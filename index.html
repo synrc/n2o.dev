@@ -170,29 +170,27 @@
  -record(reply,   { msg      :: n2o(), req :: term(), ctx :: cx() } ).
  -record(unknown, { msg      :: n2o(), req :: term(), ctx :: cx() } ).
 
- -spec start(#handler{}) -> {pid(),term()} | #error{}.
- -spec stop(term(),atom()) -> #handler{} | #error{}.
- -spec proc(atom(),#handler{}) -> term().
+ -spec start(#pi{}) -> {pid(),term()} | #error{}.
+ -spec stop(term(),atom()) -> #pi{} | #error{}.
+ -spec proc(atom(),#pi{}) -> term().
  -spec info(term(),term()(),#cx{}) -> #reply{} | #unknown{}.
 
- -record(handler, { name     :: atom(),
-                    module   :: atom(),
-                    class    :: term(),
-                    group    :: atom(),
-                    config   :: term(),
-                    state    :: term(),
-                    seq      :: term()}).
+ -record(pi, { name     :: atom(),
+               table    :: ets:tid(),
+               sup      :: atom(),
+               module   :: atom(),
+               state    :: term()  }).
 
- -record(cx,      { session   = [] :: [] | binary(),
-                    formatter = bert :: bert | json,
-                    actions   = [] :: list(tuple()),
-                    state     = [] :: [] | term(),
-                    module    = [] :: [] | atom(),
-                    lang      = [] :: [] | atom(),
-                    path      = [] :: [] | binary(),
-                    node      = [] :: [] | atom(),
-                    pid       = [] :: [] | pid(),
-                    vsn       = [] :: [] | integer() }).
+ -record(cx, { session   = [] :: [] | binary(),
+               formatter = bert :: bert | json,
+               actions   = [] :: list(tuple()),
+               state     = [] :: [] | term(),
+               module    = [] :: [] | atom(),
+               lang      = [] :: [] | atom(),
+               path      = [] :: [] | binary(),
+               node      = [] :: [] | atom(),
+               pid       = [] :: [] | pid(),
+               vsn       = [] :: [] | integer() }).
 
  -spec encode(record()) -> binary().
  -spec decode(binary()) -> record().
