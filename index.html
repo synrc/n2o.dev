@@ -1,0 +1,445 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="Maxim Sokhatsky" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:900" rel="stylesheet">
+    <title>N2O DEV</title>
+    <link rel="stylesheet" href="https://synrc.space/synrc.css?v=6" />
+</head>
+
+<body>
+
+<nav>
+    <a href='https://synrc.space/'>SYNRC</a>
+    <a href='https://o1.network'>O1</a>
+    <a href='https://o3.click'>O3</a>
+    <a href='https://o7.network'>O7</a>
+</nav>
+
+<header>
+    <h1>N2O DEV</h1>
+</header>
+
+<aside>
+    <article>
+        <section>
+            <h3>SYNOPSIS</h3>
+            <div>
+                 N2O DEV defines a full stack specification along
+                 with reference implementations in functional programming
+                 languages. It provides WebSocket and MQTT connectivity
+                 with minimalistic enterprise protocol stack: web framework, business process management, scalable data storage.
+                 As an example, three N2O implementations presented
+                 here in functional languages: Erlang, Haskell, and Standard ML.<br><br>
+            </div>
+            <div class=logo style="padding:20px;margin-bottom:20px;"><center>
+                <img src="Erlang-Mono.svg?v=3" style="width:120px;margin-right:60px;">
+                <img src="Haskell-Mono.svg?v=3" style="width:100px;margin-right:60px;">
+                <img src="SML-Mono.svg?v=3" style="width:130px;">
+            </center></div>
+            <div>
+                2013&mdash;2019 &copy; <a href="https://5ht.co/license.htm">DHARMA LICENSE</a>
+            </div>
+        </section>
+    </article>
+</aside>
+<main>
+    <section>
+        <h3>WHAT IS N2O DEV?</h3>
+        <p> N2O DEV is an ecosystem that provides it's own
+            application protocol stack, defined in Erlang that can be authomatically
+            exposed as ASN.1, Protobuf V3, JSON/REST and already implemented in
+            different tiers of server programming languages:
+            <!-- tier 0 [Coq, Agda, Lean], -->
+            tier 1 [Erlang, Haskell, Standard ML],
+            tier 2 [Scala/Java, F#/C#, Python, Clojure, Elixir]; compatible with
+            different client languages: JavaScript, Swift, Kotlin; and designed
+            for WebSocket and MQTT.</p>
+        <p> Remember protocol stacks you are already familiar with.
+            It could be legacy standards, such as:
+            CORBA, DCOM, WSDL, SOAP, XMPP; as well as some latests restricted
+            implementations: JVM [Spring, Apache], CLR [WCF, WWF, WPF].
+            Recall telecom protocol stacks there are being used as
+            complimentary and more underlying layers of protocols defined with ASN.1
+            [Bluetooth, WiFi, LDAP, DNS, SS7, GSM, UMTS, SMPP, BGP, AMQP].
+            Modern protocol stack tend to use lightweight versions of
+            descriptive languages: Thrift, GRPC/Protobuf and
+            different protocols: HTTP/2, QUIC, WebSocket, MQTT as well as
+            legacy TCP and UDP. That is a reason we chose WebSocket, MQTT
+            and QUIC for transport and session layer.</p>
+        <p> N2O DEV offers a full-stack specification and implementation for banking,
+            messaging and platform development. It specifies the way
+            to scale applications, protocols, processes, services, and storage.
+            Ready for high-speed, low-latency IoT, MQTT, TCP, UDP and WebSocket
+            applications, N2O powers <a href="https://pb.ua/depozit"> banks</a>,
+            <a href="https://nynja.io">messaging systems</a>, and several
+            startups around America, Europe and Asia.</p>
+    </section>
+    <section>
+         <h3>LANGUAGE AGNOSTIC</h3>
+         <figure><figcaption>NITRO ERLANG:</figcaption><code>
+ event(init) ->
+     wf:reg(room);
+ event(chat) ->
+     wf:send(room,{client,{peer(),message()}});
+ event({client,{P,M}}) ->
+     wf:insert_bottom(history,
+        #panel{id=history,body=[P,": ",M,#br{}]}).
+         </code></figure>
+        <figure><figcaption>NITRO Haskell:</figcaption><code>
+ index Init = do
+     updateText "system" "What is your name?"
+     wireEl button{id="send", postback=Just Greet, source=["name"]
+ index (Message Greet) = do
+     Just name &lt;- get "name"
+     updateText "system" ("Hello, " <> jsEscape name <> "!")
+ about Init =
+     updateText "app" "This is the N2O Hello World App"
+        </code></figure>
+        <figure><figcaption>NITRO JAVASCRIPT:</figcaption><code>
+ var index = match({
+    'init' : function () {
+        wf.reg('room'); },
+    '["client",[sid,msg]]' : function (sid,msg) {
+        wf.insert_bottom("history","<span>"+sid+": "+msg+"</span>"); },
+    '["chat",msg]' : function (msg) {
+        wf.send('room',tuple(atom('client'),tuple(bin(this.sid),bin(msg))))); }});
+         </code></figure>
+        <figure><figcaption>NITRO ELIXIR:</figcaption><code>
+ def event(:init) do :wf.reg(:room) end
+ def event({:chat,pid}) do pid |> send {:message, :wf.q(:message)} end
+ def body() do { :ok, pid } = :wf.async(fn() -> loop() end)
+               [ :div.new(id: :history),
+                 :textbox.new(id: :message),
+                 :button.new(id: :send, body: "Chat",
+                      postback: {:chat,pid}, source: [:message]) ] end
+ def loop() do
+     receive do
+        { :message, message } ->
+          :wf.insert_bottom(:history, [ :span.new(body: message), :br.new() ])
+          :wf.flush(:room)
+        unknown -> :wf.info('Unknown Looper Message ~p',[unknown]) end
+     loop() end
+         </code></figure>
+         <figure><figcaption>KVX ERLANG:</figcaption><code>
+ #reader{id=R} = kvs:save(kvs:reader(Id)),
+ [ kvs:save(kvs:add((kvs:load_writer(Id))
+   #writer{args=#emails{}})) || _ <- lists:seq(1,X) ],
+  Bot = kvs:bot(kvs:load_reader(R)),
+  #reader{args=F} = kvs:take(Bot#reader{args=20,dir=0}),
+         </code></figure>
+         <figure><figcaption>BPE ERLANG:</figcaption><code>
+ action({request,'Init'}, Proc) ->
+    {reply,Proc};
+
+ action({request,'Payment'}, Proc) ->
+    Payment = bpe:doc({payment_notification},Proc),
+    case is_tuple(Payment) of
+         true  -> {reply,'Process',Proc};
+         false -> {reply,'Signatory',Proc} end;
+         </code></figure>
+         <figure><figcaption>REST ERLANG:</figcaption><code>
+ init() -> ets:new(users, [public, named_table, {keypos, #user.id}]).
+ populate(Users) -> ets:insert(users, Users).
+ exists(Id) -> ets:member(users, wf:to_list(Id)).
+ get() -> ets:tab2list(users).
+ get(Id) -> [User] = ets:lookup(users, wf:to_list(Id)), User.
+ delete(Id) -> ets:delete(users, wf:to_list(Id)).
+ post(#user{} = User) -> ets:insert(users, User);
+ post(Data) -> post(from_json(Data, #user{})).
+         </code></figure>
+    </section>
+    <section>
+         <h3>FORMAL SPEC</h3>
+         <h4><a href="https://ws.n2o.space">N2O</a></h4>
+         <p>Core, Protocols and Services.</p>
+         <p>N2O provides cache and session tables along with basic RPC protocol.</p>
+         <figure><figcaption>N2O:</figcaption><code>
+ -type n2o()       :: #bert{} | #json{} | #binary{} | #default{}.
+ -type cx()        :: #cx{}.
+ -type formatter() :: binary | json | bert | text | default | atom().
+ -type response()  :: { formatter(), binary() }.
+ -type memtable()  :: atom().
+
+ -record(ok,      { data     :: term() }).
+ -record(error    { data     :: term() }.
+ -record(reply,   { msg      :: n2o(), req :: term(), ctx :: cx() } ).
+ -record(unknown, { msg      :: n2o(), req :: term(), ctx :: cx() } ).
+
+ -spec start(#handler{}) -> {pid(),term()} | #error{}.
+ -spec stop(term(),atom()) -> #handler{} | #error{}.
+ -spec proc(atom(),#handler{}) -> term().
+ -spec info(term(),term()(),#cx{}) -> #reply{} | #unknown{}.
+
+ -record(handler, { name     :: atom(),
+                    module   :: atom(),
+                    class    :: term(),
+                    group    :: atom(),
+                    config   :: term(),
+                    state    :: term(),
+                    seq      :: term()}).
+
+ -record(cx,      { session   = [] :: [] | binary(),
+                    formatter = bert :: bert | json,
+                    actions   = [] :: list(tuple()),
+                    state     = [] :: [] | term(),
+                    module    = [] :: [] | atom(),
+                    lang      = [] :: [] | atom(),
+                    path      = [] :: [] | binary(),
+                    node      = [] :: [] | atom(),
+                    pid       = [] :: [] | pid(),
+                    vsn       = [] :: [] | integer() }).
+
+ -spec encode(record()) -> binary().
+ -spec decode(binary()) -> record().
+ -spec session(term(),term()) -> term().
+ -spec session(term()) -> term().
+ -spec cache(memtable(),term(),term()) -> term().
+ -spec cache(memtable(),term()) -> term().
+         </code></figure>
+         <h4><a href="https://nitro.n2o.space">NITRO</a></h4>
+         <p>Web Framework.</p>
+         <p>NITRO supports streaming of
+            prerendered forms over WebSocket and MQTT
+            and provides tiny JavaScript library to work with document model.
+            This library is compatible across implementations.</p>
+         <figure><figcaption>NITRO:</figcaption><code>
+ -spec render(list(#element{})) -> binary().
+ -spec wire(list(#action{})) -> [].
+ -spec insert_top(atom(), list(#element{})) -> [].
+ -spec insert_bottom(atom(), list(#element{})) -> [].
+ -spec update(atom(), list(#element{})) -> [].
+ -spec clear(atom()) -> [].
+ -spec remove(atom()) -> [].
+
+ -record(init,    { token  = [] :: [] | binary() }).
+ -record(pickle,  { source = [], pickled=[], args=[] }).
+ -record(flush,   { data   = [] :: [] | term() }).
+ -record(direct,  { data   = [] :: [] | term() }).
+ -record(ev,      { module = [] :: [] | atom(),
+                    msg    = [] :: [] | term(),
+                    trigger= [] :: [] | atom() | binary(),
+                    name   = [] :: [] | atom() | binary() }).
+         </code></figure>
+         <h4><a href="https://kvx.n2o.space">KVX</a></h4>
+         <p>Persistent Streams (Database).</p>
+         <p>KVX and KVS provides unified API for key-value storage along with native
+            backend implementations for each language.</p>
+         <figure><figcaption>KVX:</figcaption><code>
+ -record(iter,   { id    = [] :: [] | integer(),
+                   next  = [] :: [] | integer(),
+                   prev  = [] :: [] | integer() } ).
+
+ -record(id_seq, { thing = [] :: term(),
+                   id    =  0 :: integer() } ).
+
+ -record(writer, { id    = [] :: term(),
+                   count =  0 :: integer(),
+                   cache = [] :: [] | tuple(),
+                   args  = [] :: term(),
+                   first = [] :: [] | tuple() } ).
+
+ -record(reader, { id    = [] :: integer(),
+                   pos   =  0 :: [] | integer(),
+                   cache = [] :: [] | integer(),
+                   args  = [] :: term(),
+                   feed  = [] :: term(),
+                   dir   =  0 :: 0 | 1 } ).
+
+ -spec top  (#reader{}) -> #reader{}.
+ -spec bot  (#reader{}) -> #reader{}.
+ -spec next (#reader{}) -> #reader{}.
+ -spec prev (#reader{}) -> #reader{}.
+ -spec drop (#reader{}) -> #reader{}.
+ -spec take (#reader{}) -> #reader{}.
+ -spec up   (#reader{}) -> #reader{}.
+ -spec down (#reader{}) -> #reader{}.
+ -spec add  (#writer{}) -> #writer{}.
+
+ -spec writer  (term()) -> #writer{}.
+ -spec reader  (term()) -> #reader{}.
+ -spec load_writer (term()) -> {ok,term()} | {error,term()}.
+ -spec load_reader (integer()) -> {ok,term()} | {error,term()}.
+         </code></figure>
+         <h4><a href="https://roster.n2o.space">ROSTER</a></h4>
+         <p>Public and Private Enterprise Messaging.</p>
+         <p>ROSTER provides lightweight address book access and file sharing.</p>
+         <figure><figcaption>ROSTER:</figcaption><code>
+ -type container()     :: chain | cur.
+ -type messageType()   :: sys | reply | forward | read | edited | cursor.
+ -type messageStatus() :: masync | mdelete | mclear| mupdate | medit.
+ -type historyType()   :: updated | get | update | last_msg | greply.
+
+ -record(muc,       { name = [] :: [] | binary() }).
+ -record(p2p,       { from = [] :: [] | binary(),
+                      to   = [] :: [] | binary() }).
+
+ -record('File',    { id        = [] :: binary(),
+                      mime      = <<"text">> :: binary(),
+                      payload   = [] :: binary(),
+                      parentid  = [] :: binary(),
+                      data      = [] :: binary() }).
+
+ -record('Message', { id        = [] :: [] | integer(),
+                      container = chain :: container(),
+                      feed_id   = [] :: #muc{} | #p2p{},
+                      prev      = [] :: [] | integer(),
+                      next      = [] :: [] | integer(),
+                      msg_id    = [] :: [] | binary(),
+                      from      = [] :: [] | binary(),
+                      to        = [] :: [] | binary(),
+                      files     = [] :: list(#'File'{}),
+                      type      = [] :: messageType(),
+                      link      = [] :: [] | integer() | #'Message'{},
+                      mstatus   = [] :: messageStatus()}).
+
+ -record('History', { roster_id = [] :: [] | binary(),
+                      feed      = [] :: [] | #p2p{} | #muc{},
+                      size      = 0  :: [] | integer(),
+                      entity_id = 0  :: [] | integer(),
+                      data      = [] :: integer(),
+                      status    = [] :: historyType()}).
+
+ -record('Contact', { user_id   = [] :: [] | binary(),
+                      avatar    = [] :: list(integer()),
+                      names     = [] :: [] | binary(),
+                      reader    = [] :: [] | list(integer()),
+                      presence  = offline :: presence(),
+                      status    = [] :: contactStatus()}).
+
+ -record('Roster',  { id        = [] :: [] | integer(),
+                      names     = [] :: [] | binary(),
+                      nick      = [] :: [] | binary(),
+                      userlist  = [] :: list(#'Contact'{}),
+                      roomlist  = [] :: list(integer()),
+                      phone     = [] :: [] | binary(),
+                      rosterStatus = [] :: rosterStatus() }).
+         </code></figure>
+         <h4><a href="https://bpe.n2o.space">BPE</a></h4>
+         <p>Business Process Engine.</p>
+         <p>BPE maps directly Erlang processes to formal BPMN business processes.</p>
+         <figure><figcaption>BPE:</figcaption><code>
+ -type tasks()  :: #task{} | #serviceTask{} | #userTask{} | #receiveTask{}.
+ -type events() :: #messageEvent{} | #boundaryEvent{} | #timeoutEvent{}.
+
+ -record(complete,  { id=[] :: [] | integer() }).
+ -record(proc,      { id=[] :: [] | integer() }).
+ -record(histo,     { id=[] :: [] | integer() }).
+ -record(create,    { proc=[] :: [] | #process{} | binary(), docs=[] :: list() }).
+ -record(amend,     { id=[] :: [] | integer(), docs=[] :: [] | list(record()) }).
+ -record(process,   { ?ITERATOR(feed),
+                      name=[] :: [] | binary(),
+                      roles    = [] :: list(),
+                      tasks    = [] :: list(tasks()),
+                      events   = [] :: list(events()),
+                      hist     = [] :: [],
+                      flows    = [] :: list(#sequenceFlow{}),
+                      rules    = [] :: [],
+                      docs     = [] :: list(tuple()),
+                      options  = [] :: term(),
+                      task     = [] :: [] | atom(),
+                      timer    = [] :: [] | binary(),
+                      notifications=[] :: [] | term(),
+                      result   = [] :: [] | binary(),
+                      started  = [] :: [] | binary(),
+                      beginEvent=[] :: [] | atom(),
+                      endEvent = [] :: [] | atom()}).
+         </code></figure>
+    </section>
+    <section>
+        <p>Tier 1 — Implementations in functional languages (Erlang, Haskell, Standard ML).</p>
+    </section>
+    <section>
+        <a name=intro></a>
+        <h3><a href="https://o7.network">O7 ECO</a></h3>
+        <p> O7 ECO defines ecosystem, a full-stack specification and implementation
+            for banking, messaging and platform development. It specifies the way
+            to scale applications, protocols, processes, services, and storage.
+            Ready for high-speed, low-latency MQTT, TCP, QUIC, UDP, and WebSocket
+            applications this version of N2O&nbsp;ECO provides: business process management (BPE),
+            Nitrogen web framework (NITRO), WebSocket and MQTT connectivity (N2O),
+            REST framework, fast and simple package manager (MAD),
+            type-driven BERT parser generator for API development,
+            scalable data storage (KVX), and many more.
+        </p>
+            <ul>
+                <li><a href="https://ws.n2o.space">o7/n2o</a> &mdash; N2O 5.11.1 MQTT WS</li>
+                <li><a href="https://kvx.n2o.space">o7/kvx</a> &mdash; KVX 5.11</li>
+                <li><a href="https://mad.n2o.space">o7/mad</a> &mdash; MAD 4.11</li>
+                <li><a href="https://bpe.n2o.space">o7/bpe</a> &mdash; BPE 3.11</li>
+                <li><a href="https://forms.n2o.space">o7/forms</a> &mdash; FORMS 3.11</li>
+                <li><a href="https://synrc.github.io/roster">o7/roster</a> &mdash; ROSTER 3.11</li>
+                <li><a href="https://synrc.github.io/nitro">o7/nitro</a> &mdash; NITRO 3.10</li>
+                <li><a href="https://synrc.github.io/rest">o7/rest</a> &mdash; REST 5.10</li>
+                <li><a href="https://synrc.github.io/active">o7/active</a> &mdash; ACTIVE 4.11</li>
+                <li><a href="https://synrc.github.io/fs">o7/fs</a> &mdash; FS 4.10</li>
+                <li><a href="https://synrc.github.io/sh">o7/sh</a> &mdash; SH 2.11</li>
+                <li><a href="https://synrc.github.io/bert">o7/bert</a> &mdash; BERT 1.11.1</li>
+                <li><a href="https://review.n2o.space">o7/review</a> &mdash; REVIEW 1.11 TT</li>
+                <li><a href="https://sample.n2o.space">o7/sample</a> &mdash; REVIEW 1.11 WS</li>
+                <li><a href="https://xio.n2o.space">o7/xio</a> &mdash; XIO MQTT 5.0</li>
+            </ul>
+
+    </section>
+    <section>
+        <h3><a href="https://o3.click">O3 ECO</a></h3>
+         <p>O3 ECO introduces N2O protocols for Haskell programming language.
+            It includes full implementation of Nitrogen Web Framework (NITRO) in
+            Haskell along with HTML example (SAMPLE)
+            driven by WebSocket and static HTTP servers (N2O).</p>
+        <ul>
+            <li><a href="https://n2o.o3.click">o3/n2o</a> &mdash; N2O 0.11 HS</li>
+            <li><a href="https://nitro.o3.click">o3/nitro</a> &mdash; NITRO 0.11</li>
+            <li><a href="https://sample.o3.click">o3/sample</a> &mdash; SAMPLE 0.11</li>
+        </ul>
+    </section>
+    <section>
+        <a name=intro></a>
+        <h3><a href="https://o1.network">O1 ECO</a></h3>
+        <p> O1 ECO is a Standard ML N2O implementation. Standard ML (SML)
+            is a certified language with formally defined operational semantics.
+            Here is yet simple CML loop with INetSock.TCP spawned acceptors.
+            Simple enough to handle N2O protocols inside the TCP server.
+            O1&nbsp;ECO provides basic WebSocket connectivity and basic
+            application server (N2O). The unique feature of SML implementation
+            is that O1 ECO is implemented in verified language.
+        </p>
+        <ul>
+            <li><a href="https://n2o.o1.network">o1/n2o</a> &mdash; N2O 0.11 ML</li>
+        </ul>
+    </section>
+    <section>
+        <p>More tiers could be found at <a href="https://n2o.im">n2o.im</a> page.</p>
+    </section>
+    <section>
+           <h3> ADVICE TO AUTHOR</h3>
+            <p> Each language, N2O is implemented in, should
+                embed N2O most naturally and compact. If some layer between
+                the base library of a language is needed, it
+                could be provided, but it should be reduced
+                to zero if possible. In some cases, some parts
+                of a base library could be replaced with better replacement.
+                N2O should provide client companion library usually
+                implemented in a different set
+                of client languages: JavaScript, Swift, and Kotlin.
+                If you did everything right, N2O should not
+                be more than 500 LOC in any language.
+                The correct way is to implement WebSocket and
+                static HTTP server using the same codebase.<br><br>
+            </p>
+            <br>
+            <br>
+    </section>
+
+</main>
+
+<footer>
+    Made with <span class="heart">❤</span> to N2O
+</footer>
+
+</body>
+</html>

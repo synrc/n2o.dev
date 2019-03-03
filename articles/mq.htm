@@ -1,0 +1,390 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="Maxim Sokhatsky" />
+    <title>EMQ</title>
+    <link rel="stylesheet" href="https://synrc.space/synrc.css" />
+</head>
+
+<body>
+
+<nav>
+    <a href='https://synrc.space/'>SYNRC</a>
+    <a href='https://n2o.space'>N2O</a>
+</nav>
+
+<header>
+    <a href="https://n2o.space"><img src="https://synrc.space/images/Synrc Neo.svg?v=1"></a>
+    <h1>EMQ 2.1.2</h1>
+</header>
+
+<aside>
+    <article>
+        <section>
+            <h3>Motivation</h3>
+            <div>
+                Introduce N2O Protocols for commercial use on top of the MQTT protocol.
+                Provide an EMQ extension that immediately activates the N2O protocol
+                and its applications for all connected MQTT devices. Create a single
+                Erlang eco-system for Enterprise Protocol Federation and establish
+                a solid CORBA/WS-SOAP/XMPP-replacement, ready for high-speed,
+                low-latency IoT applications.
+            </div>
+        </section>
+
+        <section>
+            <a name=plugin><h3>MANUAL</h3></a>
+            <div><ul>
+           <li><a href="man/n2o.htm">N2O</a></font></li>
+           <li><a href="man/n2o_async.htm">ASYNC</a></font></li>
+           <li><a href="man/n2o_proto.htm">PROTO</a></font></li>
+           <li><a href="man/n2o_vnode.htm">VNODE</a></font></li>
+           <li><a href="man/n2o_stream.htm">STREAM</a></font></li>
+            </ul></div>
+            <br>
+            <div>
+                26 APR 2017 &copy; <a href="http://5ht.co/license.htm">DHARMA LICENSE</a>
+            </div>
+
+        </section>
+    </article>
+</aside>
+<main>
+    <section>
+
+        <h3>MQTT for Transport and Sesssions</h3>
+        <p>
+            <a href="http://emqtt.io">EMQ</a> is an open-source MQTT broker implementation by Feng Lee.
+            It's clean, concise and robust. We've developed an EMQ compatible
+            plugin that works as plugin and have different connection schema
+            than Cowboy's ranch integration of N2O.
+        </p>
+        <p>
+            Usually, Web Framework uses HTTP or WebSocket endpoints.
+            But what if we need to connect application on devices with TCP/UDP transports?
+            One of the protocols addressing this usecase is <a href="http://www.indigoo.com/dox/wsmw/1_Middleware/MQTT.pdf">MQTT</a>
+            that was designed by Andy Stanford-Clark (IBM) and Arlen Nipper in 1999 for connecting Oil
+            Pipeline telemetry systems over satellite.
+            The protocol is designed to work over connectionless
+            unreliable environments, and provides three levels of
+            QoS delivery: at least once, at most once, exactly once.
+        </p>
+        <p>
+            Starting from 4.5, <a href="https://n2o.space">N2O</a> reduces everything that duplicates MQTT features.
+            On the other hand, MQTT version is a completely N2O-compatible embeddable protocol relay
+            with limited features. And it takes only 25KB in Erlang.
+        </p>
+        <div>
+        <ul>
+            <li><b><a href="man/n2o.htm">n2o</a></b> &mdash; N2O Protocol Server <div class=desk>version 4.5 MQTT &mdash; 10KB</div></li>
+            <li><b><a href="man/n2o_async.htm">n2o_async</a></b> &mdash; N2O Async Streams<div class=desk>: gen_server &mdash; 4KB</div></li>
+            <li><b><a href="man/n2o_format.htm">n2o_format</a></b> &mdash; N2O Formatter<div class=desk>: JSON, BERT &mdash; 2KB</div></li>
+            <li><b><a href="man/n2o_ftp.htm">n2o_ftp</a></b> &mdash; N2O File Protocol<div class=desk>: FTP &mdash; 4KB</div></li>
+            <li><b><a href="man/n2o_nitro.htm">n2o_nitro</a></b> &mdash; N2O Nitro Protocol<div class=desk>: PICKLE, FLUSH, DIRECT, IO, INIT &mdash; 3KB</div></li>
+            <li><b><a href="man/n2o_proto.htm">n2o_proto</a></b> &mdash; N2O Protocols Loop<div class=desk>: NITRO, FTP &mdash; 1KB</div></li>
+            <li><b>n2o_secret</b> &mdash; N2O Security<div class=desk>: HMAC AES/CBC-128 &mdash; 1KB</div></li>
+        </ul>
+        </div>
+        <p>N2O MQTT provides real smooth experience for developers:
+           clean git history, small codebase, nitro compatible,
+           man/html docs.</p>
+        <figure>
+            <figcaption>Listing 1. N2O 4.5 MQTT</figcaption>
+        <code>
+
+ $ time git clone git://github.com/synrc/mqtt
+ real       0m0.794s
+
+ $ cloc .
+ 370
+
+ $ cat rebar.config
+ {deps, [{nitro, "git://github.com/synrc/nitro"},
+         {n2o,   "git://github.com/synrc/mqtt"}]}.
+
+ $ man ./man/n2o.1
+
+        </code></figure>
+    </section>
+
+
+    <section>
+        <a name=""><h3>Differences from WebSocket</h3></a>
+        <p>
+            N2O_start and n2o.js are no longer used in MQTT version of N2O.
+            Instead of N2O_start, MQTT_start and mqtt.js should be used for
+            session control replacement. We traded HEART protocol and session
+            facilities for built-in MQTT features. N2O authentication and
+            authorization mechanisms are also abandoned as MQTT could provide
+            AUTH features too.
+        </p>
+        <ul>
+            <li><b>n2o_session</b> &mdash; Server Cookies</li>
+            <li><b><a href="man/n2o_stream.htm">n2o_stream</a></b> &mdash; XHR fallback</li>
+            <li><b>n2o_heart</b> &mdash; PING protocol</li>
+            <li><b>n2o_mq</b> &mdash; syn and gproc</li>
+            <li><b>n2o_query</b> &mdash; Query Router</li>
+            <li><b>N2O_start</b> &mdash; MQTT_start</li>
+            <li><b>ranch</b> &mdash; esockd</li>
+            <li><b>cowboy</b> &mdash; mochiweb</li>
+        </ul>
+    </section>
+
+    <section>
+        <a name=endpoints><h3>Endpoints</h3></a>
+        <p>
+            All N2O/MQTT messages which go directly to TCP and/or WebSocket.
+            However there are some endpoints which are not TCP sockets, even non-sockets,
+            like gen_server endpoint, HTTP REST endpoint, which is non-WebSocket endpoint,
+            and there is a room for other endpoint types.
+        </p>
+        <p>
+            Here is a list of types of endpoints which are supported by EMQ and accesible to N2O apps:
+            WebSockets, MQTT, MQTT-SN, TCP, UDP, CoAP.
+            Normal use of N2O as a Web Framework or a Web Application Server is through WebSockets,
+            but for IoT and MQTT applications it could be served through UDP or SCTP protocols
+            providing application level message delivery consistency.
+            By using MQTT as a transport we extend the supported set of endpoint protocols.
+        </p>
+        <p>
+            Also N2O is able to work under <b>cowboy</b> Erlang web server and <b>mochiweb</b> web server.
+            There is <b>rest</b> library to deal with REST endpoint.
+        </p>
+    </section>
+
+    <section>
+        <a name=formatters><h3>N2O and MQTT Formatters</h3></a>
+        <p>
+           N2O supports <b>TEXT</b>, <b>JSON</b>, <b>XML</b>, <b>BERT</b>,
+           <b>MessagePack</b> formatters but you can add your own implementations either.
+           They are terminal formatters before socket interface library (usually <b>ranch</b> or <b>esockd</b>).
+           For example one may format IO message with BERT encoding <b>n2o:format({io,Eval,Data},bert).</b>
+        </p>
+        <p>MQTT format messages only in MQTT format. You can wrap binary B in MQTT packet as
+        <b>emqttd_message:make(Name, 0, Name, B).</b>
+    </section>
+
+    <section>
+        <a name=sample><h3>Sample Application</h3></a>
+        <figure>
+            <figcaption>Listing 2. Sample Web Application written in NITRO DSL</figcaption>
+            <code>
+  main() -> [].
+
+  event(init) ->
+    nitro:update(loginButton,
+      #button{id=loginButton,body="Login",
+              postback=login,source=[user,pass]});
+
+  event(login) ->
+    nitro:redirect("index.htm?room=" ++ 
+    nitro:to_list(
+    n2o:q(pass)));
+
+</code>
+</figure>
+        <figure>
+            <figcaption>Picture 3. N2O Review Application</figcaption>
+            <img src="https://n2o.space/img/n2o-mqtt.png">
+        </figure>
+    </section>
+
+    <section>
+        <a name=js><h3>MQTT JavaScript Client</h3></a>
+        <figure>
+            <figcaption>Listing 5. mq.js</figcaption>
+            <code>
+var subscribeOptions = {
+    qos: 2,  // QoS
+    invocationContext: { foo: true },  // Passed to success / failure callback
+    onSuccess: function (x) { console.log("N2O Subscribed"); },
+    onFailure: function (m) { console.log("N2O SubError: " + m.errorMessage); },
+    timeout: 2 };
+
+var options = {
+    timeout: 2,
+    userName: module,
+    password: token(),
+    cleanSession: false,
+    onFailure: function (m) { console.log("N2O ConnError: " + m.errorMessage); },
+    onSuccess: function ()  { console.log("N2O Connected ");
+                              ws.send(enc(tuple(atom('init'),bin(token()))));
+                            } };
+
+function rnd()         { return Math.floor((Math.random() * nodes)+1); }
+function pageModule()  { return module || 'api'; }
+function token()       { return localStorage.getItem("token")  || ''; };
+function topic(prefix) { return prefix + "/1/" + rnd() + "/" + pageModule()
+                       + "/anon/" + client() + "/" + token(); }
+function gen_client()  { return Math.random().toString(36).substring(2)
+                       + (new Date()).getTime().toString(36); }
+function client()      { var c = localStorage.getItem("client"), a;
+                         if (null == c) { c = 'emqttd_' + gen_client(); }
+                         localStorage.setItem("client", c); return c; }
+
+  mqtt = new Paho.MQTT.Client(host, 8083, client());
+  mqtt.onConnectionLost = function (o) { console.log("connection lost: "
+                                       + o.errorMessage); };
+  mqtt.onMessageArrived = function (m) {
+        var BERT = m.payloadBytes.buffer.slice(m.payloadBytes.byteOffset,
+            m.payloadBytes.byteOffset + m.payloadBytes.length);
+        try {
+            erlang = dec(BERT);
+            for (var i = 0; i < $bert.protos.length; i++) {
+                p = $bert.protos[i];
+                if (p.on(erlang, p.do).status == "ok") return;
+            }
+        } catch (e) { console.log(e); }
+  };
+
+mqtt.connect(options);
+
+            </code>
+        </figure>
+    </section>
+
+    <section>
+        <a name=dash><h3>Enable EMQ Plugin</h3></a>
+        <p>
+            The N2O over MQTT bridge is a drop-in plugin for EMQ broker.
+            After starting the server you should enable N2O over MQTT bridge EMQ plugin on plugin page
+            <a href="http://127.0.0.1:18083/#/plugins">http://127.0.0.1:18083/#/plugins</a> and then open the application sample
+            <a href="http://127.0.0.1:8000/spa/login.htm">http://127.0.0.1:8000/spa/login.htm</a>
+        </p>
+        <figure>
+            <figcaption>Picture 4. N2O 4.5 MQTT as EMQ Plugin</figcaption>
+            <img src="https://n2o.space/img/emq.png">
+        </figure>
+        <p>
+        The nice thing about EMQ is that it enables session introspection for N2O connections.
+        The EMQ Dashboards is written in vue.js and a bit complex for admin application.
+        The possible and expecting hackaton is on rewriting EMQ admin with <b>hyperapp</b> and <b>n2o</b>.
+        The IBM library Paho is also too old and fat to fit N2O sizes. Some parts should be replaced
+        with more modern and compact pinger and connection respawning from <b>n2o.js</b>. This is
+        expecting further research and imporevement.
+        </p>
+        <figure>
+            <figcaption>Picture 5. Inspecting N2O sessions with EMQ</figcaption>
+            <img src="//n2o.space/img/emq-sub.png">
+        </figure>
+    </section>
+
+
+    <section>
+        <a><h3>EMQ &mdash; Lightweight Broker as Service Container for N2O Apps</h3></a>
+        <p>
+            EMQ is the latest software that has robust iOS and Android MQTT client libraries, just have a look at
+            <a href="https://github.com/emqtt">https://github.com/emqtt</a> Github organization.
+        </p>
+        <figure>
+            <figcaption>Picture 6. MQTT 3.1.1 vs MQTT 5.0</figcaption>
+            <img src="https://n2o.space/img/mqtt-v5.svg">
+        </figure>
+        <p>
+            We made a compatible EMQ plugin and N2O Review sample application with built-in EMQ with minimal dependencies.
+            Our fork is based on the latest EMQ master and is dedicated for building with our MAD build tool.
+        </p>
+        <figure>
+            <figcaption>Listing 6. Setup MQTT flavoured N2O.</figcaption>
+            <code>
+$ brew install erlang
+$ curl -fsSL https://raw.github.com/synrc/mad/master/mad > mad \
+            && chmod +x mad \
+            && sudo cp mad /usr/local/bin
+$ git clone git://github.com/voxoz/mq && cd mq
+$ time mad dep com
+Writing /apps/review/ebin/review.app
+OK
+
+real    1m45.357s
+user    0m17.166s
+sys     0m5.065s
+$ mad rep
+Configuration: [{n2o,
+                    [{port,8000},
+                     {app,review},
+                     {pickler,n2o_secret},
+                     {formatter,bert},
+                     {log_modules,config},
+                     {log_level,config}]},
+                {emq_dashboard,
+                    [{listeners_dash,
+                         [{http,18083,[{acceptors,4},{max_clients,512}]}]}]},
+                {emqttd,
+                    [{listeners,
+                         [{http,8083,[{acceptors,4},{max_clients,512}]},
+                          {tcp,1883,[{acceptors,4},{max_clients,512}]}]},
+                     {sysmon,
+                         [{long_gc,false},
+                          {long_schedule,240},
+                          {large_heap,8000000},
+                          {busy_port,false},
+                          {busy_dist_port,true}]},
+                     {session,
+                         [{upgrade_qos,off},
+                          {max_inflight,32},
+                          {retry_interval,20},
+                          {max_awaiting_rel,100},
+                          {await_rel_timeout,20},
+                          {enable_stats,off}]},
+                     {queue,[]},
+                     {allow_anonymous,true},
+                     {protocol,
+                         [{max_clientid_len,1024},{max_packet_size,64000}]},
+                     {acl_file,"etc/acl.conf"},
+                     {plugins_etc_dir,"etc/plugins/"},
+                     {plugins_loaded_file,"etc/loaded_plugins"},
+                     {pubsub,
+                         [{pool_size,8},{by_clientid,true},{async,true}]}]},
+                {kvs,
+                    [{dba,store_mnesia},
+                     {schema,[kvs_user,kvs_acl,kvs_feed,kvs_subscription]}]}]
+Applications:  [kernel,stdlib,gproc,lager_syslog,pbkdf2,asn1,fs,ranch,mnesia,
+                compiler,inets,crypto,syntax_tools,xmerl,gen_logger,esockd,
+                cowlib,goldrush,public_key,lager,ssl,cowboy,mochiweb,emqttd,
+                erlydtl,kvs,mad,emqttc,nitro,rest,sh,syslog,review]
+Erlang/OTP 19 [erts-8.3] [source] [64-bit] [smp:4:4]
+              [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+
+Eshell V8.3  (abort with ^G)
+starting emqttd on node 'nonode@nohost'
+Nonexistent: []
+Plugins: [{mqtt_plugin,emq_auth_username,"2.1.1",
+                       "Authentication with Username/Password",false},
+          {mqtt_plugin,emq_dashboard,"2.1.1","EMQ Web Dashboard",false},
+          {mqtt_plugin,emq_modules,"2.1.1","EMQ Modules",false},
+          {mqtt_plugin,n2o,"4.5-mqtt","N2O Server",false}]
+Names: [emq_dashboard,n2o]
+dashboard:http listen on 0.0.0.0:18083 with 4 acceptors.
+Async Start Attempt {handler,"timer",n2o,system,n2o,[],[]}
+Proc Init: init
+mqtt:ws listen on 0.0.0.0:8083 with 4 acceptors.
+mqtt:tcp listen on 0.0.0.0:1883 with 4 acceptors.
+emqttd 2.1.1 is running now
+>
+
+            </code>
+        </figure>
+    </section>
+    <section>
+        <a name=plugin><h3>Related Documents</h3></a>
+        <div>
+        <ul>
+           <li><a href="https://n2o.space/articles/n2o.htm">N2O: PROTOCOL</a></li>
+           <li><a href="https://n2o.space/articles/web.htm">N2O: SERVER</a></li>
+           <li><a href="https://n2o.space/articles/history.htm">N2O: HISTORY</a></li>
+           <li><a href="https://5ht.co/spawnproc.htm">N2O: PRIVATBANK</a></li>
+        </ul></div>
+    </section>
+</main>
+
+<footer>
+    Made with <span class="heart">❤</span> for EMQ and N2O
+</footer>
+
+</body>
+</html>

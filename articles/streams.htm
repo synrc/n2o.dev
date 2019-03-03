@@ -1,0 +1,301 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="Maxim Sokhatsky" />
+    <title>STREAMS</title>
+    <link rel="stylesheet" href="https://synrc.space/synrc.css" />
+</head>
+
+<body>
+
+<header>
+    <a href="../index.html"><img src="../img/Synrc Neo.svg"></a>
+    <h1>STREAMS</h1>
+</header>
+
+<aside>
+    <article>
+        <section>
+            <h3>Intro</h3>
+            <div>
+                STREAM was dedicated to bench Erlang I/O and gen_server throughput.
+                We end up with 100MB/s per actor Erlang Events recording.
+            </div>
+            <br>
+            <div>
+                15 SEP 2016 &copy; <a href="http://5ht.co/license.htm">ISC LICENSE</a>
+            </div>
+        </section>
+    </article>
+</aside>
+<main>
+    <section>
+        <h3>Minimal gen_server</h3>
+
+<p>When we started EXE we didn't know the landscape of ways we could
+   implement interoperability with Erlang runtime. From the first,
+   it seems reasonable to break all the compatibility and build the
+   new world. But what about thinking of building reasonable type
+   checked code that produces OTP compatible gen_server?</p>
+
+<p>To show you that way we understand gen_server first we need
+   to reimplement poor man's OTP-compatible gen_server in Erlang,
+   by the way showing the session types and typed handler of gen_server.</p>
+
+<p>We at Synrc are not using much OTP. First, we found that OTP principles,
+   in general, are OK, but for simple services all those handle_call,
+   handle_info necessary declarations seems a bit extra. We have
+   irreplaceable application_controller, complicated user_drv layer,
+   and more legacy stuff that prevent us from building modern and
+   flexible functional codebase. E.g. we have the use case in mad
+   for loading the application from escript bundle and ETS filesystem
+   and even made a custom static handler for that purposes.</p>
+
+<p>The reason to rethink OTP ideas is not only NIH syndrome.
+   We also want to see minimal primitives to specify gen_server
+   more formally in its distilled form. Others may take into account
+   that this is toy sample.</p>
+
+<h3>Overview</h3>
+
+<p>The basic idea of gen_server is to be run and to be reacted during life-time
+   to a series of ordered events. You may think of gen_server as simple stream
+   data type of a given state and also typed with an effectfull process.</p>
+
+<h3>Boot Code</h3>
+
+<p>The very first <b>gen_server</b> in ERTS and LING is application_controller,
+   that starts from <b>init</b> module. It starts even without <b>proc_lib</b> and enters
+   <b>gen_server</b> loop manually.</p>
+
+  <p>NOTE: <b>init </b> message is our public version of <b>ack</b>.
+  We use init for reinitialization even without stopping the process.
+  But instead of <b>gen_server</b> for N2O protocols we use <b>n2o_async</b> interfaced
+  with <b>proc/2</b> message and state parameters.</p>
+
+<figure>
+<code>
+-module(boot).
+-compile(export_all).
+
+start(App) ->
+    spawn_link(?MODULE, init, [self(), App]).
+
+init(Parent, App) ->
+    process_flag(trap_exit, true),
+    self() ! {init,self(),{}},
+    loop(Parent, {local, ?MODULE}, {}, ?MODULE, infinity).
+
+</code>
+</figure>
+
+<p>We can make it <b>gen_server</b>-compatible by placing two lines in init</p>
+<figure><pre>
+    put('$ancestors', [Parent]),
+    put('$initial_call', {application_controller, start, 1}),
+
+</pre>
+</figure>
+
+<h3>Loop</h3>
+
+<p>Here is the hardest part for reasoning.
+   We give computing control to Erlang VM which calls hibernate function in the gen_server module.</p>
+
+<p>Hibernate, Infinity or Timeout:</p>
+<figure>
+<code>
+loop(Parent, Name, State, Mod, hibernate) ->
+    erlang:hibernate(?MODULE,hibernate,[Parent, Name, State, Mod]);
+
+loop(Parent, Name, State, Mod, Time) ->
+    server(drain(Time), Parent, Name, State, Mod).
+
+</code>
+</figure>
+
+<p>Here is happened computational emptiness and all sources of effects.<br>
+You may think of <b>receive</b> as effectful suspended <b>case</b>.</p>
+<figure>
+<pre>
+drain()        -> receive Input -> Input end.
+drain(Timeout) -> receive Input -> Input
+                  after Timeout -> {timeout,[],[]} end.
+</pre></figure>
+
+<p>Wake up from Hibernate state here:</p>
+<figure>
+<pre>
+hibernate(P, N, S, M) -> server(drain(), P, N, S, M).
+</pre>
+</figure>
+
+<h3>Session Types in EXE</h3>
+
+<p>Note that <b>init</b> is added by me, because it always needed
+   a place for reinit without stopping the process.</p>
+<figure>
+<figcaption>Exe Listing 1. Events API</figcaption>
+<code>
+       data input (Any: Type): Type :=
+            (EXIT:      Any -> Pid -> Record -> input Any)
+            (init:      Any -> Pid -> Record -> input Any)
+            ($gen_call: Any -> Pid -> Record -> input Any)
+            ($gen_cast: Any -> Pid -> Record -> input Any)
+            (system:    Any -> Pid -> Record -> input Any)
+            (timeout:   Any -> Pid -> Record -> input Any)
+            (info:                       Any -> input Any)
+
+</code>
+</figure>
+<figure>
+<figcaption>Effects API</figcaption>
+<pre>
+       data output (Any: Type): Type :=
+            (ok:                   Record -> output Any)
+            (ok:            Any -> Record -> output Any)
+            (error:                  Atom -> output Any)
+            (stop:  Atom -> Pid -> Record -> output Any)
+</pre>
+</figure>
+
+<p>Effects could be stored as persisted trace of <b>ok</b> and/or <b>error</b> events in KVS.
+   We could allow process to continue on errors, etc.</p>
+
+<h3>Server</h3>
+
+<p>Loop is waiting for data in <b>drain</b> and pass it to Server which can
+   handle only tuple/3 with following first elements: <b>EXIT</b>, <b>timeout</b>,
+   <b>system</b>, <b>$gen_call</b>, <b>$gen_cast</b>, <b>init</b>. After receiving message
+   the server will call appropriate function in a given <b>sen_server</b> module.</p>
+
+<p>OTP reply is a tuple/2:</p>
+<figure>
+<code>
+reply({To,Tag},Reply) -> To ! {Tag,Reply}.
+
+</code>
+</figure>
+<figure>
+<pre>
+ server({Fun, Sender, Msg}, P, N, S, M) ->
+
+    try case M:Fun(Msg, Sender, S) of
+
+        {stop, Status, Tag, NS} -> reply(Tag,Status), Status;
+                {ok, Reply, NS} -> reply(Sender,Reply),
+                                   loop(P, N, NS, M, infinity);
+                       {ok, NS} -> loop(P, N, NS, M, infinity) end
+
+  catch _:_ -> reply(Sender, {error,erlang:get_stacktrace() }) end;
+</pre>
+</figure>
+<p>There is a trick in OTP to handle Any messages built into protocol which is not good for reasoning.
+   We will convert them to cast messages (or better deny totally).</p>
+<figure>
+<pre>
+ server(Message,P,N,S,M) -> server({'$gen_cast',[],Message},P,N,S,M).
+
+</pre>
+</figure>
+
+<h3>Callback Module</h3>
+
+<p>Here is new callback module, that eliminates gen_server behaviour callbacks,
+   but allows raw protocol messages naming.</p>
+
+<figure>
+<code>
+ init(M,R,S) ->
+     {ok, State}.
+
+ timeout(M,R,S) ->
+     io:format("timeout: ~p~n",[{M,R,S}]),
+     {stop, timeout, {R,[]}, S}.
+
+ system(M,R,S) ->
+     io:format("system: ~p~n",[{M,R,S}]),
+     {stop, M, {R,[]}, S}.
+
+</code>
+</figure>
+<figure>
+<pre>
+'$gen_call'(M,R,S) ->
+     io:format("$gen_call: ~p~n",[{M,R,S}]),
+     {ok,R,S}.
+
+'$gen_cast'(M,R,S) ->
+     io:format("$gen_cast: ~p~n",[{M,R,S}]),
+     {ok, S}.
+
+'EXIT'(M,R,S) ->
+     io:format("EXIT: ~p~n",[{M,R,S}]),
+     {stop, M, {R,[]}, S}.
+
+</pre></figure>
+
+<h3>Callback Module in EXE</h3>
+
+<p>In general it is possible to compile such EXE record in OTP-compatible Erlang code.</p>
+
+<figure>
+<code>
+   record handler (M: Sigma) (P: Pid) (S: State) (A: Type): Type :=
+          (init      := output.ok   A                       S)
+          (timeout   := output.stop A :timeout  (prod P []) S)
+          (system    := output.stop A M         (prod P []) S)
+          ($gen_call := output.ok   A M                     S)
+          ($gen_cast := output.ok   A                       S)
+
+</code></figure>
+
+<p>Typed Free Structure can handle the stream.</p>
+
+<figure>
+<code>
+     data IOI.F (A,State: Type): Type :=
+          (receive: (input A → State) → IO.F)
+          (server:   input A → State  → IO.F)
+          (pure: A → IO.F)
+
+     data IOI (A,State: Type): Type :=
+          (intro: State → (State → IOI.F A State) → IOI)
+
+</code></figure>
+
+
+<h3>Let's try!</h3>
+
+<figure>
+<pre>
+1> boot:start(1).
+<0.1564.0>
+
+2> gen_server:call(pid(0,1564,0),hello).
+$gen_call: {hello,{<0.1562.0>,#Ref<0.0.3.2620>},{}}
+{<0.1562.0>,#Ref<0.0.3.2620>}
+
+3> pid(0,1564,0) ! helo.
+$gen_cast: {helo,[],{}}
+helo
+
+4> exit(pid(0,1564,0),normal).
+EXIT: {normal,<0.1562.0>,{}}
+true
+
+</pre></figure>
+
+    </section>
+</main>
+
+<footer>
+    Made with <span class="heart">❤</span> for N2O
+</footer>
+
+</body>
+</html>

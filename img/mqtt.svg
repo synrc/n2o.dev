@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1500px" height="750px" viewBox="0 0 1500 750" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.1 (12002) - http://www.bohemiancoding.com/sketch -->
+    <title>4. N2O over MQTT</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="4.-N2O-over-MQTT" sketch:type="MSLayerGroup">
+            <rect id="Rectangle-1" stroke="#979797" sketch:type="MSShapeGroup" x="0" y="0" width="1500" height="750"></rect>
+            <text id="N2O-Protocols" sketch:type="MSTextLayer" font-family="Geometria" font-size="48" font-weight="260" fill="#000000">
+                <tspan x="75" y="123">N2O Protocols</tspan>
+            </text>
+            <g id="Rectangle-4-Copy-29-+-N2O-Copy" transform="translate(412.000000, 197.000000)">
+                <rect id="Rectangle-4-Copy-29" stroke="#979797" fill="#F8E81C" sketch:type="MSShapeGroup" transform="translate(72.823661, 30.500000) scale(-1, -1) translate(-72.823661, -30.500000) " x="0.647321429" y="0" width="144.352679" height="61"></rect>
+                <text id="WS" sketch:type="MSTextLayer" font-family="Geometria" font-size="36" font-weight="260" fill="#000000">
+                    <tspan x="41.8303571" y="42">WS</tspan>
+                </text>
+            </g>
+            <g id="Rectangle-4-Copy-29-+-N2O-Copy-Copy-Copy" transform="translate(75.000000, 197.000000)">
+                <rect id="Rectangle-4-Copy-29" stroke="#979797" fill="#F8E81C" sketch:type="MSShapeGroup" transform="translate(72.823661, 30.500000) scale(-1, -1) translate(-72.823661, -30.500000) " x="0.647321429" y="0" width="144.352679" height="61"></rect>
+                <text id="UDP" sketch:type="MSTextLayer" font-family="Geometria" font-size="36" font-weight="260" fill="#000000">
+                    <tspan x="35.8928571" y="42">UDP</tspan>
+                </text>
+            </g>
+            <g id="Rectangle-4-Copy-29-+-N2O-Copy-Copy" transform="translate(244.000000, 197.000000)">
+                <rect id="Rectangle-4-Copy-29" stroke="#979797" fill="#F8E81C" sketch:type="MSShapeGroup" transform="translate(72.500000, 30.500000) scale(-1, -1) translate(-72.500000, -30.500000) " x="0.64159292" y="0" width="143.716814" height="61"></rect>
+                <text id="TCP" sketch:type="MSTextLayer" font-family="Geometria" font-size="36" font-weight="260" fill="#000000">
+                    <tspan x="37.5132743" y="41">TCP</tspan>
+                </text>
+            </g>
+            <g id="Group" transform="translate(75.000000, 279.000000)">
+                <g id="Rectangle-4-Copy-44-+-MQTT">
+                    <rect id="Rectangle-4-Copy-44" stroke="#979797" fill-opacity="0.5" fill="#F8E81C" sketch:type="MSShapeGroup" transform="translate(238.000000, 199.500000) scale(-1, -1) translate(-238.000000, -199.500000) " x="0" y="0" width="476" height="399"></rect>
+                    <text id="MQTT" sketch:type="MSTextLayer" font-family="Geometria" font-size="48" font-weight="260" fill="#000000">
+                        <tspan x="284" y="76.5754476">MQTT</tspan>
+                    </text>
+                </g>
+                <g id="Rectangle-4-Copy-29-+-N2O" transform="translate(36.000000, 34.000000)">
+                    <rect id="Rectangle-4-Copy-29" stroke="#979797" fill="#F8E81C" sketch:type="MSShapeGroup" transform="translate(72.750000, 30.500000) scale(-1, -1) translate(-72.750000, -30.500000) " x="0.5" y="0" width="144.5" height="61"></rect>
+                    <text id="N2O" sketch:type="MSTextLayer" font-family="Geometria" font-size="36" font-weight="260" fill="#000000">
+                        <tspan x="33" y="40">N2O</tspan>
+                    </text>
+                </g>
+                <g id="Rectangle-4-Copy-30-+-KVS" transform="translate(35.500000, 125.000000)">
+                    <rect id="Rectangle-4-Copy-30" stroke="#979797" fill="#F8E81C" sketch:type="MSShapeGroup" transform="translate(73.000000, 30.750000) scale(-1, -1) translate(-73.000000, -30.750000) " x="0.5" y="0.25" width="145" height="61"></rect>
+                    <text id="KVS" sketch:type="MSTextLayer" font-family="Geometria" font-size="36" font-weight="260" fill="#000000">
+                        <tspan x="33" y="40">KVS</tspan>
+                    </text>
+                </g>
+                <g id="Rectangle-4-Copy-30-+-KVS-Copy" transform="translate(205.500000, 125.000000)">
+                    <rect id="Rectangle-4-Copy-30" stroke="#979797" fill="#F8E81C" sketch:type="MSShapeGroup" transform="translate(73.000000, 30.750000) scale(-1, -1) translate(-73.000000, -30.750000) " x="0.5" y="0.25" width="145" height="61"></rect>
+                    <text id="BPE" sketch:type="MSTextLayer" font-family="Geometria" font-size="36" font-weight="260" fill="#000000">
+                        <tspan x="33" y="40">BPE</tspan>
+                    </text>
+                </g>
+                <g id="Rectangle-4-Copy-30-+-KVS-Copy-Copy" transform="translate(289.500000, 214.000000)">
+                    <rect id="Rectangle-4-Copy-30" stroke="#979797" fill="#F8E81C" sketch:type="MSShapeGroup" transform="translate(73.000000, 30.750000) scale(-1, -1) translate(-73.000000, -30.750000) " x="0.5" y="0.25" width="145" height="61"></rect>
+                    <text id="MUC" sketch:type="MSTextLayer" font-family="Geometria" font-size="36" font-weight="260" fill="#000000">
+                        <tspan x="30" y="43">MUC</tspan>
+                    </text>
+                </g>
+                <g id="Rectangle-4-Copy-31-+-ROSTER" transform="translate(35.500000, 213.514773)">
+                    <rect id="Rectangle-4-Copy-31" stroke="#979797" fill="#F8E81C" sketch:type="MSShapeGroup" transform="translate(116.750000, 30.985227) scale(-1, -1) translate(-116.750000, -30.985227) " x="0.530681818" y="0" width="232.438636" height="61.9704545"></rect>
+                    <text id="ROSTER" sketch:type="MSTextLayer" font-family="Geometria" font-size="36.5727273" font-weight="260" fill="#000000">
+                        <tspan x="35.025" y="43.6352273">ROSTER</tspan>
+                    </text>
+                </g>
+                <g id="Rectangle-4-Copy-31-+-ROSTER-Copy" transform="translate(35.500000, 302.000000)">
+                    <rect id="Rectangle-4-Copy-31" stroke="#979797" fill="#F8E81C" sketch:type="MSShapeGroup" transform="translate(90.500000, 30.500000) scale(-1, -1) translate(-90.500000, -30.500000) " x="0.583870968" y="0" width="179.832258" height="61"></rect>
+                    <text id="NITRO" sketch:type="MSTextLayer" font-family="Geometria" font-size="36" font-weight="260" fill="#000000">
+                        <tspan x="36.8580645" y="42.5">NITRO</tspan>
+                    </text>
+                </g>
+                <g id="Rectangle-4-Copy-31-+-ROSTER-Copy-Copy" transform="translate(239.500000, 302.000000)">
+                    <rect id="Rectangle-4-Copy-31" stroke="#979797" fill="#F8E81C" sketch:type="MSShapeGroup" transform="translate(100.141791, 30.500000) scale(-1, -1) translate(-100.141791, -30.500000) " x="0" y="0" width="200.283582" height="61"></rect>
+                    <text id="XSFER" sketch:type="MSTextLayer" font-family="Geometria" font-size="36" font-weight="260" fill="#000000">
+                        <tspan x="30.5820896" y="42.5">XSFER</tspan>
+                    </text>
+                </g>
+            </g>
+            <g id="protocols" transform="translate(686.000000, 78.000000)">
+                <g id="Page-1">
+                    <g id="Group">
+                        <g id="Rectangle-1-+-heart" transform="translate(37.292256, 0.000000)">
+                            <rect id="Rectangle-1" stroke="#979797" stroke-width="2" fill="#F8E81C" sketch:type="MSShapeGroup" x="0" y="0" width="117.06936" height="49.5393169"></rect>
+                            <g id="heart" transform="translate(15.105724, 7.548848)" font-size="26.9869737" font-family="Geometria" fill="#043D3D" sketch:type="MSTextLayer" font-weight="260">
+                                <text>
+                                    <tspan x="0" y="26" fill="#000000">heart</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <text id="ping,-n2o,-io" fill="#043D3D" sketch:type="MSTextLayer" font-family="Geometria" font-size="26.9869737" font-weight="260">
+                            <tspan x="182.684848" y="33.5488483" fill="#000000">ping, n2o, io</tspan>
+                        </text>
+                        <text id="client,-server" fill="#043D3D" sketch:type="MSTextLayer" font-family="Geometria" font-size="26.9869737" font-weight="260">
+                            <tspan x="182.684848" y="154.533143" fill="#000000">client, server</tspan>
+                        </text>
+                        <text id="bin,-binary" fill="#043D3D" sketch:type="MSTextLayer" font-family="Geometria" font-size="26.9869737" font-weight="260">
+                            <tspan x="182.684848" y="214.923929" fill="#000000">bin, binary</tspan>
+                        </text>
+                        <text id="pickle,-direct,-ev" fill="#043D3D" sketch:type="MSTextLayer" font-family="Geometria" font-size="26.9869737" font-weight="260">
+                            <tspan x="182.684848" y="275.314716" fill="#000000">pickle, direct, ev</tspan>
+                        </text>
+                        <text id="run,-complete,-amend,-until,-start" fill="#043D3D" sketch:type="MSTextLayer" font-family="Geometria" font-size="26.9869737" font-weight="260">
+                            <tspan x="182.684848" y="335.705502" fill="#000000">run, complete, amend, until, start</tspan>
+                        </text>
+                        <text id="pub,-sub,-unsub,-msg,-resume,-suspend" fill="#043D3D" sketch:type="MSTextLayer" font-family="Geometria" font-size="26.9869737" font-weight="260">
+                            <tspan x="184.10101" y="94.0468294" fill="#000000">pub, sub, unsub, msg, resume, suspend</tspan>
+                        </text>
+                        <text id="join,-room,-public,-leave" fill="#043D3D" sketch:type="MSTextLayer" font-family="Geometria" font-size="26.9869737" font-weight="260">
+                            <tspan x="184.10101" y="456.284353" fill="#000000">join, room, public, leave</tspan>
+                        </text>
+                        <text id="get,-post,-exists,-put,-options,-delete" fill="#043D3D" sketch:type="MSTextLayer" font-family="Geometria" font-size="26.9869737" font-weight="260">
+                            <tspan x="184.10101" y="518.090548" fill="#000000">get, post, exists, put, options, delete</tspan>
+                        </text>
+                        <text id="friend,-confirm,-private,-typing,-presence" fill="#043D3D" sketch:type="MSTextLayer" font-family="Geometria" font-size="26.9869737" font-weight="260">
+                            <tspan x="184.10101" y="395.893566" fill="#000000">friend, confirm, private, typing, presence</tspan>
+                        </text>
+                        <g id="Rectangle-2-+-spa" transform="translate(67.031650, 120.512492)">
+                            <rect id="Rectangle-2" stroke="#979797" stroke-width="2" fill="#F9F9F9" sketch:type="MSShapeGroup" x="0" y="0" width="87.3299663" height="49.5393169"></rect>
+                            <g id="spa" transform="translate(15.105724, 6.605242)" font-size="26.9869737" font-family="Geometria" fill="#043D3D" sketch:type="MSTextLayer" font-weight="260">
+                                <text>
+                                    <tspan x="0" y="26" fill="#000000">spa</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="Rectangle-3-+-bin" transform="translate(74.584512, 180.431475)">
+                            <rect id="Rectangle-3" stroke="#979797" stroke-width="2" fill="#F9F9F9" sketch:type="MSShapeGroup" x="0" y="0" width="79.7771044" height="49.5393169"></rect>
+                            <g id="bin" transform="translate(15.577778, 7.548848)" font-size="26.9869737" font-family="Geometria" fill="#043D3D" sketch:type="MSTextLayer" font-weight="260">
+                                <text>
+                                    <tspan x="0" y="26" fill="#000000">bin</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="Rectangle-4-+-nitrogen" transform="translate(0.000000, 240.350458)">
+                            <rect id="Rectangle-4" stroke="#979797" stroke-width="2" fill="#F9F9F9" sketch:type="MSShapeGroup" x="0" y="0" width="153.889562" height="49.5393169"></rect>
+                            <g id="nitrogen" transform="translate(20.024916, 6.605242)" font-size="26.9869737" font-family="Geometria" fill="#043D3D" sketch:type="MSTextLayer" font-weight="260">
+                                <text>
+                                    <tspan x="0" y="26" fill="#000000">nitrogen</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="Rectangle-5-+-bpe" transform="translate(67.031650, 300.269442)">
+                            <rect id="Rectangle-5" stroke="#979797" stroke-width="2" fill="#F9F9F9" sketch:type="MSShapeGroup" x="0" y="0" width="85.9138047" height="49.5393169"></rect>
+                            <g id="bpe" transform="translate(13.217508, 7.548848)" font-size="26.9869737" font-family="Geometria" fill="#043D3D" sketch:type="MSTextLayer" font-weight="260">
+                                <text>
+                                    <tspan x="0" y="26" fill="#000000">bpe</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="Rectangle-6-+-mq" transform="translate(74.584512, 58.610769)">
+                            <rect id="Rectangle-6" stroke="#979797" stroke-width="2" fill="#F8E81C" sketch:type="MSShapeGroup" x="4.17248551e-13" y="-1.04374006e-13" width="78.3609428" height="49.5393169"></rect>
+                            <g id="mq" transform="translate(16.521886, 6.133439)" font-size="26.9869737" font-family="Geometria" fill="#043D3D" sketch:type="MSTextLayer" font-weight="260">
+                                <text>
+                                    <tspan x="0" y="26" fill="#000000">mq</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="Rectangle-8-+-muc" transform="translate(52.397980, 419.904686)">
+                            <rect id="Rectangle-8" stroke="#979797" stroke-width="2" fill="#F9F9F9" sketch:type="MSShapeGroup" x="0" y="0" width="100.547475" height="49.5393169"></rect>
+                            <g id="muc" transform="translate(21.714478, 8.492454)" font-size="26.9869737" font-family="Geometria" fill="#043D3D" sketch:type="MSTextLayer" font-weight="260">
+                                <text>
+                                    <tspan x="0" y="26" fill="#000000">muc</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <text id="mark,-query" fill="#043D3D" sketch:type="MSTextLayer" font-family="Geometria" font-size="26.9869737" font-weight="260">
+                            <tspan x="184.10101" y="577.537728" fill="#000000">mark, query</tspan>
+                        </text>
+                        <g id="Rectangle-8-+-muc-2" transform="translate(22.186532, 544.460683)">
+                            <rect id="Rectangle-8" stroke="#979797" stroke-width="2" fill="#F9F9F9" sketch:type="MSShapeGroup" x="0" y="0" width="130.758923" height="49.5393169"></rect>
+                            <g id="search" transform="translate(14.633670, 9.907863)" font-size="26.9869737" font-family="Geometria" fill="#043D3D" sketch:type="MSTextLayer" font-weight="260">
+                                <text>
+                                    <tspan x="0" y="26" fill="#000000">search</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="Rectangle-9-+-rest" transform="translate(53.342088, 482.182685)">
+                            <rect id="Rectangle-9" stroke="#979797" stroke-width="2" fill="#F9F9F9" sketch:type="MSShapeGroup" x="0" y="0" width="100.547475" height="49.5393169"></rect>
+                            <g id="rest" transform="translate(30.889871, 6.605242)" font-size="26.9869737" font-family="Geometria" fill="#043D3D" sketch:type="MSTextLayer" font-weight="260">
+                                <text id="kvs">
+                                    <tspan x="0" y="26" fill="#000000">kvs</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="Rectangle-7-+-roster" transform="translate(37.292256, 359.985703)">
+                            <rect id="Rectangle-7" stroke="#979797" stroke-width="2" fill="#F9F9F9" sketch:type="MSShapeGroup" x="0" y="0" width="116.125253" height="49.5393169"></rect>
+                            <g id="roster" transform="translate(13.217508, 6.605242)" font-size="26.9869737" font-family="Geometria" fill="#043D3D" sketch:type="MSTextLayer" font-weight="260">
+                                <text>
+                                    <tspan x="0" y="26" fill="#000000">roster</tspan>
+                                </text>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

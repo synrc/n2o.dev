@@ -1,0 +1,175 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="Maxim Sokhatsky" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:900" rel="stylesheet">
+    <title>N2O エコ</title>
+    <link rel="stylesheet" href="https://synrc.space/synrc.css?v=5" />
+</head>
+
+<body>
+
+<nav>
+    <a href='https://synrc.space/'>SYNRC</a>
+    <a href='https://o1.network'>O1</a>
+    <a href='https://o3.click'>O3</a>
+    <a href='https://o7.network'>O7</a>
+</nav>
+
+<header>
+    <h1>N2O エコ</h1>
+</header>
+
+<aside>
+    <article>
+        <section>
+            <h3>アブストラクト </h3>
+            <div>
+                 N2O エコ 最小限のエンタープライズプロトコルスタッ
+                 （Webフレームワーク、ビジネスプロセス管理、スケー
+                 ラブルなデータストレージ）でWebSocketとMQTTの接
+                 続性を提供します。 例として、3つのN2O実装が与え
+                 られている（SML、Haskell、Erlang）。
+                 <br><br>
+            </div>
+            <div class=logo style="padding:20px;margin-bottom:30px;"><center>
+                <img src="../SML-Mono.svg?v=3" style="width:130px;margin-right:60px;">
+                <img src="../Haskell-Mono.svg?v=3" style="width:100px;margin-right:60px;">
+                <img src="../Erlang-Mono.svg?v=3" style="width:120px;">
+            </center></div>
+            <div>
+                2013&mdash;2018 &copy; <a href="https://5ht.co/license.htm">仏教のライセンス</a>
+            </div>
+        </section>
+        <section>
+            <h3>著者へのアドバイス</h3>
+            <div>各言語、N2Oは、N2Oを最も自然にコンパクトに埋め込む
+                 ように実装されています。 言語の基本ライブラリの間の
+                 いくつかのレイヤーが必要な場合は、それを提供するこ
+                 とができますが、できるだけゼロに減らす必要がありま
+                 す。 場合によっては、ベースライブラリの一部をより良
+                 い置き換えに置き換えることができます。 N2Oは、JavaScript、
+                 Swift、Kotlinのクライアント言語の異なるセットで
+                 通常実装されるクライアントコンパニオンライブラリ
+                 を提供する必要があります。 すべてのことを正しく行
+                 った場合、N2Oはどの言語でも500 LOCを超えることは
+                 できません。 正しい方法は、同じコードベースを使用
+                 してWebSocketと静的HTTPサーバーを実装することです。<br><br>
+            </div>
+        </section>
+    </article>
+</aside>
+<main>
+    <section>
+        <p>Tier 1 — 積極的に宣伝された言語（SML、Haskell、Erlang）：</p>
+    </section>
+    <section>
+        <a name=intro></a>
+        <h3><a href="https://o1.network">O1 エコ</a></h3>
+        <p> O1 エコは、標準ML N2O実装です。 標準MLは、正式に定義された操
+            作セマンティクスを持つ認証言語です。 ここでは、INetSock.TCPが
+            生成したアクセプタを持つ単純なCMLループです。 TCPサーバー内の
+            N2Oプロトコルを処理するのに十分シンプルです。 O1 エコは、基本
+            WebSocket接続と基本アプリケーションサーバー（N2O）を提供します。
+        </p>
+        <ul>
+            <li><a href="https://n2o.o1.network">o1/n2o</a> &mdash; N2O 0.11 ML</li>
+        </ul>
+    </section>
+    <section>
+        <h3><a href="https://o3.click">O3 エコ</a></h3>
+         <p>O3 エコは、Haskellプログラミング言語用のN2Oプロトコルを導入
+            しています。 WebSocketと静的HTTPサーバー（N2O）によって駆動
+            されるHTML5サンプル（SAMPLE）とともに、HaskellのNitro Web
+            Framework（NITRO）を完全に実装しています。
+         </p>
+        <ul>
+            <li><a href="https://n2o.o3.click">o3/n2o</a> &mdash; N2O 0.11 HS</li>
+            <li><a href="https://nitro.o3.click">o3/nitro</a> &mdash; NITRO 0.11</li>
+            <li><a href="https://sample.o3.click">o3/sample</a> &mdash; SAMPLE 0.11</li>
+        </ul>
+    </section>
+    <section>
+        <a name=intro></a>
+        <h3><a href="https://o7.network">O7 エコ</a></h3>
+        <p> O7 エコは、銀行、メッセージング、プラットフォーム
+            開発のためのエコシステム、フルスタック仕様、実装
+            を定義します。 アプリケーション、プロトコル、プロ
+            セス、サービス、およびストレージを拡張する方法
+            を指定します。 高速、低遅延MQTT、TCP、QUIC、UDP、
+            およびWebSocketアプリケーションに対応このバージ
+            ョンのN2O エコは、ビジネスプロセス管理（BPE）、
+            Nitro Webフレームワーク（NITRO）、WebSocketおよ
+            びMQTT接続性（N2O）、REST フレームワーク、高速で
+            シンプルなパッケージマネージャ（MAD）、API開発用
+            のタイプ駆動型BERTパーサジェネレータ、スケー
+            ラブルデータストレージ（KVX）などが含まれます。
+        </p>
+            <ul>
+                <li><a href="https://ws.n2o.space">o7/n2o</a> &mdash; N2O 5.11.1 MQTT WS</li>
+                <li><a href="https://kvx.n2o.space">o7/kvx</a> &mdash; KVX 5.11</li>
+                <li><a href="https://mad.n2o.space">o7/mad</a> &mdash; MAD 4.11</li>
+                <li><a href="https://bpe.n2o.space">o7/bpe</a> &mdash; BPE 3.11</li>
+                <li><a href="https://synrc.github.io/nitro">o7/nitro</a> &mdash; NITRO 3.10</li>
+                <li><a href="https://synrc.github.io/rest">o7/rest</a> &mdash; REST 5.10</li>
+                <li><a href="https://synrc.github.io/active">o7/active</a> &mdash; ACTIVE 4.11</li>
+                <li><a href="https://synrc.github.io/fs">o7/fs</a> &mdash; FS 4.10</li>
+                <li><a href="https://synrc.github.io/sh">o7/sh</a> &mdash; SH 2.11</li>
+                <li><a href="https://synrc.github.io/bert">o7/bert</a> &mdash; BERT 1.11.1</li>
+                <li><a href="https://review.n2o.space">o7/review</a> &mdash; REVIEW 1.11 TT</li>
+                <li><a href="https://sample.n2o.space">o7/sample</a> &mdash; REVIEW 1.11 WS</li>
+                <li><a href="https://mqtt.n2o.space">o7/mqtt</a> &mdash; N2O 5.11.1 TT</li>
+            </ul>
+            <br>
+            <p></p>
+    </section>
+    <section>
+        <p>Tier 0 — 実験的実装（Coq、Rust、Lean）：</p>
+    </section>
+    <section>
+        <a name=intro></a>
+        <h3><a href="https://o1.network">O2 ECO</a></h3>
+        <p> O2 ECOはCoq N2Oの実装です。 Coq実装のユニークな特徴は、
+            O2 ECOがMLTT言語で実装されていることです。
+        </p>
+        <ul>
+            <li><a href="https://github.com/o29/n2o">o29/n2o</a> &mdash; N2O GL</li>
+        </ul>
+    </section>
+    <section>
+        <a name=intro></a>
+        <h3><a href="https://o1.network">O4 ECO</a></h3>
+        <p> O4 ECOは、錆N2Oの実装です。 実行時およびプログラミング言語で
+            のフルスタックが提示されています。優先度の高いタスクとスケ
+            ーラブルなタイマーを使用して低遅延のノンブロッキングゼロコピ
+            ーCASマルチキューを自動バランシングします。 これは、O言語
+            のインタプリタタスク間で5〜20nsのレイテンシというユニ
+            ークな機能を備えています。
+        </p>
+        <ul>
+            <li><a href="https://o4.github.io/platform.rs/">o4/kernel</a> &mdash; KERNEL</li>
+        </ul>
+    </section>
+    <section>
+        <a name=intro></a>
+        <h3><a href="https://o1.network">O5 ECO</a></h3>
+        <p> O5 ECOは将来のリーンN2Oの実装です。
+        </p>
+        <ul>
+            <li><a href="https://github.com/o53">o53/n2o</a> &mdash; N2O LE</li>
+        </ul>
+        <br><br>
+    </section>
+
+</main>
+
+<footer>
+    N2Oへの<span class="heart"> ❤ </span>をもって作られた
+</footer>
+
+</body>
+</html>

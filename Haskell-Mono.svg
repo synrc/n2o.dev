@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="170px" height="120px" viewBox="0 0 170 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>Haskell</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0 120 170 120 170 0 0 0"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Haskell">
+            <g id="Clipped">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Shape"></g>
+                <g id="Group" mask="url(#mask-2)" fill="#ECF8FE">
+                    <g transform="translate(0.000000, -61.000000)" id="Shape">
+                        <polygon points="40 121 0 61 30 61 70 121 30 181 0 181"></polygon>
+                        <polygon points="80 121 40 61 70 61 150 181 120 181 95 143.5 70 181 40 181"></polygon>
+                        <polygon points="123.333333 126 170 126 170 146 136.666667 146"></polygon>
+                        <polygon points="103.333333 96 170 96 170 116 116.666667 116"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

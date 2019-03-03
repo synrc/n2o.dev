@@ -1,0 +1,288 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="Maxim Sokhatsky" />
+    <title>MACH</title>
+    <link rel="stylesheet" href="https://synrc.space/synrc.css" />
+</head>
+
+<body>
+
+<header>
+    <a href="../index.html"><img src="../img/Synrc Neo.svg"></a>
+    <h1>MACH</h1>
+</header>
+
+<aside>
+    <article>
+        <section>
+            <h3>Intro</h3>
+            <div>
+                MACH or machine defines a way to scale external services
+                walking into declarative and verifiable manner.
+            </div>
+            <br>
+            <div>
+                16 OCT 2015 &copy; <a href="http://5ht.co/license.htm">ISC LICENSE</a>
+            </div>
+        </section>
+    </article>
+</aside>
+<main>
+    <section>
+        <h3>Walking Machine</h3>
+        <p>У нас в банке нужно ходить по сервисам. Некоторые сервисы вполне шаблонны:
+           сначала нужно сделать первый запрос куда-то, потом в другое место метнуться
+           прочитать статус; в некоторых случает достаточно 1 хопа, а в некоторых
+           случаях даже могут ветвления быть и цепочка из четырех вызовов. Вообщем
+           хоть бери и графами все это описывай и BPE для этого используй. Но тащить
+           BPE для того, чтобы стуктурировать пайплайн внешних сервисов не очень,
+           BPE больше для структурирования внутренней бизнес локиги, к тому же
+           BPE предлагает контекст и историю. А для обхода всех эндпойнтов нам не
+           нужен прямо бизнес контекст, нам хочется чтобы все без контекста
+           было только с аккумулятором ответов. К тому же внутри BPE только Эрланг
+           термами мы общаемся а тут эта муть с богомерзкими JSON и XML, вообщем
+           надо что-то более легковесное и заточенное на форматтеры. N2O умеет форматтеры,
+           но N2O еще тяжелее BPE, поэтому пришлось писать суперлегковеский Сервис Уолкер.</p>
+
+<div><ul>
+<li> &mdash; Полная абстракция от функций формматирования</li>
+<li> &mdash; Желание полной декларативности </li>
+<li> &mdash; Простая но удобная система моков и их тестов </li>
+<li> &mdash; По коду определить количество необходимых моков </li>
+<li> &mdash; Построение кода по примерам сообщений </li>
+<li> &mdash; Исключить падения из протокола через try из-за аккумулятивности </li>
+<li> &mdash; Возвращать не только статус но и все шаги </li>
+<li> &mdash; Транзакционность и Персистентность контекста опроса </li>
+<li> &mdash; Настройка retry запросов, типов запросов и HTTP методов </li>
+<li> &mdash; Двухуровневая модульность по портам подключения и точкам подключения </li>
+<li> &mdash; Программирование последовательностей запросов в пайпах для 
+построения не только линейных, но и ветвящихся алгоритмов 
+обхода сетевых сервисов. </li>
+</ul></div>
+
+<p>За счет того, что каждый вызов необходимо разорвать сразу перед
+вызовом нижележащего HTTP клиента, получилась система из трех
+типов и трех функций:</P>
+
+<div><ul>
+<li> &mdash; Форматтер (распаковка)</li>
+<li> &mdash; Протокол (вызов)</li>
+<li> &mdash; Эрланг Терм (запаковка)</li>
+</ul></div>
+
+<p>Запаковка и распаковка это типа return или pure, штуки которые
+   втягивают какой-то объект в обертку какого-то типа. Например у
+   нас Data а мы над Data конструируем такой тип:</p>
+
+<figure><pre>Pipe = {ok,Data,Acc}
+     | {warning,Data,Acc}
+     | {error,Data,Acc}
+     | {refusal,Data,Acc}
+     | {repeat,Acc}</pre></figure>
+
+<p>Вот этот тип и есть тот тип-протокол, благодаря которому наши функции Упаковки
+   и Распаковки будут звучать. Т.е. имея этот тип мы делаем наши функции упаковки
+   и распаковки композабельными. Теперь как мы будем выстраивать в цепочку нашу монадку.
+   Для начала опишем интерфейс функций форматтирования:
+</P>
+
+<figure><pre>
+req1([Id],Acc) ->
+    Req = jsone:encode({[{id,Id}]}),
+    {ok, Req, [{sid,Id}|Acc]}.
+
+ans1(AnswerJSON,Acc) ->
+    {ok,{Resp},_} = jsone:try_decode(unipre:characters_to_binary(AnswerJSON)),
+    {Data} = proplists:get_value(<<"data">>,Resp),
+    {ok, #account{ iban     = proplists:get_value(<<"iban">>,Data),
+                   phone    = proplists:get_value(<<"phone">>,Data),
+                   surnames = proplists:get_value(<<"surnames">>,Data),
+                   names    = proplists:get_value(<<"names">>,Data)}, Acc}.
+</pre></figure>
+
+<p>Тут вы не смотрите, что JSON не автоиматически преобразует типы по пайплайну
+   а нужно вручную в поля заглядывать, это сделано для того чтобы программисты
+   которые на этом будут писать, чувствовали немного анархии, впрочем мы им не
+   запрещаем самим конвертировать JSON в Proplists с помощью нашего synrc/rest.
+   Как видите Ans берет Erlang терм и пакует его в наш протокольный тип Pipe,
+   который дальше уже пойдет на вызов сервиса, а после вызова нам нужно будет
+   распарсать ответ от сервиса и опять запаковать его в наш протокольный тип,
+   которые вместе с функциями упаковки и распаковки образуем монаду.
+   Сама программа обхода выглядит следующим образом:</p>
+
+<figure><pre>
+withdraw() -> {{?MODULE,mach:host(?MODULE)},
+              [{json,post,withdraw,{req7,ans7}, 2, "/withdraw"},
+               {json,get, withdraw,{req8,ans8}, 3, "/withdrawCheck"},
+               {xml,post, withdraw,{req9,ans9}, 3, "/notify"}]}.
+</pre></figure>
+
+<p>Тут это просто развернутая запись на Erlang композиции функций
+   форматтирования и вызовов внешних сервисов:</p>
+
+<figure><pre>req7 . call . ans7 . call . req8 . call . ans8 . req9 . call . ans9</pre></figure>
+
+<p>Котрая происходит при вызове сервиса. Первым параметром мы ложим
+   программу обходов сервиса, т.е. композицию функции. Вторым параметром
+   мы ложим Erlang объект который хотим залифтить монадично по цепочке,
+   дальше таймаут дефалный и начальное положение акумулятора. Покажем как
+   это работает на примере:</p>
+
+<figure><pre>
+ > mach:services(withdraw(),[#customer{}], 1000, []).
+
+    {ok,20,
+     [{ans2,20},
+      {call,<<"{\"Response\":{\"bank\":\"mach\",\"state\":\"r\"...>>},
+      {req2,<<"{\"Request\":{\"bank\":\"mach\"}}">>},
+      {ans1,[undefined,undefined,1,<<"00000001">>,site]},
+      {call,<<"{\"Response\":{\"bank\":\"mach\",\"state\":\"r\",\"list\":{\"cont"...>>},
+      {req1,<<"{\"Request\":{\"ref\":\"2015100803502313492\",\"channel\":\"S"...>>},
+      {req,<<"{\"Request\":{\"ref\":\"2015100803502313492\",\"channel"...>>},
+      {id,<<"00000001">>},
+      {sid,1},
+      {channel,site}]}
+</pre></figure>
+
+<p>Не забываем про декларативное описание все-го что нам нужно для доступа к сервису,
+   половина уже описана в самих шагах как то METHOD, MIME, количество Retries и точка
+   монтирования порта. Сам порт залается функуией host/1, а кастомные заголовки для
+   сервиса header/1 в которых вы можете свободно обращаться к акумулятору за полями
+   которые вы можете положить в акумулятор на любом шаге выполнения этой композиции.</p>
+
+<figure><pre>
+headers(Acc) -> [{proplists:get_value(method,Acc), "HTTP/1.1"},
+                 {"content-type",   mach:type(proplists:get_value(type,Acc))},
+                 {"accept",         mach:type(proplists:get_value(type,Acc))},
+                 {"connection",     "keep-alive"},
+                 {"content-Length", size(proplists:get_value(req,Acc))},
+                 {"sid",          proplists:get_value(sid,Acc)}].
+
+host(_)    -> "http://bank.com:8888/";
+</pre></figure>
+
+<p>Вообщем в модуле больше ничего не нужно, кроме имплементации обязательной
+   функции test/0 и вместе с ней моками которые имитируют ответы от каждого
+   вебсервиса, естественно моки должны быть в тех же модулях что и функции
+   упаковки и распаковки.</p>
+
+<figure><pre>
+test() ->
+  lists:flatten([[ begin erlang:put(mock,Mock),
+      mach:service(?MODULE:Fun(),Args,1000,Acc) end || Mock <- Mocks ]
+          || {Fun,Mocks,Args,Acc} <-
+          [{withdraw, [7,8], [#account{}],  []},
+           {odb,      [5],   [#customer{}], []},
+           {debt,   [1,2,3], [#customer{}}, []] ]).
+</pre></figure>
+
+<p>тут мы цифрами указываем моки которые тестируют разные входы пайпов.
+   Каждая система шагов это как граф по сути, у которого может быть много
+   точек входа, тут мы в фукнции тест программируем какие моки для каких
+   точек входы выбирать. А вот и сами моки:</p>
+
+<figure><pre>mock(9,[Method,Address,Headers,Type,Data]) ->
+    Request = [{i, [{'ibank',   [#xmlText{value="10"}] },
+                    {'account', [#xmlText{value="20"}]},
+                    {'names',   [#xmlText{value="mach"}]},
+                    {'phone',   [#xmlText{value="r"}]}]} ],
+    {ok,{{[],200,"OK"},[], mach:xml(Request) }}.</pre></figure>
+
+<p>В сигнатура функции mock/2 второй параметр это список всего
+   что нужно передать в httpc клиент. А вот собственно три функции
+   Упаковки, Вызова и рапаковки:</p>
+
+<figure><pre>
+pack(_,{{P,RA},[{Type,Method,M,{F,G},Retry,Addr}|T]}=Stack,A,Time,Acc) ->
+       try case M:F(A,Acc) of
+               {ok,Ret,NewAcc} -> call(Retry,Stack,Ret,Time,[{F,A}|NewAcc]);
+       {warning,Reason,NewAcc} -> {warning,Reason,NewAcc};
+         {error,Reason,NewAcc} -> {error,Reason,NewAcc} end
+       catch E:R -> fatal(E,R) end.
+
+call(Retry,{{_,RA},[{Type,Method,M,{F,G},A,Addr}|T]}=Stack,Req,Time,Acc)
+       when Retry < 1 -> {error,{attempts,A},Acc};
+call(Retry,{{P,RA},[{Type,Method,M,{F,G},_,Addr}|T]}=Stack,Req,Time,Acc) ->
+       try case req_ret(request(P,M,[ Method,
+                                addr(RA,Addr,Acc),
+                                P:headers([{req,Req},
+                                           {method,string:to_upper(
+                                                   wf:to_list(Method))}]),
+                                type(Type),
+                                Req])) of
+                   {ok,Answer} -> unpack(Retry,Stack,Answer,
+                                         Time,[{call,Req}|Acc]);
+                {error,Reason} -> {error,Reason,Acc} end
+    catch E:R -> fatal(E,R) end.
+
+unpack(Retry,{{P,RA},[{_,_,M,{F,G},_,_}|T]}=Stack,A,Time,Acc) ->
+    try case M:G(A,Acc) of
+               {ok,Ret,NewAcc} -> pipe(Retry,{{P,RA},T},Ret,Time,[{G,A}|NewAcc]);
+       {warning,Reason,NewAcc} -> {warning,Reason,NewAcc};
+         {error,Reason,NewAcc} -> {error,Reason,NewAcc};
+       {refusal,Reason,NewAcc} -> {refusal,Reason,NewAcc};
+               {repeat,NewAcc} ->
+                       timer:sleep(Time),
+                       wf:info(?MODULE, "Retry ~p: ~p~n",[Retry, hd(Acc)]),
+                       call(Retry-1,Stack,element(2,hd(Acc)),
+                            Time,tl(Acc)) end
+    catch E:R -> fatal(E,R) end.
+</pre></figure>
+
+<p>Где мокабельный http_request выгляит так:</p>
+
+<figure><pre>
+http_request(P,M,true,Args) -> M:mock(mock(get(mock)),Args);
+http_request(P,M,false,[Method,Address,Headers,Type,Data]) ->
+     httpc:request(Method,{Address, Headers, Type, Data},[],[]).
+</pre></figure>
+
+<p>Получилось жутко удобно. Публикую здесь краткое описание для всех,
+   кто собирается использовать этот продукт. Что касается моков, то
+   их количество зависит от количества case в методах распаковки.
+   Проверить что все моки работают можно скопом:</p>
+
+<figure><pre>
+> mach:test().
+   [{passed,26},{failed,0}].
+</pre></figure>
+
+<p>Вот так может выглядеть например модуль сервиса:</p>
+
+<figure><pre>
+  -module(service_edit).
+  -compile(export_all).
+
+  req(List,Acc)   -> {ok, mach:xml([{}]), Acc}.
+  ans(Binary,Acc) -> {ok, "OK", Acc}.
+
+  mock(1, [Method,Address,Headers,Type,Data]) ->
+         {ok,{{[],200,"OK"},[],jsone:encode({[{<<"Response">>,
+                                            {[{'bank','mach'}]} }]}) }}.
+
+</pre></figure>
+
+<p>Что дал переход на такую систему сервисов? Я смогу за 2 дня переписать
+   15 сервисов убрав все лишнее, что не касается форматтироврания, в результате
+   у меня получился общий код который единобразно работает со всеми сервисами,
+   дает трейсы выполнения любых программ обхода сервисов, и методику закатывания
+   любых сервисов не думая особо над кодом: моки создаются по коду, а код пишется по мокам.</p>
+
+<p>Цена вопроса 100 LOC, в среднем получается 2-5КБ на сервис.
+Аналоги в других мирах: Apache Camel, WCF.
+</p>
+
+    </section>
+</main>
+
+<footer>
+    Made with <span class="heart">❤</span> for N2O
+</footer>
+
+</body>
+</html>

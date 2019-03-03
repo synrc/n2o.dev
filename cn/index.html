@@ -1,0 +1,119 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="Maxim Sokhatsky" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:900" rel="stylesheet">
+    <title>N2O ECO</title>
+    <link rel="stylesheet" href="https://synrc.space/synrc.css?v=5" />
+</head>
+
+<body>
+
+<nav>
+    <a href='https://synrc.space/'>SYNRC</a>
+    <a href='https://o1.network'>O1</a>
+    <a href='https://o3.click'>O3</a>
+    <a href='https://o7.network'>O7</a>
+</nav>
+
+<header>
+    <h1>N2O ECO</h1>
+</header>
+
+<aside>
+    <article>
+        <section>
+            <h3>抽象 </h3>
+            <div>
+                 N2O ECO定义了完整的堆栈规范以及函数式编程语言中的参考实现。 它提供WebSocket和MQTT连接以及简约的企业协议栈：Web框架，业务流程管理，可扩展的数据存储。 作为示例，本文提出了三种N2O实现功能语言：SML，Haskell和Erlang。
+                 <br><br>
+            </div>
+            <div class=logo style="padding:20px;margin-bottom:30px;"><center>
+                <img src="../SML-Mono.svg?v=3" style="width:130px;margin-right:60px;">
+                <img src="../Haskell-Mono.svg?v=3" style="width:100px;margin-right:60px;">
+                <img src="../Erlang-Mono.svg?v=3" style="width:120px;">
+            </center></div>
+        </section>
+        <section>
+            <h3>对作者的建议</h3>
+            <div>每种语言，N2O都在实现，应该最自然地嵌入N2O和紧凑。
+                 如果需要某种语言的基础库之间的某个层，则可以提供它，
+                 但如果可能，应该将其减少到零。 在某些情况下，基础
+                 库的某些部分可以用更好的替换替换。 N2O应该提供通常
+                 以不同的客户端语言集实现的客户端伴侣库：JavaScript，
+                 Swift和Kotlin。 如果你做的一切正确，N2O在任何语言
+                 中都不应超过500 LOC。 正确的方法是使用相同的代码库实现
+                 WebSocket和静态HTTP服务器。
+                    <br><br>
+            </div>
+            <div>
+                2013&mdash;2018 &copy; <a href="https://5ht.co/license.htm">佛教执照</a>
+            </div>
+        </section>
+    </article>
+</aside>
+<main>
+    <section>
+        <a name=intro></a>
+        <h3><a href="https://o1.network">O1 ECO</a></h3>
+        <p> O1 ECO是标准ML N2O实施。 标准ML是一种经过认证的语言，
+            具有正式定义的操作语义。 这是一个简单的CML循环与INetSock.TCP
+            衍生的接受器。 足够简单，可以处理TCP服务器内的N2O协议。
+            O1 ECO提供基本的WebSocket连接和基本的应用服务器（N2O）。
+        </p>
+        <ul>
+            <li><a href="https://n2o.o1.network">o1/n2o</a> &mdash; N2O 0.11 ML</li>
+        </ul>
+    </section>
+    <section>
+        <h3><a href="https://o3.click">O3 ECO</a></h3>
+         <p>O3 ECO为Haskell编程语言引入了N2O协议。 它包括在Haskell中完全实现Nitrogen
+         Web Framework（NITRO）以及由WebSocket和静态HTTP服务器（N2O）驱动的HTML示例（SAMPLE）。
+         </p>
+        <ul>
+            <li><a href="https://n2o.o3.click">o3/n2o</a> &mdash; N2O 0.11 HS</li>
+            <li><a href="https://nitro.o3.click">o3/nitro</a> &mdash; NITRO 0.11</li>
+            <li><a href="https://sample.o3.click">o3/sample</a> &mdash; SAMPLE 0.11</li>
+        </ul>
+    </section>
+    <section>
+        <a name=intro></a>
+        <h3><a href="https://o7.network">O7 ECO</a></h3>
+        <p> O7 ECO定义了生态系统，银行，消息传递和平台开发的全栈规范和实现。
+           它指定了扩展应用程序，协议，进程，服务和存储的方法。 准备好高速，
+           低延迟的MQTT，TCP，QUIC，UDP和WebSocket应用程序，此版本的N2O ECO提供：
+           业务流程管理（BPE），氮网络框架（NITRO），WebSocket和MQTT连接（N2O），
+           REST 框架，快速简单的包管理器（MAD），用于API开发的类型驱动的BERT解析器生成器，
+           可伸缩数据存储（KVX）等等。
+        </p>
+            <ul>
+                <li><a href="https://ws.n2o.space">o7/n2o</a> &mdash; N2O 5.11.1 MQTT WS</li>
+                <li><a href="https://kvx.n2o.space">o7/kvx</a> &mdash; KVX 5.11</li>
+                <li><a href="https://mad.n2o.space">o7/mad</a> &mdash; MAD 4.11</li>
+                <li><a href="https://bpe.n2o.space">o7/bpe</a> &mdash; BPE 3.11</li>
+                <li><a href="https://synrc.github.io/nitro">o7/nitro</a> &mdash; NITRO 3.10</li>
+                <li><a href="https://synrc.github.io/rest">o7/rest</a> &mdash; REST 5.10</li>
+                <li><a href="https://synrc.github.io/active">o7/active</a> &mdash; ACTIVE 4.11</li>
+                <li><a href="https://synrc.github.io/fs">o7/fs</a> &mdash; FS 4.10</li>
+                <li><a href="https://synrc.github.io/sh">o7/sh</a> &mdash; SH 2.11</li>
+                <li><a href="https://synrc.github.io/bert">o7/bert</a> &mdash; BERT 1.11.1</li>
+                <li><a href="https://review.n2o.space">o7/review</a> &mdash; REVIEW 1.11 TT</li>
+                <li><a href="https://sample.n2o.space">o7/sample</a> &mdash; REVIEW 1.11 WS</li>
+                <li><a href="https://mqtt.n2o.space">o7/mqtt</a> &mdash; N2O 5.11.1 TT</li>
+            </ul>
+            <br>
+            <p></p>
+    </section>
+
+</main>
+
+<footer>
+    用<span class="heart"> ❤ </span>制成N2O
+</footer>
+
+</body>
+</html>

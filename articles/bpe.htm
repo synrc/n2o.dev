@@ -1,0 +1,299 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="Maxim Sokhatsky" />
+    <title>BPE</title>
+    <link rel="stylesheet" href="https://synrc.space/synrc.css" />
+</head>
+
+<body>
+
+<header>
+    <a href="../index.html"><img src="../img/Synrc Neo.svg"></a>
+    <h1>BPE</h1>
+</header>
+
+<aside>
+    <article>
+        <section>
+            <h3>Intro</h3>
+            <div>
+                BPE defines a way to scale business processes in your infrastructure.
+                We keep it as simple as possible, yet declarative and verifiable.
+            </div>
+            <br>
+            <div>
+                20 OCT 2014 &copy; <a href="http://5ht.co/license.htm">ISC LICENSE</a>
+            </div>
+        </section>
+    </article>
+</aside>
+<main>
+    <section>
+        <a name=modules><h3>What is BPE?</h3></a>
+
+<p>Что такое BPE? BPE — это все что нужно для управления большими
+проектами и процессами. Это и WWF и BizTalk, это и Activity и Oracle BPM.
+BPE это сабсет BPMN 2.0. Не нужно писать бесконечные XML, все ваши
+процессы будут помещаться на одной странице, а API настолько
+естественен, насколько естественно исчисление процессов. Возможно
+имеет смысл написать бекенды в разные движки, но это ненужно так
+как BPE полностью покрывает всю минимально необходимую спартанскую
+фунциональность workflow движков, FSM-серверов и систем управления
+бизнес-процессами. В контексте BPE процессов могут храниться и
+передаваться любые данные которые хранятся в KVS. Каждый процесс
+имеет свой лог, работает под супервизорами, с полностью персистентным
+состоянием, изолированый для vnode и устойчивый к сбоям, способный к
+миграциям. И все это в 600 строчек кода. Есть прокси для вебсокетов.
+Работает в продакшине на многомиллионной аудитории.</p>
+
+<p>Текущий мой проект напрямую связан с моим магистерским дипломом.
+Сейчас я могу смело заявлять, что работаю по специальности.
+Тема моего магистрантского диплома на Факультете Прикладной
+Математики была "Архитектура и программирование систем
+управления бизнес-процессами". В этой работе был исследован
+комплекс математических, лингвистических (как сейчас модно
+говорить DSL) и других обеспечений, которые лежат в основе таких систем.</p>
+
+<center><p>Picture 1. Business Process</p><p>
+<img src="http://5ht.co/img/BPE.svg" width=600>
+</center></p>
+
+<p>В основе систем управления процессами лежат Сети Петри,
+переходы между состояниями FSM тоже отмечены вершинами.
+Этот математический аппарат очевидно предшествовал модели
+модели акторов. В работе были рассмотрены также другие
+модели организации бизнес процессов: Event-Condition-Action
+модели (или как сейчас модно говорить реакционной модели),
+алгоритм RETE и дедуктивные системы правил.</p>
+
+<p>Уже тогда мной были рассмотрены все существующие на тот
+момент Workflow DSL, такие как XPDL (WfMC), Skelta, OpenWFE,
+Shark, J2, jBPM. Создавая тогда свою систему на .NET 1.0 я
+объединил ECA и Workflow подходы. Но я тогда не знал Erlang.</p>
+
+<p>Сейчас я реализовал аналогичную по мощности систему в 300
+строк Эрланг кода. За основу я взял современный BPMN 2.0
+стандарт, который объединил все существующие системы на
+рынке через 8 лет после моей работы. Поскольку формат этого
+блога и размер этой системы мне позволяют, я приведу
+фактически весь код этого движка на Эрланге.</p>
+
+<h3>Formal Models of Business Processes</h3>
+
+<p>The nice thing about all palette of different implementation of workflow models is
+that all of them reduced to one of two kinds of encoding: one is algebraic one and
+the other is geometric.</p>
+
+<p><b>Petri-nets.</b>The geometric one is Petri nets.
+Carl Petri introduced it in 1962 during discrete
+analysis of asynchronous computer systems. Any its graphical representation could be
+defined with Petri nets formalism. Petri modeling in one of its forms is a good
+complementation to process algebra useful as computational model.</p>
+
+<p><b>Pi-calculus</b>
+The algebraic one is Pi-calculus developed by Robin Milner who gained
+Turing award for 1) Meta Language ML, 2) Calculus for Communication Systems CCS (1980),
+the general theory of concurrency and 3) theoretical base for proof assistants,
+Logic for Computable Functions LCF.
+The model of process calculus is a theoretical
+background of virtual environment of Erlang infrastructure, so BPE
+implementation fully relies on Pi-calculus (1999), the successor of CCS notion.
+Thus providing effective computational model for implementation of workflow
+process management.</p>
+
+<p><b>Finite State Machines</b>
+One of the common known types of encoding process calculus is well developed FSM framework (60-s).
+This language is widely used almost in any programming language presented as core
+feature or as library. The process defines with an extension to Turing machine
+with states, input, outputs and functions.
+</P>
+
+<p><b>SADT</b>
+The next language (framework) that used in (80-s, 90-s) to describe similar
+to process calculus definitions with graphical Petri nets and model definitions
+was SADT introduced by Marca and MacGowan 1988, 1991.</p>
+
+<p><b>Reactive Systems</b>
+One of the wide range of semantics is Reactive Systems based on message passing
+and event routing, but also it could be known as Functional Reactive Programming FRP
+which is rather a set of combinators over streams. Both interpretations are
+used in languages and frameworks, depending on involvement of stream in core
+definition (2010-s).</p>
+
+<p><b>Typing Pi-calculus</b>
+In typed theory Pi-calculus defines also the typing system (could be System F, e.g.) for
+input and outputs of processes or function signatures specified in process definition.
+In BPE the role of types was taken by document types, which is simple Erlang records,
+so in BPE workflow processing is type-safe on compilation stage with respect to document types.</p>
+
+<h3>BPMN 2.0 in Erlang</h3>
+
+<p>Здесь конечно не все, но здесь как раз эти 20% которые покрывают 80% workflows.</p>
+
+<figure>
+    <figcaption>Listing 1. BPMN 2.0 Model</figcaption>
+<pre style="width:700px">
+
+  -record(task,         { name, roles=[], module }).
+  -record(userTask,     { name, roles=[], module }).
+  -record(serviceTask,  { name, roles=[], module }).
+  -record(receiveTask,  { name, roles=[], module }).
+  -record(messageEvent, { name, payload=[], timeout=[], module }).
+  -record(beginEvent ,  { name, module }).
+  -record(endEvent,     { name, module }).
+  -record(sequenceFlow, { source, target }).
+  -record(history,      { ?ITERATOR(feed,true), name, task }).
+  -record(process,      { ?ITERATOR(feed,true), name,
+                          roles=[], tasks=[], events=[],
+                          history=[], flows=[],
+                          rules, docs=[],
+                          task,
+                          beginEvent, endEvent }).
+</pre></figure>
+
+<p>В каждом FSM есть желание триггернуть состояние напрямую.
+В erlang такое тоже есть и у нас тоже есть. Я много написал
+gen_server и gen_fsm. И решил не использовать gen_fsm вообще
+никогда. Это broken by design elrnag otp behaviour.</p>
+
+<figure>
+    <figcaption>Listing 2. Boundary Event</figcaption>
+<pre style="width:700px">
+    process_event(Event, Proc) ->
+    Targets = bpe_task:targets(Event#messageEvent.name,Proc),
+    {Status,{Reason,Target},ProcState} =
+           bpe_event:handle_event(Event,
+              bpe_task:find_flow(Targets),Proc),
+    NewProcState = ProcState#process{task = Target},
+    FlowReply = fix_reply({Status,{Reason,Target},NewProcState}),
+    kvs:put(NewProcState),
+    FlowReply.
+</pre></figure>
+
+<figure>
+    <figcaption>Listing 3. Flow Processing</figcaption>
+<pre style="width:700px">
+    process_flow(Proc) ->
+    Curr = Proc#process.task,
+    Term = [],
+    Task = bpe:task(Curr,Proc),
+    Targets = bpe_task:targets(Curr,Proc),
+    {Status,{Reason,Target},ProcState} 
+      = case {Targets,Proc#process.task} of
+         {[],Term} -> bpe_task:already_finished(Proc);
+         {[],Curr} -> bpe_task:handle_task(Task,Curr,Curr,Proc);
+         {[],_}    -> bpe_task:denied_flow(Curr,Proc);
+         {List,_}  -> bpe_task:handle_task(Task,Curr,
+                         bpe_task:find_flow(List),Proc)
+    end,
+
+    kvs:add(#history { id = kvs:next_id("history",1),
+                       feed_id = {history,ProcState#process.id},
+                       name = ProcState#process.name,
+                       task = {task, Curr} }),
+
+    NewProcState = ProcState#process{task = Target},
+
+    FlowReply = fix_reply({Status,{Reason,Target},NewProcState}),
+    kvs:put(NewProcState),
+    FlowReply.
+</pre></figure>
+
+<figure>
+    <figcaption>Listing 4. gen_server BPE protocol</figcaption>
+<pre style="width:700px">
+    {get}
+    {run}
+    {until,_}
+    {complete}
+    {complete,_}
+    {amend,_}
+    {amend,_,_}
+    {event,_}
+</pre></figure>
+
+<p>In business process management the key feature of is a
+compact process definitions. Here is example of Deposit Opening process
+definition in simple and clean language. The web application is an
+client to ACT business process server, which hosts business process context.
+All the processes can be executed in attached console without web application.</p>
+
+<figure>
+    <figcaption>Listing 5. Open Deposit BPE Process</figcaption>
+<pre style="width:700px">
+
+  deposit_app() ->
+
+    #process { name = 'Create Deposit Account',
+
+        flows = [
+            #sequenceFlow{source='Init',      target='Payment'},
+            #sequenceFlow{source='Payment',   target='Signatory'},
+            #sequenceFlow{source='Payment',   target='Process'},
+            #sequenceFlow{source='Process',   target='Final'},
+            #sequenceFlow{source='Signatory', target='Process'},
+            #sequenceFlow{source='Signatory', target='Final'}
+        ],
+
+        tasks = [
+            #userTask    { name='Init',      module = deposit },
+            #userTask    { name='Signatory', module = deposit},
+            #serviceTask { name='Payment',   module = deposit},
+            #serviceTask { name='Process',   module = deposit},
+            #endEvent    { name='Final'}
+        ],
+
+        beginEvent = 'Init',
+        endEvent = 'Final',
+        events = [
+             #messageEvent{name="PaymentReceived"}
+        ]
+    }.
+
+</pre>
+</figure>
+
+<figure>
+    <figcaption>Listing 5. Open Deposit BPE Process</figcaption>
+<pre style="width:700px">
+
+  action({request,'Init'}, Proc) ->
+      {reply,Proc};
+
+  action({request,'Payment'}, Proc) ->
+      Payment = bpe:doc(#payment_notification{},Proc),
+      case is_tuple(Payment) of
+           true  -> {reply,'Process',Proc};
+           false -> {reply,'Signatory',Proc} end;
+
+  action({request,'Signatory'}, Proc) ->
+      {reply,'Process',Proc};
+
+  action({request,'Process'}, Proc) ->
+      Account = #user{id=Proc#process.id},
+      kvs:add(Account),
+      {reply,Proc};
+
+  action({request,'Final'}, Proc) ->
+      {reply,Proc}.
+
+</pre>
+</figure>
+
+<p>Thanks to compact process context the 1 million records of
+process states consume only 1GB of storage.</p>
+
+    </section>
+</main>
+
+<footer>
+    Made with <span class="heart">❤</span> for N2O
+</footer>
+
+</body>
+</html>
