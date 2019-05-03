@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
     <meta name="author" content="Maxim Sokhatsky" />
-    <title>HISTORY</title>
+    <title>LOG</title>
     <link rel="stylesheet" href="https://synrc.space/synrc.css" />
 </head>
 
@@ -14,15 +14,16 @@
 
 <header>
     <a href="../index.html"><img src="../img/Synrc Neo.svg"></a>
-    <h1>N2O History</h1>
+    <h1>N2O LOG</h1>
 </header>
 
 <main>
     <section>
 
+<h3>2013</h3>
 <p>The N2O was born in 2013 in spring. It's started as a process of
 reimplementation of Nitrogen Web Framework behavior for better
-performance and code reducing. The initial version had its own
+performance and code reduce. The initial version had its own
 render core along with pure websocket nature of the IO protocol.</p>
 
 <p>First official release of N2O was made in October 2013 when
@@ -35,6 +36,7 @@ Was introduced ETS caching. Tiny 50 LOC Makefile called <b>otp.mk</b> was
 suggested for easy production deployment. It's still best option to deploy
  applications. It was release 0.11.</p>
 
+<h3>2014</h3>
 <p>In January 2014 release xen hosting in LING VM
 was initially introduced. Dependencies
 start to freezing; asset and deploy options were improved.</p>
@@ -63,13 +65,13 @@ New client side protocol pipeline along with new <b>n2o.js</b>.
 For mad was issued new dynamic loader
 which is able to host working directory inside ETS table and readable
 from erlang executable script on Windows, Linux and Mac. UTF-8 support
-was optimized in <b>utf8.js</b>. New experimental <b>rails</b> protocol and <b>crashdump.io</b>
-logging backend module were added in version 1.9.</p>
+was optimized in <b>utf8.js</b>.</p>
 
 <p>October 2014 version 1.10 was minor again. The only message in changelog
 were added: "nothing special". The first malfunction bug which was fixed is the
 racing which happened during async DOM bulding. Yes, N2O is faster than browser.</p>
 
+<h3>2015</h3>
 <p>January 2015 version 2.1. Major Release. N2O book from now
 on can be purchased in a hardcover print. For business
 applications validations were introduced. <b>n2o.js</b>, <b>binary.js</b>, <b>nitrogen.js</b>,
@@ -78,10 +80,12 @@ new <b>review</b> sample application.
 Log level support and several field and racing fixes in HTML elements.</p>
 
 <p>March 2015 version 2.3. Initial Haskell implentation of N2O server is introduced.
-New N2O WebSocket protocol specification for all stack of <b>synrc</b> and <b>spawnproc</b> applications.
+New N2O WebSocket protocol specification for all stack of applications.
 New auto-expiring cookie-based session and cache managers. Revised and more sane XHR fallback.
 Automatic language detection from routes in context.
 Several element fixes and latest Cowboy 1.0.1.</p>
+
+<h3>2016</h3>
 
 <center><p>•</p></center>
 
@@ -92,7 +96,7 @@ I hope you will find this retrospective useful in your discovering of N2O.</p>
 
 <figure>
 <pre>
-$ mad app sample
+$ mad app web sample
 Create File: "sample/sys.config"
 Create File: "sample/apps/sample/priv/static/synrc.css"
 Create File: "sample/apps/sample/src/web_app.erl"
