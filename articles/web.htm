@@ -1,23 +1,7 @@
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="Maxim Sokhatsky" />
-    <title>N2O WEB</title>
-    <link rel="stylesheet" href="https://synrc.space/synrc.css" />
-</head>
-
-<body>
-
-<header>
-    <a href="../index.html"><img src="../img/Synrc Neo.svg"></a>
+<html><head><meta charset="utf-8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="" /><meta name="author" content="Maxim Sokhatsky" /><title>N2O WEB</title><link rel="stylesheet" href="https://synrc.space/synrc.css" /></head><body><header>
+    <a href="../index.html"><img src="../img/Synrc Neo.svg" /></a>
     <h1>N2O Web Applications</h1>
-</header>
-
-<main>
+</header><main>
     <section>
 
 <h3>REPL</h3>
@@ -28,7 +12,7 @@ This is regular Erlang shell, but it is aware of OTP
 applications placed in apps and deps directories,
 how to resolve them and perform proper starting.</p>
 
-<figure><img src="../img/mad.png" width=800 style="padding:20px;"></figure>
+<figure><img src="../img/mad.png" width="800" style="padding:20px;" /></figure>
 
 <h3>Single Page Application</h3>
 
@@ -36,12 +20,12 @@ how to resolve them and perform proper starting.</p>
 Also you should specify a list of n2o.js modules, like protocols, components,
 translations or other modules with up to date client functionality. Here is sample SPA:</p>
 
-<figure><img src="../img/n2oindex.png" width=800 style="padding:0px;"></figure>
+<figure><img src="../img/n2oindex.png" width="800" style="padding:0px;" /></figure>
 
 <p>During each initial route connection, main/0 function followed by event(init) is
 being called to render postbacks of active controls. Same
 page module could serve SPA and/or DTL pages. N2O_start() boots up a supported
-connection and send initial <<"N2O,">> authorization packet to open a protocol stream connection.</p>
+connection and send initial &lt;&lt;"N2O,">> authorization packet to open a protocol stream connection.</p>
 
 <figure><figcaption>Listing 1. Route module</figcaption><pre>
 -module(index).
@@ -101,7 +85,7 @@ Test duration: 1.00634 s.
 at the same time the web logic language should be readable by Java, .NET engineers.
 Web Logic of Deposits Application is powered by N2O WebSocket Application Server.</p>
 
-<figure><img src="../img/web1.png" width=800 style="padding:20px;"></figure>
+<figure><img src="../img/web1.png" width="800" style="padding:20px;" /></figure>
 
 <p><b>Note:</b> Operating clean and minimalistic API will allow you engineers
 to think on core features of the system, SpawnProc provides most
@@ -118,10 +102,10 @@ or DTL or other template enginer rendering.</p>
 
 
 <figure><figcaption>Picture 1. One-Time Password Form</figcaption>
-        <img src="../img/otp.png"></figure>
+        <img src="../img/otp.png" /></figure>
 
 <figure>
-<figcaption>Listing 3. OTP Form</fitgcaption>
+<figcaption>Listing 3. OTP Form
 <pre>document(Name,Phone) -> #document { name = Name,
 
     sections = [   #sec { name= [ deposits:translate({?MODULE,message}), 
@@ -134,11 +118,11 @@ or DTL or other template enginer rendering.</p>
     fields   = [ #field { name='otp', type=otp, 
                           title= deposits:translate({?MODULE,pass}),
                           labelClass=label, fieldClass=column3} ] }.
-</pre></figure>
+</pre></figcaption></figure>
 
 
 <figure><figcaption>Picture 2. Open Application Form</figcaption>
-<img src="../img/open.png"></figure>
+<img src="../img/open.png" /></figure>
 
 <figure><figure>Listing 4. Open Application Form</figure><pre>
 document(Name,Curr) ->
@@ -235,11 +219,6 @@ document(Name,Curr) ->
 </pre></figure>
 
     </section>
-</main>
-
-<footer>
+</main><footer>
     Made with <span class="heart">❤</span> for N2O
-</footer>
-
-</body>
-</html>
+</footer></body></html>

@@ -1,46 +1,26 @@
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="Maxim Sokhatsky" />
-    <title>HISTORY</title>
-    <link rel="stylesheet" href="https://synrc.space/synrc.css" />
-</head>
-
-<body>
-
-<header>
-    <a href="../index.html"><img src="../img/Synrc Neo.svg"></a>
+<html><head><meta charset="utf-8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="" /><meta name="author" content="Maxim Sokhatsky" /><title>HISTORY</title><link rel="stylesheet" href="https://synrc.space/synrc.css" /></head><body><header>
+    <a href="../index.html"><img src="../img/Synrc Neo.svg" /></a>
     <h1>N2O: File Transfer Protocol</h1>
-</header>
-
-<aside>
+</header><aside>
     <article>
         <section>
             <h3>Intro</h3>
             <div>
                 FTP defines a pure WebSocket way of File Transfer rising the HTTP speed.
             </div>
-            <br>
+            <br />
             <div>
-                23 SEP 2015 &copy; <a href="http://5ht.co/license.htm">ISC LICENSE</a>
+                23 SEP 2015 © <a href="http://5ht.co/license.htm">ISC LICENSE</a>
             </div>
         </section>
     </article>
-</aside>
-
-<main>
+</aside><main>
     <section>
 
 <p>TL;DR — Sick and tired of XML, jQuery, Base64, XHR, MIME, miltipart?
    Here is clean and simple WebSocket file transfer!</p>
 
-<p><center><iframe width="600" height="400"
-           src="//www.youtube.com/embed/6894J2If78c?wmode=opaque" frameborder="0"
-           allowfullscreen="allowfullscreen" data-link="//www.youtube.com/watch?v=6894J2If78c"></iframe>
+<p><center><iframe width="600" height="400" src="//www.youtube.com/embed/6894J2If78c?wmode=opaque" frameborder="0" allowfullscreen="allowfullscreen" data-link="//www.youtube.com/watch?v=6894J2If78c"></iframe>
 </center></p>
 
 <h3>Background</h3>
@@ -69,9 +49,9 @@ but WebSockets is young technlology and tools like <b>tcpkali</b> arises and mor
 This is exactly where WebSocket protocol shines. FTP and BIN protocols were presented from the begining of formalizing
 <a href="n2o.htm">N2O</a> protocol stack and this document will guide you N2O FTP implementation. This implementation was made
 by the original N2O co-author Andrii Zadorozhnii and was designed to be limited by 100 LOC for both
-JavaScript and Erlang.<p>
+JavaScript and Erlang.</p><p>
 
-<h3>Erlang Supervision</h3>
+</p><h3>Erlang Supervision</h3>
 
 <p>Usually we encourage to build stateless N2O applications. This allows you easy scaling but sometimes
 you to really need access to global state, especialy in web frameworks: sessions, cache and other global
@@ -98,10 +78,10 @@ The other cool thing is that n2o_async supports gen_server's <b>call</b>, <b>cas
 
     > supervisor:which_children(n2o).
       [{{async,
-          {"counter",<<"d43adcc79dd64393a1eb559227a2d3fd">>}},
+          {"counter",&lt;&lt;"d43adcc79dd64393a1eb559227a2d3fd">>}},
         <0.11564.0>,worker,
         [n2o_async]}]
-</pre></figure>
+</0.11564.0></pre></figure>
 
 <p>The only mandatory state value you need to hold during file uploading is a file offset that increments after each chunck.
 However user may want to put some additional metainformation from FTP packet during upload. For that purposes N2O implements
@@ -112,7 +92,7 @@ initialization is clean and portable:</p>
 <pre>
 
 info( #ftp { sid=Sid, filename=Filename, hash=Hash,
-            status= <<"init">>, offset=Size, block=B,
+            status= &lt;&lt;"init">>, offset=Size, block=B,
             data=Msg } = FTP, Req, State) ->
 
     application:set_env(n2o,formatter,bert),
@@ -127,7 +107,7 @@ info( #ftp { sid=Sid, filename=Filename, hash=Hash,
     Name   = { Sid, Filename, Hash },
     Block  = case B of 0 -> ?stop; _ -> ?next end,
     Offset = case FSize >= Size of true -> FSize; false -> 0 end,
-    F2     = FTP#ftp{block = Block, offset = Offset, data = <<>> },
+    F2     = FTP#ftp{block = Block, offset = Offset, data = &lt;&lt;>> },
 
     n2o_async:stop(file,Name),
     n2o_async:start(#handler { module=?MODULE, class=file,
@@ -146,11 +126,11 @@ info( #ftp { sid=Sid, filename=Filename, hash=Hash,
           #handler{ state=#ftp{data=State, offset=Offset}} = Async) ->
 
     F2 = FTP#ftp{status= "send", offset=Offset + Block },
-    wf:info(?MODULE,"send ~p", [F2#ftp{data= <<"">>}]),
+    wf:info(?MODULE,"send ~p", [F2#ftp{data= &lt;&lt;"">>}]),
 
     case file:write_file(?FILE(Sid,F),&lt;&lt;Msg/binary&gt;&gt;,[append,raw]) of
 
-            ok -> {reply, F2#ftp{data= <<"">>}, Async#handler{state=F2}};
+            ok -> {reply, F2#ftp{data= &lt;&lt;"">>}, Async#handler{state=F2}};
     {error,Rw} -> {reply, {error, Rw}, Async} end.
 
 </pre></figure>
@@ -228,7 +208,7 @@ only <b>ftp.js</b> API that can plugged to any upload front-end such as <b>dropz
       bind(ftp_stop,  click,  "ftp.stop();"),
       bind(nitro:to_atom(Uid), change, "ftp.init(this.files[0],1);"),
       Upload = #panel  { body = [
-               #input  { id   = Uid,         type    = <<"file">> },
+               #input  { id   = Uid,         type    = &lt;&lt;"file">> },
                #span   { id   = ftp_status,  body    = [] },
                #span   { body = [
                #button { id   = ftp_open,    body = "Browse" },
@@ -243,11 +223,6 @@ only <b>ftp.js</b> API that can plugged to any upload front-end such as <b>dropz
 </figure>
 
     </section>
-</main>
-
-<footer>
+</main><footer>
     Made with <span class="heart">❤</span> for N2O
-</footer>
-
-</body>
-</html>
+</footer></body></html>

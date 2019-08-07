@@ -1,23 +1,7 @@
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="Maxim Sokhatsky" />
-    <title>MACH</title>
-    <link rel="stylesheet" href="https://synrc.space/synrc.css" />
-</head>
-
-<body>
-
-<header>
-    <a href="../index.html"><img src="../img/Synrc Neo.svg"></a>
+<html><head><meta charset="utf-8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="" /><meta name="author" content="Maxim Sokhatsky" /><title>MACH</title><link rel="stylesheet" href="https://synrc.space/synrc.css" /></head><body><header>
+    <a href="../index.html"><img src="../img/Synrc Neo.svg" /></a>
     <h1>MACH</h1>
-</header>
-
-<aside>
+</header><aside>
     <article>
         <section>
             <h3>Intro</h3>
@@ -25,14 +9,13 @@
                 MACH or machine defines a way to scale external services
                 walking into declarative and verifiable manner.
             </div>
-            <br>
+            <br />
             <div>
-                16 OCT 2015 &copy; <a href="http://5ht.co/license.htm">ISC LICENSE</a>
+                16 OCT 2015 © <a href="http://5ht.co/license.htm">ISC LICENSE</a>
             </div>
         </section>
     </article>
-</aside>
-<main>
+</aside><main>
     <section>
         <h3>Walking Machine</h3>
         <p>У нас в банке нужно ходить по сервисам. Некоторые сервисы вполне шаблонны:
@@ -49,31 +32,15 @@
            надо что-то более легковесное и заточенное на форматтеры. N2O умеет форматтеры,
            но N2O еще тяжелее BPE, поэтому пришлось писать суперлегковеский Сервис Уолкер.</p>
 
-<div><ul>
-<li> &mdash; Полная абстракция от функций формматирования</li>
-<li> &mdash; Желание полной декларативности </li>
-<li> &mdash; Простая но удобная система моков и их тестов </li>
-<li> &mdash; По коду определить количество необходимых моков </li>
-<li> &mdash; Построение кода по примерам сообщений </li>
-<li> &mdash; Исключить падения из протокола через try из-за аккумулятивности </li>
-<li> &mdash; Возвращать не только статус но и все шаги </li>
-<li> &mdash; Транзакционность и Персистентность контекста опроса </li>
-<li> &mdash; Настройка retry запросов, типов запросов и HTTP методов </li>
-<li> &mdash; Двухуровневая модульность по портам подключения и точкам подключения </li>
-<li> &mdash; Программирование последовательностей запросов в пайпах для 
+<div><ul><li> — Полная абстракция от функций формматирования</li><li> — Желание полной декларативности </li><li> — Простая но удобная система моков и их тестов </li><li> — По коду определить количество необходимых моков </li><li> — Построение кода по примерам сообщений </li><li> — Исключить падения из протокола через try из-за аккумулятивности </li><li> — Возвращать не только статус но и все шаги </li><li> — Транзакционность и Персистентность контекста опроса </li><li> — Настройка retry запросов, типов запросов и HTTP методов </li><li> — Двухуровневая модульность по портам подключения и точкам подключения </li><li> — Программирование последовательностей запросов в пайпах для 
 построения не только линейных, но и ветвящихся алгоритмов 
-обхода сетевых сервисов. </li>
-</ul></div>
+обхода сетевых сервисов. </li></ul></div>
 
 <p>За счет того, что каждый вызов необходимо разорвать сразу перед
 вызовом нижележащего HTTP клиента, получилась система из трех
-типов и трех функций:</P>
+типов и трех функций:</p>
 
-<div><ul>
-<li> &mdash; Форматтер (распаковка)</li>
-<li> &mdash; Протокол (вызов)</li>
-<li> &mdash; Эрланг Терм (запаковка)</li>
-</ul></div>
+<div><ul><li> — Форматтер (распаковка)</li><li> — Протокол (вызов)</li><li> — Эрланг Терм (запаковка)</li></ul></div>
 
 <p>Запаковка и распаковка это типа return или pure, штуки которые
    втягивают какой-то объект в обертку какого-то типа. Например у
@@ -89,7 +56,7 @@
    и Распаковки будут звучать. Т.е. имея этот тип мы делаем наши функции упаковки
    и распаковки композабельными. Теперь как мы будем выстраивать в цепочку нашу монадку.
    Для начала опишем интерфейс функций форматтирования:
-</P>
+</p>
 
 <figure><pre>
 req1([Id],Acc) ->
@@ -98,11 +65,11 @@ req1([Id],Acc) ->
 
 ans1(AnswerJSON,Acc) ->
     {ok,{Resp},_} = jsone:try_decode(unipre:characters_to_binary(AnswerJSON)),
-    {Data} = proplists:get_value(<<"data">>,Resp),
-    {ok, #account{ iban     = proplists:get_value(<<"iban">>,Data),
-                   phone    = proplists:get_value(<<"phone">>,Data),
-                   surnames = proplists:get_value(<<"surnames">>,Data),
-                   names    = proplists:get_value(<<"names">>,Data)}, Acc}.
+    {Data} = proplists:get_value(&lt;&lt;"data">>,Resp),
+    {ok, #account{ iban     = proplists:get_value(&lt;&lt;"iban">>,Data),
+                   phone    = proplists:get_value(&lt;&lt;"phone">>,Data),
+                   surnames = proplists:get_value(&lt;&lt;"surnames">>,Data),
+                   names    = proplists:get_value(&lt;&lt;"names">>,Data)}, Acc}.
 </pre></figure>
 
 <p>Тут вы не смотрите, что JSON не автоиматически преобразует типы по пайплайну
@@ -138,13 +105,13 @@ withdraw() -> {{?MODULE,mach:host(?MODULE)},
 
     {ok,20,
      [{ans2,20},
-      {call,<<"{\"Response\":{\"bank\":\"mach\",\"state\":\"r\"...>>},
-      {req2,<<"{\"Request\":{\"bank\":\"mach\"}}">>},
-      {ans1,[undefined,undefined,1,<<"00000001">>,site]},
-      {call,<<"{\"Response\":{\"bank\":\"mach\",\"state\":\"r\",\"list\":{\"cont"...>>},
-      {req1,<<"{\"Request\":{\"ref\":\"2015100803502313492\",\"channel\":\"S"...>>},
-      {req,<<"{\"Request\":{\"ref\":\"2015100803502313492\",\"channel"...>>},
-      {id,<<"00000001">>},
+      {call,&lt;&lt;"{\"Response\":{\"bank\":\"mach\",\"state\":\"r\"...>>},
+      {req2,&lt;&lt;"{\"Request\":{\"bank\":\"mach\"}}">>},
+      {ans1,[undefined,undefined,1,&lt;&lt;"00000001">>,site]},
+      {call,&lt;&lt;"{\"Response\":{\"bank\":\"mach\",\"state\":\"r\",\"list\":{\"cont"...>>},
+      {req1,&lt;&lt;"{\"Request\":{\"ref\":\"2015100803502313492\",\"channel\":\"S"...>>},
+      {req,&lt;&lt;"{\"Request\":{\"ref\":\"2015100803502313492\",\"channel"...>>},
+      {id,&lt;&lt;"00000001">>},
       {sid,1},
       {channel,site}]}
 </pre></figure>
@@ -174,12 +141,7 @@ host(_)    -> "http://bank.com:8888/";
 <figure><pre>
 test() ->
   lists:flatten([[ begin erlang:put(mock,Mock),
-      mach:service(?MODULE:Fun(),Args,1000,Acc) end || Mock <- Mocks ]
-          || {Fun,Mocks,Args,Acc} <-
-          [{withdraw, [7,8], [#account{}],  []},
-           {odb,      [5],   [#customer{}], []},
-           {debt,   [1,2,3], [#customer{}}, []] ]).
-</pre></figure>
+      mach:service(?MODULE:Fun(),Args,1000,Acc) end || Mock </pre></figure>
 
 <p>тут мы цифрами указываем моки которые тестируют разные входы пайпов.
    Каждая система шагов это как граф по сути, у которого может быть много
@@ -206,7 +168,7 @@ pack(_,{{P,RA},[{Type,Method,M,{F,G},Retry,Addr}|T]}=Stack,A,Time,Acc) ->
        catch E:R -> fatal(E,R) end.
 
 call(Retry,{{_,RA},[{Type,Method,M,{F,G},A,Addr}|T]}=Stack,Req,Time,Acc)
-       when Retry < 1 -> {error,{attempts,A},Acc};
+       when Retry &lt; 1 -> {error,{attempts,A},Acc};
 call(Retry,{{P,RA},[{Type,Method,M,{F,G},_,Addr}|T]}=Stack,Req,Time,Acc) ->
        try case req_ret(request(P,M,[ Method,
                                 addr(RA,Addr,Acc),
@@ -262,7 +224,7 @@ http_request(P,M,false,[Method,Address,Headers,Type,Data]) ->
   ans(Binary,Acc) -> {ok, "OK", Acc}.
 
   mock(1, [Method,Address,Headers,Type,Data]) ->
-         {ok,{{[],200,"OK"},[],jsone:encode({[{<<"Response">>,
+         {ok,{{[],200,"OK"},[],jsone:encode({[{&lt;&lt;"Response">>,
                                             {[{'bank','mach'}]} }]}) }}.
 
 </pre></figure>
@@ -278,11 +240,6 @@ http_request(P,M,false,[Method,Address,Headers,Type,Data]) ->
 </p>
 
     </section>
-</main>
-
-<footer>
+</main><footer>
     Made with <span class="heart">❤</span> for N2O
-</footer>
-
-</body>
-</html>
+</footer></body></html>

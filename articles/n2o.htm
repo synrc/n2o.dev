@@ -1,23 +1,7 @@
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="Maxim Sokhatsky" />
-    <title>N2O IoT</title>
-    <link rel="stylesheet" href="https://synrc.space/synrc.css" />
-</head>
-
-<body>
-
-<header>
-    <a href="../index.html"><img src="../img/Synrc Neo.svg"></a>
+<html><head><meta charset="utf-8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="" /><meta name="author" content="Maxim Sokhatsky" /><title>N2O IoT</title><link rel="stylesheet" href="https://synrc.space/synrc.css" /></head><body><header>
+    <a href="../index.html"><img src="../img/Synrc Neo.svg" /></a>
     <h1>N2O: IoT Protocol</h1>
-</header>
-
-<main>
+</header><main>
     <section>
 
 <h3>Protocols, Messages and Formatters</h3>
@@ -48,20 +32,16 @@ N2O provides definition support for several unoverlapped sub-protocols.
 There is no single system shipped to support all of them but it could
 exist theoretically.</p>
 
-<p><center>Picture 1. Protocol Modules<br><br><img src="http://5ht.co/img/protocols.svg" width=500></center><br></p>
+<p><center>Picture 1. Protocol Modules<br /><br /><img src="http://5ht.co/img/protocols.svg" width="500" /></center><br /></p>
 
 <p>N2O should not define any particular set of formatters.
 Application developers could choose their own formatter per protocol.
-E.g. N2O uses TEXT formatting for <<"PING">> and <<"N2O,">> protocol
+E.g. N2O uses TEXT formatting for &lt;&lt;"PING">> and &lt;&lt;"N2O,">> protocol
 messages, across versions N2O used to have IO message formatted with JSON and BERT both.
 All other protocol messages were BERT from origin. The only thing is that protocol
 formatter should be specified somehow.</p>
 
-<ul><li>TEXT</li>
-    <li>JSON</li>
-    <li>XML</li>
-    <li>BERT</li>
-    <li>MessagePack</li></ul>
+<ul><li>TEXT</li><li>JSON</li><li>XML</li><li>BERT</li><li>MessagePack</li></ul>
 
 <p>All this formattes format message which comes directly to TCP WebSocket.
 However there are some endpoints which are not TCP sockets, even non-sockets,
@@ -70,16 +50,14 @@ and there is a room for other endpoint types. Here is a list of types of
 endpoints which arise in multi-protocol discussions:
 </p>
 
-<ul><li>gen_server</li>
-    <li>ws</li>
-    <li>http</li></ul>
+<ul><li>gen_server</li><li>ws</li><li>http</li></ul>
 
 <p>The core protocols shipped with N2O provide very basic but yet
 powerful functionality such as reconnects, page initialization
 and common client/server messaging. The core is enough for
 binary upload/download, games construction and SPA applications.</p>
 
-<p><center>Picture 2. N2O<br><br><img src="http://5ht.co/img/n2o.png" width=500></center><br></p>
+<p><center>Picture 2. N2O<br /><br /><img src="http://5ht.co/img/n2o.png" width="500" /></center><br /></p>
 
 <h3>HEART</h3>
 
@@ -94,9 +72,9 @@ client usage but for supporting active connection with notifications
 and possibly DOM updates.</p>
 
 <figure><pre>1. IO tuple {io,EVAL,DATA}
-2. NOP <<>>
-3. N2O init marker <<"N2O,",Session/binary>>
-4. PING message <<"PING">>
+2. NOP &lt;&lt;>>
+3. N2O init marker &lt;&lt;"N2O,",Session/binary>>
+4. PING message &lt;&lt;"PING">>
 </pre></figure>
 
 <p>Heartbeat protocol is essential WebSocket application
@@ -194,15 +172,14 @@ JS> enc(tuple(atom('pickle'),
                        {error,"6189"},
                        '#next',
                        event},
-                   [{user,<<"maxim">>},
-                    {pass,<<"token">>}].
+                   [{user,&lt;&lt;"maxim">>},
+                    {pass,&lt;&lt;"token">>}].
 </pre></figure>
 
 <p>PICKLE events are being sent pickled by server side picklers.
 N2O supports following picklers:
 
-<ul><li>PLAIN binary BERT encoding of the event or</li>
-<li>AES/CBC encrypted event for sensitive information about the API.</li></ul></p>
+</p><ul><li>PLAIN binary BERT encoding of the event or</li><li>AES/CBC encrypted event for sensitive information about the API.</li></ul>
 
 <p>EV message contains RPC specification: target module,
 originated module, event arguments and name of controller
@@ -233,7 +210,7 @@ and server originated messages MSG.</p>
 
 <h3>BPE</h3>
 
-<figure><img src="http://5ht.co/img/bpe.png" width=500></figure>
+<figure><img src="http://5ht.co/img/bpe.png" width="500" /></figure>
 
 <p>The bpe protocol defined client originated messages
 GET, COMPLETE, RUN, UNTIL, AMEND, EVENT and ANY server originated
@@ -254,7 +231,7 @@ messages.</p>
 <h3>ROSTER</h3>
 
 <figure><figcaption>Picture 4. ROSTER</figcaption>
-        <img src="http://5ht.co/img/roster.png" width=500 style="padding: 20px;"></figure>
+        <img src="http://5ht.co/img/roster.png" width="500" style="padding: 20px;" /></figure>
 
 <p>The roster protocol defined client originated messages AUTH, ADD, CONFIRM,
 CREATE, JOIN, MESSAGE, TYPING,  and server originated messages PERSON,
@@ -286,7 +263,7 @@ and server originated messages ROOM, PUBLIC.</p>
 <h3>REST</h3>
 
 <figure><figcaption>Picture 5. KVS</figcaption>
-        <img src="http://5ht.co/img/kvs.png" width=500>
+        <img src="http://5ht.co/img/kvs.png" width="500" />
         </figure>
 
 <p>The rest protocol defined client originated HTTP messages PUT, GET, OPTIONS, DELETE
@@ -303,11 +280,6 @@ provided by <b>rest</b> library and <b>kvs</b> abstract database.</p>
 </pre></figure>
 
     </section>
-</main>
-
-<footer>
+</main><footer>
     Made with <span class="heart">❤</span> for N2O
-</footer>
-
-</body>
-</html>
+</footer></body></html>
