@@ -13,6 +13,6 @@ Languages
 Credits
 -------
 
-* The Jonathan
-* Taras
-* Namdak Tonpa
+* The Jonathan — https://t.me/collision02
+* Taras — https://t.me/TTaraskin
+* Namdak Tonpa — https://t.me/tonpa
