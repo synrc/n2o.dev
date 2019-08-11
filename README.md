@@ -4,7 +4,7 @@ N2O User Manuals
 Languages
 ---------
 
-* Ukranian
+* Ukrainian
 * Hebrew
 * English
 * Russian
