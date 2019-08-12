@@ -18,7 +18,7 @@ body {
 }
 
 h1, h2, h3, h4 {
-    font-weight: normal;
+    font-weight: normal;    direction:rtl; text-align: right;
 }
 
 nav { padding: 10px 0 10px 0; display: block; position: fixed; width: 100%; background-color: white;
@@ -36,19 +36,28 @@ nav a { font-size: 16px; border: 2px solid #dedede; color: blue; text-decoration
 }
 
 header {
+    display: flex;
+  align-items: center;
+  justify-content: center;
     text-align: center;
     background-color: white;
     padding-top: 80px;
 }
 
-header h1 {
+header h1  {
     line-height: 1;
-    margin: 20px 20px 20px;
-    padding-left: 30px;
     font-size: 38px;
-    border-left: 2px solid #00b8cf;
+    margin-top: 20px;
+    padding-right: 20px;
     display: inline-block;
-    text-align: left;
+    vertical-align: center;
+}
+
+header img {
+    line-height: 1;
+    padding-left: 20px;
+    width: 120px;
+    border-left: 2px solid #00b8cf;
 }
 
 aside {
@@ -70,6 +79,7 @@ aside h3 {
 }
 
 aside div {
+    direction: rtl; text-align: right;
     color: #585859;
 }
 
@@ -185,9 +195,9 @@ figure code {
 }
 
 header img {
-    margin-right:0px;
-    margin-bottom:-20px;
-    width: 100px;
+    padding-left: 20px;
+    width: 120px;
+    border-left: 2px solid #00b8cf;
 }
 
 figure img {
@@ -230,6 +240,11 @@ footer {
 
     li { list-style-position: inside; }
 
+    header h1 {
+        font-size: 50px;
+        margin: 70px 0 100px;
+    }
+
     aside {
         text-align: center;
         padding-bottom: 100px;
@@ -248,11 +263,6 @@ footer {
         font-size: 18px;
     }
 
-    header h1 {
-        font-size: 50px;
-        margin: 70px 0 100px;
-    }
-
     main section {
         padding-top: 20px;
     }
@@ -266,11 +276,6 @@ footer {
         font-size: 24px;
         margin: 40px auto;
     }
-
-    header img {
-        margin-right: 20px;
-    }
-
 
     main p {
         margin: 20px auto;
@@ -295,18 +300,9 @@ footer {
     li { list-style-position: outside; }
     body { font-size: 20px; }
 
-    header h1 {
-        font-size: 70px;
-        margin: 100px 0 150px;
-    }
-
     aside {
         text-align: center;
         padding-bottom: 100px;
-    }
-
-    header img {
-        margin-right: 20px;
     }
 
     aside section {
@@ -335,7 +331,12 @@ footer {
         margin-right: auto;
     }
 
-    main section:first-child {
+     header h1 {
+        font-size: 70px;
+        margin: 110px 0 100px 0;
+    }
+
+            main section:first-child {
         padding-top: 100px;
     }
 
