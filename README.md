@@ -4,7 +4,7 @@ N2O User Manuals
 Languages
 ---------
 
-* Ukranian
+* Ukrainian
 * Hebrew
 * English
 * Russian
@@ -13,6 +13,7 @@ Languages
 Credits
 -------
 
-* The Jonathan — https://t.me/collision02
-* Taras — https://t.me/TTaraskin
-* Namdak Tonpa — https://t.me/tonpa
+* The Jonathan — [IL] — https://t.me/collision02
+* Taras — [UA] — https://t.me/TTaraskin
+* Namdak Tonpa — [EN,RU] — https://t.me/tonpa
+* Radostin Dimitrov — [BG]
