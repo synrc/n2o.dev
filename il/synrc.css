@@ -65,10 +65,17 @@ aside {
     padding: 20px 0px 0px 0px;
 }
 
+aside article { 
+    display:flex;
+    flex-direction: row;
+    max-width:600px;
+    margin: 0 auto;
+    flex-wrap:wrap;
+}
+   
 aside section {
     padding: 0 20px;
-    max-width: 600px;
-    margin: auto;
+    flex: 1 0 50%;
 }
 
 aside h3 {
@@ -250,11 +257,16 @@ footer {
         padding-bottom: 100px;
     }
 
+    aside article {
+        max-width: 800px;
+        justify-content: center;
+    }
+
     aside section {
-        display: inline-block;
+        flex: 1 1 auto;
         vertical-align: top;
         text-align: left;
-        font-size: 16px; // BIG
+        font-size: 16px;
     }
 
 
@@ -306,15 +318,13 @@ footer {
     }
 
     aside section {
-        display: inline-block;
         vertical-align: top;
         text-align: left;
-        font-size: 20px; // BIG
+        font-size: 20px;
     }
 
 
     aside section:first-child {
-        max-width: 650px;
         font-size: 22px;
     }
 
