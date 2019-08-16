@@ -1,0 +1,89 @@
+.TH kvs 1 "kvs" "Synrc Research Center" "KVS"
+.SH NAME
+kvs
+
+.SH INTRO
+.LP
+KVS module provides user level interface for console commands.
+It has discovery, data manipulation and retrival features. Under the hood
+it handles configurable run-time backends for each supported database.
+.LP
+.LP
+\fIdir/0\fR\& — table list.
+\fIver/0\fR\& — KVS version.
+\fIseq/2\fR\& — generate new sequence table id.
+\fIcount/1\fR\& — counts records in table.
+\fIput/1\fR\& — put record using id as a key.
+\fIget/2\fR\& — get record by key from table.
+\fIdelete/1\fR\& — delete record from table.
+\fIindex/3\fR\& — search records by field and its value.
+.LP
+You can change backend by setting application env.
+This behaves well even under the heavy load.
+
+.SH SETUP
+.LP
+In sys.config you should specify kvs backend and list of modules
+containing
+metainfo/0
+exported function.
+.nf
+[{kvs, [{dba,store_mnesia},
+{schema,[kvs,kvs_stream]}]}].
+.fi
+dir() -> list({'table',atom()}).
+.LP
+Returns actual tables.
+ver() -> {'version',string()}.
+.LP
+Returns backend version.
+dump() -> ok.
+.LP
+Display database information.
+.nf
+> kvs:dump().
+NAME                     STORAGE TYPE    MEMORY (MB)   ELEMENTS
+id_seq                      disc_copies           0.00          0
+writer                      disc_copies           0.00          0
+emails                      disc_copies           0.00          0
+reader                      disc_copies           0.00          0
+Snapshot taken: {{2018,11,10},{5,2,38}}
+ok
+.fi
+
+.SH SEQ
+.LP
+Sequence table id_seq stores the counter per thing.
+The couners are global and atomic in each supported database.
+Sequences are used to generate unique names for records per distributed table.
+If names in the table are not unique, e.g.
+then count function may return a different value than the current sequence.
+.nf
+-record(id_seq, { thing = atom(),
+id    = 0 :: integer() } ).
+.fi
+seq(atom(), integer()) -> integer().
+.LP
+Increments and returns id counter for the particular table.
+count(atom()) -> integer().
+.LP
+Returns number of records in table.
+
+.SH BACKEND
+.LP
+Data operations.
+put(tuple()) -> ok | {error,any()}.
+.LP
+Storing of data record.
+get(atom(),any()) -> {ok,any()} | {error, not_found | duplicated }.
+.LP
+Retrieval of data record.
+delete(atom(),any()) -> ok | {error,any()}.
+.LP
+Deletion of data record.
+index(atom(),any(),any()) -> list(tuple()).
+.LP
+Search of data record by an indexed field and a given value.
+
+.SH ALSO
+.L

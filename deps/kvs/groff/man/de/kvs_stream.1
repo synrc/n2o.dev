@@ -1,0 +1,109 @@
+.TH kvs_stream 1 "kvs_stream" "Synrc Research Center" "STREAM"
+.SH NAME
+kvs_stream
+
+.SH INTRO
+.LP
+The STREAM module provides chain accumulation, traversal and persistence.
+.LP
+.LP
+\fIwriter/1\fR\& — creates writer cursor to db.
+\fIreader/1\fR\& — creates reader cursor to db.
+\fIsave/1\fR\& — stores cursor to db.
+\fIload_reader/1\fR\& — loads reader cursor.
+\fIload_writer/1\fR\& — loads writer cursor.
+\fItop/1\fR\& — returns top of the chain.
+\fIbot/1\fR\& — returns bottom of the chain.
+\fInext/1\fR\& — moves reader next.
+\fIprev/1\fR\& — moves reader prev.
+\fItake/1\fR\& — takes N elements from reader.
+\fIdrop/1\fR\& — skips N elements from reader.
+\fIadd/1\fR\& — adds element to list.
+\fIappend/2\fR\& — adds element to feed.
+\fIcut/2\fR\& — cleanup feed by a given timestamp.
+.LP
+You can grab
+\fIkvs_stream\fR\& and use it in your applications without importing
+synrc/kvs
+dependency,
+as this module is self-containing.
+The possible applications are: public and private feeds, FIFO queues,
+unread messages, chat applications, blockchain etc.
+
+.SH WRITER
+.LP
+Writer cursor represents append list chain with some cached values.
+E.g., chain size, first element of the chain, cached value of
+previous written message and field for passing arguments for stream functions, like add.
+.nf
+-record(writer, { id    = [] :: term(),
+count =  0 :: integer(),
+cache = [] :: [] | tuple(),
+args  = [] :: term(),
+first = [] :: [] | tuple() } ).
+.fi
+.LP
+For adding data to database you need first create writer cursor,
+set the args field with record from metainfo and call save function.
+writer(term()) -> #writer{}.
+.LP
+Creates writer cursor.
+add(#writer{}) -> #writer{}.
+.LP
+Adds element to list declared by writer cursor.
+load_writer(#writer{}) -> #writer{}.
+.LP
+Loads writer cursor.
+save(#writer{}) -> #writer{}.
+.LP
+Flushes writer cursor to database.
+
+.SH READER
+.nf
+-record(reader, { id    = [] :: integer(),
+pos   =  0 :: [] | integer(),
+cache = [] :: [] | integer(),
+args  = [] :: term(),
+feed  = [] :: term(),
+dir   =  0 :: 0 | 1 } ).
+.fi
+reader(integer()) -> #reader{}.
+.LP
+Creates reader cursor.
+load_reader(#reader{}) -> #reader{}.
+.LP
+Loads reader cursor from database.
+save(#reader{}) -> #reader{}.
+.LP
+Flushes cursor to database.
+top(#reader{}) -> #reader{}.
+.LP
+Moves cursor to top of the list.
+bot(#reader{}) -> #reader{}.
+.LP
+Moves cursor to bottom of the list.
+
+.SH ITER
+.nf
+-record(iter,   { id    = [] :: [] | integer(),
+next  = [] :: [] | integer(),
+prev  = [] :: [] | integer() } ).
+.fi
+next(#reader{}) -> #reader{}.
+.LP
+Moves cursor to next. Consume data down from top.
+Return error if list is empty, otherwise next element or last.
+prev(#reader{}) -> #reader{}.
+.LP
+Moves cursor to prev. Consume data up from bottom.
+Return error if list is empty, otherwise next element or last.
+drop(#reader{}) -> #reader{}.
+.LP
+Drops N elements starting from reader.
+take(#reader{}) -> #reader{}.
+.LP
+Trying to consume N records from stream using its current value and direction.
+Returns consumed data. Usually you seek to some position and then consume some data.
+
+.SH ALSO
+.L
