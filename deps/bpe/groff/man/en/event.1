@@ -1,0 +1,20 @@
+.TH event 1 "event" "Synrc Research Center" "EVENT"
+.SH NAME
+event
+
+.SH INTRO
+.LP
+The
+bpe_event
+module provides EVENT handling functionality.
+
+.SH API
+handle_event(Event,CurrentTask,Target,Proc) ->
+{reply,{complete,Target},State} |
+{reply,{complete,Task},State} |
+{reply,{unknown_event,Target},Proc} |
+{stop,{normal,Target},Proc}
+
+.SH ALSO
+.LP
+\fB\fIBPE(1)\fR\&\fR\&
