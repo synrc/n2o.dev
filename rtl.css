@@ -1,6 +1,7 @@
 // Right-To-Left languages i18n CSS Overlay
 
-h1, h2, h3, h4 { padding-right: 20px; border-left: none; border-right: 2px solid #00b8cf; direction:rtl; text-align: right; }
-header img { margin-left: 20px; }
+h1, h2, h3, h4 { padding-right: 20px; border-left: none; direction:rtl; text-align: right; }
+header h1 { border-left: none; border-right: 2px solid #00b8cf; padding-right: 20px; }
+header img { padding-left: 0px; margin-right: 0px; margin-left: 20px; height: 100px; }
 aside div { direction: rtl; text-align: right; }
 aside h3 { margin-right: -0px; margin-left:0; border-right: none; }
