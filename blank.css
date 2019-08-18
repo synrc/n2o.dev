@@ -61,7 +61,7 @@ figure pre { font-family: monospace; font-size: 12px; overflow-x: auto;  max-wid
 li { list-style-position: inside; }
 
 @media(min-width: 550px) {
-    nav { display: flex; justify-content: center; line-height: 1; }
+    nav { padding: 10px 0 10px 0; display: flex; justify-content: center; line-height: 1; }
     nav a { font-size: 18px; min-width: initial; }
     figure { max-width: 100%; }
     figure code { max-width: 100%; font-size: 12px; }
