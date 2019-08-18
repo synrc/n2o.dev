@@ -1,0 +1,4 @@
+h1, h2, h3, h4 { padding-right: 20px; border-left: none; border-right: 2px solid #00b8cf; direction:rtl; text-align: right; }
+header img { margin-left: 20px; }
+aside div { direction: rtl; text-align: right; }
+aside h3 { margin-right: -0px; margin-left:0; border-right: none; }
