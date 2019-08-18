@@ -1,3 +1,5 @@
+// Basic Blank CSS for entire SYNRC space
+
 .dropbtn { cursor: pointer; }
 .dropdown { display: inline-block; }
 .dropdown-content { margin-top: 10px; display: none; margin-left: -5px; padding: 5px; position: absolute; }
