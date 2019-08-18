@@ -1,7 +1,7 @@
 .dropbtn { cursor: pointer; }
 .dropdown { display: inline-block; }
 .dropdown-content { margin-top: 10px; display: none; margin-left: -5px; padding: 5px; position: absolute; }
-.dropdown-content a { display: block; }
+.dropdown-content a { display: block; background: white; }
 .show {display:block;}
 
 @font-face {
