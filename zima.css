@@ -10,3 +10,7 @@ aside div { color: #F8F8F8; }
 aside a, main a, main a:visited { color: #5BC2E7 }
 figure code, figure pre { color:#c2d5ed; background-color:#2b3643 }
 main b { color: #121212; }
+
+@media(min-width: 550px)  { figure code { border: 10px solid #E8E8E8; } }
+@media(min-width: 768px)  { figure code { border: 10px solid #E8E8E8; } }
+@media(min-width: 1280px) { figure code { border: 10px solid #E8E8E8; } }
