@@ -19,7 +19,7 @@ nav { padding: 20px 0 20px 0; display: block; position: fixed; width: 100%; back
 nav a:visited { color: #5BC2E7; }
 nav a:hover { border-bottom: 2px solid #5BC2E7; }
 nav a { font-size: 16px; border: 2px solid #dedede; cursor: pointer; text-decoration: none;
-        margin: 5px 5px; padding: 7px 12px; text-align: center; }
+        margin: 5px 5px; padding: 7px 12px; text-align: center; color: #5BC2E7; }
 
 header { padding-top: 80px; text-align: center; background-color: white; }
 header img { margin-right: 25px; margin-bottom:-35px; width: 100px; }
