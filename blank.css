@@ -21,7 +21,7 @@ nav a:hover { border-bottom: 2px solid #5BC2E7; }
 nav a { font-size: 16px; border: 2px solid #dedede; cursor: pointer; text-decoration: none;
         margin: 5px 5px; padding: 7px 12px; text-align: center; color: #5BC2E7; }
 
-header { padding-top: 80px; text-align: center; background-color: white; }
+header { padding-top: 80px; padding-bottom: 40px; text-align: center; background-color: white; }
 header img { margin-right: 25px; margin-bottom:-35px; width: 100px; }
 header h1 { line-height: 1; margin: 40px 0px 40px 0px; padding-left: 20px; font-size: 38px; display: inline-block; text-align: left; }
 
@@ -51,9 +51,9 @@ main h4 { line-height: 1; font-size: 24px;  padding-left: 20px; max-width: 850px
 
 figure { margin: 10px auto; max-width: 100%; text-align: center; }
 figcaption { padding: 5px 20px; text-transform: uppercase; font-size: 1rem; }
-figure img { max-width: 100%; }
+figure img { max-width: 100%; padding: 0px; }
 figure code { font-family: monospace; font-size: 12px; display: block; max-width: 100%;
-              overflow-x: auto; padding: 0 10px; background-color: white;
+              overflow-x: auto; padding: 10px; background-color: white;
               white-space: pre; text-align: left; }
 figure pre { font-family: monospace; font-size: 12px; overflow-x: auto;  max-width: 100%;
               padding: 0 20px; white-space: pre-wrap; text-align: left;  }
@@ -65,8 +65,9 @@ li { list-style-position: inside; }
 @media(min-width: 550px) {
     nav { padding: 10px 0 10px 0; display: flex; justify-content: center; line-height: 1; }
     nav a { font-size: 18px; min-width: initial; }
+    header h1 { font-size: 30px; }
     figure { max-width: 100%; }
-    figure code { max-width: 100%; font-size: 12px; }
+    figure code { max-width: 100%; font-size: 12px; border: 0px solid #E8E8E8; }
     figure img { max-width: 100%; border: 0px solid #E8E8E8; }
 }
 
@@ -79,7 +80,7 @@ li { list-style-position: inside; }
     main p { margin: 20px auto; }
     main ul { margin: 20px auto; }
     figure { max-width: 70%; }
-    figure code { max-width: 100%; font-size: 14px; }
+    figure code { max-width: 100%; font-size: 14px; border: 10px solid #E8E8E8; }
     figure img { max-width: 100%; border: 10px solid #E8E8E8; }
 }
 
@@ -92,7 +93,7 @@ li { list-style-position: inside; }
     main section { text-align: left; max-width: 1200px; margin-left: auto; margin-right: auto; }
     main h3 { font-size: 44px; }
     figure { max-width: 70%; }
-    figure code { max-width: 100%; font-size: 16px; }
+    figure code { max-width: 100%; font-size: 16px; border: 10px solid #E8E8E8; }
     figure img { max-width: 100%; border: 10px solid #E8E8E8; }
 }
 
