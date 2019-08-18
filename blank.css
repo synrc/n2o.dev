@@ -1,7 +1,7 @@
 // Basic Blank CSS for entire SYNRC space
 
-.dropbtn { cursor: pointer; }
-.dropdown { display: inline-block; }
+.dropbtn { cursor: pointer;  }
+.dropdown { display: inline-block; color: #5BC2E7;}
 .dropdown-content { margin-top: 10px; display: none; margin-left: -5px; padding: 5px; position: absolute; }
 .dropdown-content a { display: block; background: white; }
 .show {display:block;}
@@ -18,7 +18,7 @@ nav { padding: 20px 0 20px 0; display: block; position: fixed; width: 100%; back
       display: float; text-align: center; align-items: center; }
 nav a:visited { color: #5BC2E7; }
 nav a:hover { border-bottom: 2px solid #5BC2E7; }
-nav a { font-size: 16px; border: 2px solid #dedede; color: blue; text-decoration: none;
+nav a { font-size: 16px; border: 2px solid #dedede; cursor: pointer; text-decoration: none;
         margin: 5px 5px; padding: 7px 12px; text-align: center; }
 
 header { padding-top: 80px; text-align: center; background-color: white; }
