@@ -7,8 +7,15 @@
 </head><body><nav>
     <a href="https://n2o.space">ENT</a>
     <a href="https://n2o.dev" style="background:#ededed;">DEV</a>
-    <a href="#" style="background:#ededed;">DE</a>
-    <a href="../index.html">EN</a>
+    <div class="dropdown">
+       <a onclick="drop()" class="dropbtn"  >IL</a>
+    <div id="dropdown" class="dropdown-content">
+       <a href="https://n2o.dev/il/">IL</a>
+       <a href="https://n2o.dev/ua/">UA</a>
+       <a href="https://n2o.dev/de/">DE</a>
+       <a href="https://n2o.dev/il/">EN</a>
+     </div>
+     </div>
 </nav><header>
     <a href="https://github.com/synrc"><img src="https://synrc.space/images/Synrc Neo.svg?v=1" /></a>
     <h1>DEV</h1>
@@ -202,4 +209,6 @@
 </aside><main>
 </main><footer>
     Made with <span class="heart">❤</span> to N2O
-</footer></body></html>
+</footer></body>
+<script> function drop() { document.getElementById("dropdown").classList.toggle("show"); }</script>
+</html>

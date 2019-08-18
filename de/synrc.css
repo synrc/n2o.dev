@@ -1,3 +1,9 @@
+.dropbtn { cursor: pointer; }
+.dropdown { display: inline-block; }
+.dropdown-content { margin-top: 10px; background: white; display: none; margin-left: -5px; padding: 5px; position: absolute; }
+.dropdown-content a { color: black; display: block; }
+.show {display:block;}
+
 @font-face {
     font-family: 'Geometria';
     font-weight: normal;
