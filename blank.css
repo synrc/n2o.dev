@@ -25,8 +25,6 @@ header h1 { line-height: 1; margin: 40px 0px 40px 0px; padding-left: 20px; font-
 
 footer { text-align: center; background-color: white; color: black; padding: 50px 0 100px 0; }
 
-aside { background-color: white; padding: 20px 0 0; }
-aside section { padding: 20px 0 0 0; max-width: 600px; margin: auto; }
 aside h3 { font-size: 28px; text-transform: uppercase; color: #5BC2E7; margin: 0px; padding-left: 20px; margin-bottom: 20px;  }
 aside div { color: black; }
 aside img { width: 20px; vertical-align: middle; }
@@ -35,8 +33,7 @@ aside a:visited { color: #5BC2E7; }
 aside a:hover { background: rgba(255, 255, 255, 0.3); }
 
 aside { text-align: center; padding: 0 10px 100px; }
-aside section { display: inline-block; vertical-align: top; text-align: left; font-size: 20px; padding-right: 30px;  }
-aside section:first-child { max-width: 650px; font-size: 22px; padding-bottom: 0px; }
+aside section { margin: auto; max-width: 650px; padding: 20px 0 0 0; display: inline-block; font-size: 14px;vertical-align: top; text-align: left; font-size: 20px; padding-right: 30px; }
 aside h3 { margin-left: -20px; border-left: none; }
 
 main { padding-top: 80px; }
