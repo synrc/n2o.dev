@@ -25,7 +25,7 @@ header h1 { line-height: 1; margin: 40px 0px 40px 0px; padding-left: 20px; font-
 
 footer { text-align: center; background-color: white; color: black; padding: 50px 0 100px 0; }
 
-aside h3 { font-size: 28px; text-transform: uppercase; color: #5BC2E7; margin: 0px; padding-left: 20px; margin-bottom: 20px;  }
+aside h3 { font-size: 28px; text-transform: uppercase; color: #5BC2E7; margin: 0px; padding: 20px 0 10px; margin-bottom: 20px;  }
 aside div { color: black; direction: rtl; text-align: right; }
 aside img { width: 20px; vertical-align: middle; }
 aside a { text-decoration: none; color: #5BC2E7; }
@@ -34,7 +34,7 @@ aside a:hover { background: rgba(255, 255, 255, 0.3); }
 
 aside { text-align: center; padding: 0 10px 100px; }
 aside section { margin: auto; max-width: 650px; padding: 20px 0 0 0; display: inline-block; vertical-align: top; text-align: left; padding-right: 30px; }
-aside h3 { margin-right: -20px; border-right: none; }
+aside h3 { margin-right: -0px; border-right: none; }
 
 main section { padding: 20px 20px 20px 0px; }
 main section:nth-of-type(even) { background-color: white; }
