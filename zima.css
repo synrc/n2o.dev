@@ -1,10 +1,10 @@
-h2, h3 { color: #5BC2E7 }
-body { background-color: #ECF8FE }
-nav a { background-color: #fff }
-nav a:visited { color: #5BC2E7 }
+h2, h3 { color: #5BC2E7; }
+nav, body, header, footer { background-color: #ECF8FE; }
+nav a { background-color: #fff; }
+nav a:visited { color: #5BC2E7; }
 aside { background-color: #1A70A2 }
-aside h3 { color: #5BC2E7 }
-aside div { color:#f8f8f9 }
+aside h3 { color: #5BC2E7; }
+aside div { color: #5BC2E7; }
 aside a, main a, main a:visited { color: #5BC2E7 }
 figure code, figure pre { color:#c2d5ed; background-color:#2b3643 }
 main b { color: #5BC2E7 }

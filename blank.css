@@ -87,7 +87,7 @@ li { list-style-position: inside; }
     body { font-size: 20px; }
     header h1 { font-size: 70px; margin: 100px 0 150px; }
     main { text-align: center; background: white; }
-    main section { background-color: white; text-align: left; max-width: 1200px; margin-left: auto; margin-right: auto; }
+    main section { text-align: left; max-width: 1200px; margin-left: auto; margin-right: auto; }
     main h3 { font-size: 44px; }
     figure { max-width: 70%; }
     figure code { max-width: 100%; font-size: 16px; }
