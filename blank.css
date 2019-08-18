@@ -36,8 +36,7 @@ aside { text-align: center; padding: 0 10px 100px; }
 aside section { margin: auto; max-width: 650px; padding: 20px 0 0 0; display: inline-block; vertical-align: top; text-align: left; padding-right: 30px; }
 aside h3 { margin-left: -20px; border-left: none; }
 
-main { padding-top: 80px; }
-main section { padding: 20px 0px 20px 0px; }
+main section { padding: 20px 20px 20px 0px; }
 main section:nth-of-type(even) { background-color: white; }
 main p { max-width: 850px; margin: 20px; line-height: 1.3; }
 main a { color: #5BC2E7; text-decoration: none; margin: 0; border-bottom: 1px solid green; }
@@ -73,7 +72,6 @@ li { list-style-position: inside; }
     body { font-size: 18px; }
     li { list-style-position: inside; }
     header h1 { font-size: 50px; margin: 70px 0 100px; }
-    main section { padding-top: 20px; }
     main h3 { font-size: 36px; margin: 40px auto; }
     main h4 { font-size: 24px; margin: 40px auto; }
     main p { margin: 20px auto; }
@@ -90,7 +88,6 @@ li { list-style-position: inside; }
     header h1 { font-size: 70px; margin: 100px 0 150px; }
     main { text-align: center; background: white; }
     main section { background-color: white; text-align: left; max-width: 1200px; margin-left: auto; margin-right: auto; }
-    main section:first-child { padding-top: 100px; }
     main h3 { font-size: 44px; }
     figure { max-width: 70%; }
     figure code { max-width: 100%; font-size: 16px; }
