@@ -1,0 +1,204 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="Maxim Sokhatsky" />
+    <title>CSS</title>
+    <link rel="stylesheet" href="https://n2o.dev/blank.css" />
+</head>
+<body>
+<nav>
+    <a href='https://n2o.dev'>DEV</a>
+    <a href='#' style="background:#ededed;">CSS</a>
+</nav>
+<header>
+    <a href="https://n2o.dev"><img src="https://n2o.space/img/Synrc Neo.svg"/></a>
+    <h1>CSS</h1>
+</header>
+<main>
+    <article>
+        <section>
+            <h3>INTRO</h3>
+            <p>SYNRC CSS uses HTML5 section elements for structuring both documents
+               and applications. The main goal is to have one unified solid CSS as ground for
+               both ERP applications and easy to read articles, with custom CSS
+               layering for colors, right-to-left languages, etc. In our model
+               we structure <b>section</b> inside <b>article</b> in both <b>aside</b> and <b>main</b> elements.</p>
+            <figure><figcaption>PICTURE 1. SYNRC CSS</figcaption><img src="../img/css.png" style="border:none;"/></figure>
+            <p>On the right side you can see maximum allowed width (initial or PC mode).
+               With width decreasing eventually borders disappears and article
+               edges got sticky with zero margins. In this (intermediate or Pad mode) CSS has
+               three addition subsizes. The lowest one, with minimal
+               sizes (terminal or Mobile mode) is specian because should lack borders
+               for <b>figure img</b>, <b>figure code</b> and <b>figure pre</b>
+               (borders could be visible only in colorful scheme and lack in blank).
+               Both indermediate and terminal modes are depictured on left side of the picture.
+        </section>
+        <section>
+            <h3>SIZES</h3>
+            <p>SYNRC CSS supports folowing size:</p>
+            <p>— more that 1280px (initial mode)<br/>
+               — 768px to 1280px (intermediate mode #1)<br/>
+               — 550px to 768px (intermediate mode #2)<br/>
+               — less that 550px (terminal mode)</p>
+        </section>
+        <section>
+            <h3>FILES</h3>
+            <h4>BLANK.CSS</h4>
+            <p>Blank CSS contains basic definitions for termninal mode in root
+               and intermediate and initial modes as @media overlays. As a prelude we set
+               Geometria font and Zima Blue color for heading accent in a basement.</p>
+            <p>Booting <b>body</b>, <b>h1</b>, <b>h2</b>, <b>h3</b>, <b>h4</b>:</p>
+            <figure><code>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+@font-face { src: url('https://tonpa.guru/Geometria-Light.otf');
+             font-family: 'local'; font-weight: normal; font-style: normal; }
+
+body { background-color: white; font-family: 'local', sans-serif; font-size: 16px; }
+hr { margin-top: 10px; margin-bottom: 10px; }
+h1, h2, h3, h4 { font-weight: normal; border-left: 2px solid #5BC2E7; }
+            </code></figure>
+            <p>Booting <b>nav</b>:</p>
+            <figure><code>
+nav { padding: 20px 0 20px 0; display: block; position: fixed;
+      width: 100%; background-color: white; display: float;
+      text-align: center; align-items: center; }
+
+nav a:visited { color: #5BC2E7; }
+nav a:hover { border-bottom: 2px solid #5BC2E7; }
+nav a { font-size: 16px; border: 2px solid #dedede; cursor: pointer;
+        text-decoration: none; margin: 5px 5px; padding: 7px 12px;
+        text-align: center; color: #5BC2E7; }
+            </code></figure>
+            <p>Booting <b>header</b>:</p>
+            <figure><code>
+header { padding-top: 80px; padding-bottom: 40px; text-align: center; background-color: white; }
+header img { margin-right: 25px; margin-bottom:-35px; width: 100px; }
+header h1 { line-height: 1; margin: 40px 0px 40px 0px; padding-left: 20px;
+            font-size: 38px; display: inline-block; text-align: left; }
+            </code></figure>
+            <p>Booting <b>aside</b>:</p>
+            <figure><code>
+aside h3 { font-size: 28px; text-transform: uppercase; color: #5BC2E7;
+           margin: 0px; padding: 20px 0 10px; margin-bottom: 20px; border-left: none; }
+aside div { color: black; }
+aside img { width: 20px; vertical-align: middle; }
+aside a { text-decoration: none; color: #5BC2E7; }
+aside a:visited { color: #5BC2E7; }
+aside a:hover { background: rgba(255, 255, 255, 0.3); }
+aside { text-align: center; padding: 0 10px 100px; }
+aside section { margin: auto; max-width: 650px; padding: 20px 0 0 0;
+                display: inline-block; vertical-align: top; text-align: left;
+                padding-right: 30px; }
+            </code></figure>
+            <p>Booting <b>main</b>:</p>
+            <figure><code>
+main section { padding: 20px 0px 20px 0; text-align: left; }
+main section:nth-of-type(even) { background-color: white; }
+main p { max-width: 850px; margin: 20px; line-height: 1.3; }
+main ul { list-style-type: none; max-width: 850px; margin: 20px; }
+main b { color: #121212; font-weight: bold; }
+main h3 { line-height: 1; font-size: 32px; padding-left: 20px; max-width: 850px; }
+main h4 { line-height: 1; font-size: 24px;  padding-left: 20px; max-width: 850px; }
+main a:visited { color: #5BC2E7; border-bottom: 1px solid #5BC2E7; }
+main a:hover { background: rgba(71, 144, 256, 0.13); }
+main a { color: #5BC2E7; text-decoration: none; margin:0;
+         border-bottom: 1px solid green; }
+            </code></figure>
+
+            <p>Booting <b>figure</b>:</p>
+            <figure><code>
+figcaption  { padding: 5px 20px; text-transform: uppercase; font-size: 1rem; }
+figure      { margin: 10px auto; max-width: 100%; text-align: center; }
+figure img  { max-width: 100%; padding: 0px; }
+figure code { font-family: monospace; font-size: 12px;
+              display: block; max-width: 100%; overflow-x: auto; padding: 10px;
+              background-color: white; white-space: pre; text-align: left; }
+            </code></figure>
+
+            <p>Media min-width <b>550px</b>:</p>
+            <figure><code>
+    nav { padding: 10px 0 10px 0; display: flex; justify-content: center; line-height: 1; }
+    nav a { font-size: 18px; min-width: initial; }
+    header h1 { font-size: 30px; }
+    figure { max-width: 100%; }
+    figure code { max-width: 100%; font-size: 12px; }
+    figure img { max-width: 100%; border: 0px solid #E8E8E8; }
+            </code></figure>
+
+            <p>Media min-width <b>768px</b>:</p>
+            <figure><code>
+    body { font-size: 18px; }
+    li { list-style-position: inside; }
+    header h1 { font-size: 50px; margin: 70px 0 100px; }
+    main h3 { font-size: 36px; margin: 40px auto; }
+    figure { max-width: 70%; }
+    figure code { max-width: 100%; font-size: 14px; }
+    figure img { max-width: 100%; border: 10px solid #E8E8E8; }
+            </code></figure>
+
+            <p>Media min-width <b>1280px</b>:</p>
+            <figure><code>
+    li { list-style-position: outside; }
+    body { font-size: 20px; }
+    header h1 { font-size: 70px; margin: 100px 0 150px; }
+    main section { max-width: 1200px; margin-left: auto; margin-right: auto; }
+    main h3 { font-size: 44px; }
+    figure { max-width: 70%; }
+    figure code { max-width: 100%; font-size: 16px; }
+    figure img { max-width: 100%; border: 10px solid #E8E8E8; }
+            </code></figure>
+            <h4>DROPDOWN.CSS</h4>
+            <p>Dropdown button is used for language selection in <b>nav</b> menu bar.</p>
+            <figure><code>
+.show         { display:block; }
+.dropbtn      { cursor: pointer;  }
+.dropdown     { display: inline-block; color: #5BC2E7;}
+.dropdown > a { padding: 5px 12px }
+.dropdown-content a { display: block; background: white; }
+.dropdown-content   { margin-top: 10px; display: none; margin-left: -5px;
+                      padding: 5px; position: absolute; }
+            </code></figure>
+            <h4>RTL.CSS</h4>
+            <p>RTL is a simple overlay for left-to-right languages.</p>
+            <figure><code>
+h1, h2, h3, h4 { padding-right: 20px; border-left: none;
+                 direction:rtl; text-align: right; }
+
+header h1 { border-left: none; border-right: 2px solid #00b8cf; padding-right: 20px; }
+header img { padding-left: 0px; margin-right: 0px; margin-left: 20px; height: 100px; }
+aside div { direction: rtl; text-align: right; }
+aside h3 { direction: rtl; text-align: right; margin-right: -0px;
+           margin-left:0; border-right: none; }
+            </code></figure>
+            <h4>ZIMA.CSS</h4>
+            <p>Zima Blue is a color scheme created by Arseniy Bushyn.</p>
+            <figure><code>
+h2, h3 { color: #5BC2E7; }
+nav, body, header { background-color: #ECF8FE; }
+main, footer { background-color: #1A70A2; }
+footer { color: #5BC2E7; }
+nav a { background-color: #fff; color: #5BC2E7; }
+nav a:visited { color: #5BC2E7; }
+aside { background-color: #1A70A2; }
+aside h3 { color: #5BC2E7; }
+aside div { color: #F8F8F8; }
+aside a, main a, main a:visited { color: #5BC2E7 }
+figure code, figure pre { color:#c2d5ed; background-color:#2b3643 }
+main b { color: #121212; }
+
+@media(min-width: 550px)  { figure code { border: 10px solid #E8E8E8; } }
+@media(min-width: 768px)  { figure code { border: 10px solid #E8E8E8; } }
+@media(min-width: 1280px) { figure code { border: 10px solid #E8E8E8; } }
+
+main section {  background-color: #ECF8FE; }
+main section:nth-of-type(even) { background-color: white;margin-left: auto; margin-right: auto; max-width: 1200px; }
+            </code></figure>
+        </section>
+    </article>
+</main>
+<footer>2005—2019 © Synrc Research Center</footer>
+</body>
+</html>
