@@ -15,4 +15,4 @@ main b { color: #121212; }
 @media(min-width: 768px)  { figure code { border: 10px solid #E8E8E8; } }
 @media(min-width: 1280px) { figure code { border: 10px solid #E8E8E8; } }
 
-main section:nth-of-type(even) { background-color: #ECF8FE; margin: 0px; max-width: 100%; }
+main section:nth-of-type(even) { background-color: #ECF8FE; }
