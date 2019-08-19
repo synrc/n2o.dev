@@ -1,10 +1,11 @@
 // Zima Blue SYNRC Color Scheme CSS Overlay
 
 h2, h3 { color: #5BC2E7; }
-nav, body, header, footer { background-color: #ECF8FE; }
+nav, body, header { background-color: #ECF8FE; }
+main, footer { background-color: #1A70A2; }
 nav a { background-color: #fff; color: #5BC2E7; }
 nav a:visited { color: #5BC2E7; }
-aside { background-color: #1A70A2 }
+aside { background-color: #1A70A2; }
 aside h3 { color: #5BC2E7; }
 aside div { color: #F8F8F8; }
 aside a, main a, main a:visited { color: #5BC2E7 }
@@ -15,4 +16,5 @@ main b { color: #121212; }
 @media(min-width: 768px)  { figure code { border: 10px solid #E8E8E8; } }
 @media(min-width: 1280px) { figure code { border: 10px solid #E8E8E8; } }
 
-main section:nth-of-type(even) { background-color: #ECF8FE; }
+main section {  background-color: #ECF8FE; }
+main section:nth-of-type(even) { background-color: white;margin-left: auto; margin-right: auto; max-width: 1200px; }
