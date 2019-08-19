@@ -3,6 +3,7 @@
 h2, h3 { color: #5BC2E7; }
 nav, body, header { background-color: #ECF8FE; }
 main, footer { background-color: #1A70A2; }
+footer { color: #5BC2E7; }
 nav a { background-color: #fff; color: #5BC2E7; }
 nav a:visited { color: #5BC2E7; }
 aside { background-color: #1A70A2; }
