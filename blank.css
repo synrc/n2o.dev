@@ -4,6 +4,7 @@
 .dropdown { display: inline-block; color: #5BC2E7;}
 .dropdown-content { margin-top: 10px; display: none; margin-left: -5px; padding: 5px; position: absolute; }
 .dropdown-content a { display: block; background: white; }
+.dropdown > a { padding: 5px 12px }
 .show {display:block;}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
