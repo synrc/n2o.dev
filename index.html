@@ -1,176 +1,314 @@
-<html><head><meta charset="utf-8" />
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="" /><meta name="author" content="Maxim Sokhatsky" />
+<meta name="description" content="" />
+<meta name="author" content="Maxim Sokhatsky" />
 <title>DEV</title>
 <link rel="stylesheet" href="blank.css?x=14" />
 <link rel="stylesheet" href="https://n2o.dev/zima.css?x=14" />
 </head>
 <body>
 <nav>
-    <a href="https://n2o.space">N2O</a>
-    <a href="https://n2o.dev" style="background:#ededed;">DEV</a>
-    <div class="dropdown"><a onclick="drop()" class="dropbtn"  >EN</a><div id="dropdown" class="dropdown-content">
-       <a href="https://n2o.dev/il/">IL</a><a href="https://n2o.dev/ua/">UA</a>
-       <a href="https://n2o.dev/de/">DE</a><a href="https://n2o.dev/">EN</a></div></div>
-</nav><header>
-    <a href="https://github.com/synrc"><img src="https://synrc.space/images/Synrc Neo.svg?v=1" /></a>
-    <h1>DEV</h1>
+  <a href="https://n2o.space">N2O</a>
+  <a href="https://n2o.dev" style="background:#ededed;">DEV</a>
+  <div class="dropdown">
+    <a onclick="drop()" class="dropbtn">EN</a>
+    <div id="dropdown" class="dropdown-content">
+      <a href="https://n2o.dev/il/">IL</a>
+      <a href="https://n2o.dev/ua/">UA</a>
+      <a href="https://n2o.dev/de/">DE</a>
+      <a href="https://n2o.dev/">EN</a>
+    </div>
+  </div>
+</nav>
+<header>
+  <a href="https://github.com/synrc"><img src="https://synrc.space/images/Synrc Neo.svg?v=1" /></a>
+  <h1>DEV</h1>
 </header>
 <aside>
-    <article>
-        <section>
-            <h3>User Manuals</h3>
-            <div>As a tribute to Erlang/OTP style, we provide
-                 roff man page generation from HTML5 article scheme.
-                 All XHTML in this space are converted to ROFF with MAD.
-                 This is fine to use XML/XSD/XSLT for DocOps.<br/><br/>
-            </div>
-        </section>
-    </article>
-    <article>
-        <section>
-            <h3><a href="https://bpe.n2o.space">BPE</a></h3>
-            <div>
-                 <ul><li><a href="https://bpe.n2o.space/man/bpe.htm">BPE</a></li><li><a href="https://bpe.n2o.space/man/task.htm">TASK</a></li><li><a href="https://bpe.n2o.space/man/event.htm">EVENT</a></li><li>PROC</li><li>N2O</li></ul>
-             </div>
-        </section>
-        <section>
-            <h3><a href="https://kvs.n2o.space">KVS</a></h3>
-            <div>
-                 <ul><li><a href="https://kvs.n2o.space/man/kvs.htm">KVS</a></li><li><a href="https://kvs.n2o.space/man/kvs_stream.htm">STREAM</a></li><li><a href="https://kvs.n2o.space/man/kvs_mnesia.htm">MNESIA</a></li><li><a href="https://kvs.n2o.space/man/kvs_fs.htm">FS</a></li><li><a href="https://kvs.n2o.space/man/kvs_rocks.htm">ROCKS</a></li><li><a href="https://kvs.n2o.space/man/kvs_st.htm">ST</a></li></ul>
-             </div>
-        </section>
-        <section>
-            <h3><a href="https://form.n2o.space">FORM</a></h3>
-            <div>
-                 <ul><li>FORM</li><li>NITRO</li><li>XML</li></ul>
-             </div>
-        </section>
-        <section>
-            <h3><a href="https://bert.n2o.space">BERT</a></h3>
-            <div>
-                 <ul><li><a href="https://bert.n2o.space/man/bert_swift.htm">SWIFT</a></li>
-                     <li><a href="https://bert.n2o.space/man/bert_google.htm">GRPC</a></li>
-                     <li><a href="https://bert.n2o.space/man/bert_validator.htm">ERLANG</a></li>
-                     <li><a href="https://bert.n2o.space/man/bert_javascript.htm">JS</a></li>
-                     <li>KOTLIN</li><li>ASN1</li></ul>
-             </div>
-        </section>
-    </article>
-    <article>
-        <section>
-            <h3><a href="https://rest.n2o.space">REST</a></h3>
-            <div>
-                 <ul><li><a href="https://rest.n2o.space/man/rest.htm">REST</a></li>
-                     <li><a href="https://rest.n2o.space/man/rest_cowboy.htm">COW</a></li>
-                     <li><a href="https://rest.n2o.space/man/rest_kvs.htm">KVS</a></li></ul>
-             </div>
-        </section>
-        <section>
-            <h3><a href="https://ws.n2o.space">N2O</a></h3>
-            <div>
-                 <ul><li><a href="https://ws.n2o.space/man/n2o.htm">N2O</a></li><li><a href="https://ws.n2o.space/man/n2o_pi.htm">PI</a></li><li><a href="https://ws.n2o.space/man/n2o_auth.htm">AUTH</a></li><li><a href="https://ws.n2o.space/man/n2o_mqtt.htm">MQTT</a></li><li><a href="https://ws.n2o.space/man/n2o_ws.htm">WS</a></li><li><a href="https://ws.n2o.space/man/n2o_syn.htm">SYN</a></li><li><a href="https://ws.n2o.space/man/n2o_gproc.htm">GPROC</a></li><li><a href="https://ws.n2o.space/man/n2o_session.htm">SESSION</a></li><li><a href="https://ws.n2o.space/man/n2o_cowboy.htm">COWBOY</a></li><li><a href="https://ws.n2o.space/man/n2o_ftp.htm">FTP</a></li><li><a href="https://ws.n2o.space/man/n2o_proto.htm">PROTO</a></li></ul>
-             </div>
-        </section>
-        <section>
-            <h3>JS</h3>
-            <div>
-                 <ul><li><a href="https://ws.n2o.space/man/n2o.js.htm">N2O</a></li><li><a href="https://ws.n2o.space/man/mq.js.htm">MQ</a></li><li><a href="https://ws.n2o.space/man/bert.js.htm">BERT</a></li><li><a href="https://ws.n2o.space/man/heart.js.htm">HEART</a></li><li><a href="https://ws.n2o.space/man/utf8.js.htm">UTF-8</a></li><li><a href="https://ws.n2o.space/man/ftp.js.htm">FTP</a></li><li><a href="https://ws.n2o.space/man/nitro.js.htm">NITRO</a></li><li><a href="https://ws.n2o.space/man/ieee754.js.htm">IEEE-754</a></li></ul>
-             </div>
-        </section>
-        <section>
-            <h3><a href="https://nitro.n2o.space">NITRO</a></h3>
-            <div>
-                 <ul><li><a href="https://ws.n2o.space/man/n2o_nitro.htm">N2O</a></li><li><a href="https://nitro.n2o.space/man/element_input.htm">INPUT</a></li><li><a href="https://nitro.n2o.space/man/element_textbox.htm">TEXTBOX</a></li><li>BIND</li><li>EVENT</li><li>RENDER</li><li>TAGS</li></ul>
-             </div> 
-        </section>
-    </article>
-    <article>
-        <section>
-            <h3><a href="https://fs.n2o.space">FS</a></h3>
-            <div>
-                 <ul><li><a href="https://fs.n2o.space/man/fs.htm">FS</a></li>
-                 <li><a href="https://fs.n2o.space/man/fs_event_bridge.htm">EVENT</a></li>
-                 <li><a href="https://fs.n2o.space/man/fs_server.htm">SERVER</a></li>
-                 <li><a href="https://fs.n2o.space/man/fsevents.htm">FSEVENTS</a></li>
-                 <li><a href="https://fs.n2o.space/man/inotifywait.htm">INOTIFY</a></li>
-                 <li><a href="https://fs.n2o.space/man/inotifywait_win32.htm">WIN32</a></li>
-                 <li><a href="https://fs.n2o.space/man/kqueue.htm">KQUEUE</a></li></ul>
-             </div>
-        </section>
-        <section>
-            <h3><a href="https://sh.n2o.space">SH</a></h3>
-            <div>
-                 <ul><li><a href="https://sh.n2o.space/man/sh.htm">SH</a></li><li><a href="https://sh.n2o.space/man/sh_path.htm">PATH</a></li></ul>
-             </div>
-        </section>
-        <section>
-            <h3><a href="https://active.n2o.space">ACTIVE</a></h3>
-            <div>
-                 <ul><li><a href="https://active.n2o.space/man/active.htm">ACTIVE</a></li><li><a href="https://active.n2o.space/man/active_app.htm">APP</a></li><li><a href="https://active.n2o.space/man/active_events.htm">EVENTS</a></li></ul>
-             </div>
-        </section>
-        <section>
-            <h3><a href="https://mach.n2o.space">MACH</a></h3>
-            <div>
-                 <ul><li>MACH</li></ul>
-             </div>
-        </section>
-    </article>
-    <article>
-        <section>
-            <h3><a href="https://stdlib.n2o.space">STDLIB</a></h3>
-            <div><ul><li>LIST</li><li>RE</li><li>SUPERVISOR</li><li>TIMER</li><li>UNICODE</li><li>STRING</li><li>RANDOM</li><li>GEN_SERVER</li><li>GEN_EVENT</li><li>DETS</li><li>PROC_LIB</li><li>IO</li></ul></div>
-        </section>
-        <section>
-            <h3><a href="https://kernel.n2o.space">KERNEL</a></h3>
-            <div><ul><li>APPLICATION</li><li>AUTH</li><li>CODE</li><li>DISK_LOG</li><li>GEN_TCP</li><li>GEN_UDP</li><li>HEART</li><li>INET</li><li>KERNEL</li><li>RPC</li><li>USER</li></ul></div>
-        </section>
-        <section>
-            <h3><a href="https://mad.n2o.space">MAD</a></h3>
-            <div>
-                 <ul><li><a href="https://mad.n2o.space/man/mad.htm">MAD</a></li><li><a href="https://mad.n2o.space/man/mad_local.htm">LOCAL</a></li><li><a href="https://mad.n2o.space/man/mad_git.htm">GIT</a></li><li><a href="https://mad.n2o.space/man/mad_run.htm">RUN</a></li><li><a href="https://mad.n2o.space/man/mad_compile.htm">COMPILE</a></li><li><a href="https://mad.n2o.space/man/mad_app.htm">APP</a></li><li><a href="https://mad.n2o.space/man/mad_leex.htm">LEEX</a></li><li><a href="https://mad.n2o.space/man/mad_yecc.htm">YECC</a></li><li><a href="https://mad.n2o.space/man/mad_erl.htm">ERL</a></li><li><a href="https://mad.n2o.space/man/mad_dtl.htm">DTL</a></li><li><a href="https://mad.n2o.space/man/mad_peg.htm">PEG</a></li><li><a href="https://mad.n2o.space/man/mad_port.htm">PORT</a></li><li><a href="https://mad.n2o.space/man/mad_script.htm">SCRIPT</a></li><li><a href="https://mad.n2o.space/man/mad_systools.htm">SYSTOOLS</a></li></ul>
-             </div> 
-        </section>
-    </article>
-    <article>
-        <section>
-        <h3>RELEASES</h3>
-        <div>
-        <ul><li><a href="https://tonpa.guru/stream/2019/2019-06-21%20Новые%20версии%20BUD%20и%20BANK.htm">BUD and BANK 6.6</a> <font class="desk" color="#00b8cf">21 JUN 2019</font></li><li><a href="https://tonpa.guru/stream/2019/2019-06-19%20BPE%20MIX.htm">BPE 6.6 MIX</a> <font class="desk" color="#00b8cf">19 JUN 2019</font></li><li><a href="https://tonpa.guru/stream/2019/2019-06-10%20N2O%20MIX.htm">N2O 6.6 MIX</a> <font class="desk" color="#00b8cf">10 JUN 2019</font></li><li><a href="https://tonpa.guru/stream/2019/2019-04-13%20Новая%20версия%20KVX.htm">KVX 6.4</a> <font class="desk" color="#00b8cf">13 APR 2019</font></li><li><a href="https://tonpa.guru/stream/2019/2019-04-11%20Новая%20версия%20BPE.htm">BPE 4.4</a> <font class="desk" color="#00b8cf">11 APR 2019</font></li><li><a href="http://tonpa.guru/stream/2019/2019-03-07%20Новая%20версия%20FORMS.htm">FORMS 4.3</a> <font class="desk" color="#00b8cf">19 MAR 2019</font></li><li><a href="https://tonpa.guru/stream/2019/2019-02-13%20Новая%20версия%20XIO.htm">XIO MQTT 5.0</a> <font class="desk" color="#00b8cf">13 FEB 2019</font></li><li><a href="https://tonpa.guru/stream/2018/2018-11-30%20Ошечки.htm">O-SERIES</a> <font class="desk" color="#00b8cf">30 NOV 2018</font></li><li><a href="https://tonpa.guru/stream/2018/2018-11-13%20Новая%20версия%20KVX.htm">KVX 5.11</a> <font class="desk" color="#00b8cf">13 NOV 2018</font></li><li><a href="https://tonpa.guru/stream/2018/2018-11-13%20Новая%20версия%20MAD.htm">MAD 4.10</a> <font class="desk" color="#00b8cf">13 NOV 2018</font></li><li><a href="https://tonpa.guru/stream/2018/2018-11-13%20Новая%20версия%20REVIEW.htm">REVIEW 1.10</a> <font class="desk" color="#00b8cf">13 NOV 2018</font></li><li><a href="https://tonpa.guru/stream/2018/2018-10-22%20Новый%20ролаут%20N2O.htm">N2O 5.10</a> <font class="desk" color="#00b8cf">22 OCT 2018</font></li></ul>
-            </div>
-            <h3>BOOKS</h3>
-            <div>
-                 <ul><li><a href="https://synrc.com/apps/n2o/doc/book.pdf">N2O BOOK</a></li>
-                     <li><a href="https://synrc.com/apps/bpe/doc/book.pdf">BPE BOOK</a></li>
-                     <li><a href="https://synrc.com/apps/mad/doc/book.pdf">MAD BOOK</a></li></ul>
-            </div>
-        </section>
-        <section>
-        <h3>ARTICLES</h3>
-        <div>
-        <ul><li><a href="https://n2o.dev/articles/css.htm">CSS: BOOK</a> <font class="desk" color="#00b8cf">19 AUG 2019</font> </li>
-            <li><a href="https://n2o.dev/articles/mq.htm">EMQ: N2O OVER MQTT</a> <font class="desk" color="#00b8cf">26 APR 2017</font> </li>
-            <li><a href="https://n2o.dev/articles/streams.htm">PI: 300MB/s LOGGER</a> <font class="desk" color="#00b8cf">15 SEP 2016 </font></li>
-            <li><a href="https://n2o.dev/articles/ftp.htm">FTP: 25MB/s FILE UPLOAD</a> <font class="desk" color="#00b8cf">23 SEP 2015</font></li>
-            <li><a href="https://n2o.dev/articles/web.htm">N2O: WEB APPLICATIONS</a> <font class="desk" color="#00b8cf">3 MAR 2015</font></li>
-            <li><a href="https://n2o.dev/articles/n2o.htm">SPEC: PROTOCOL</a> <font class="desk" color="#00b8cf">1 MAR 2015 </font></li>
-            <li><a href="https://n2o.dev/articles/bpe.htm">BPE: BUSINESS ENGINE</a> <font class="desk" color="#00b8cf">20 OCT 2014 </font></li>
-            <li><a href="https://n2o.dev/articles/history.htm">N2O: HISTORY</a></li><li><a href="http://synrc.com/apps/cr/doc/cr.htm">CR: DATABASE</a></li>
-            <li><a href="http://5ht.co/spawnproc.htm">PRIVATBANK CASE</a></li></ul>
-         </div>
-            <h3>SPEC</h3>
-            <div>
-                 <ul><li><a href="https://n2o.tech">EN</a></li>
-                     <li><a href="https://n2o.tech/jp/">JP</a></li>
-                     <li><a href="https://n2o.tech/cn/">CN</a></li></ul>
-            </div>
-        </section>
-    </article>
-</aside><main>
-</main><footer>
-    Made with <span class="heart">❤</span> to N2O
-</footer></body>
-<script> function drop() { document.getElementById("dropdown").classList.toggle("show"); }</script>
+  <article>
+    <section>
+      <h3>User Manuals</h3>
+      <div>As a tribute to Erlang/OTP style, we provide
+         roff man page generation from HTML5 article scheme.
+         All XHTML in this space are converted to ROFF with MAD.
+         This is fine to use XML/XSD/XSLT for DocOps.<br/><br/>
+      </div>
+    </section>
+  </article>
+  <article>
+    <section>
+      <h3><a href="https://bpe.n2o.space">BPE</a></h3>
+      <div>
+        <ul>
+          <li><a href="https://bpe.n2o.space/man/bpe.htm">BPE</a></li>
+          <li><a href="https://bpe.n2o.space/man/task.htm">TASK</a></li>
+          <li><a href="https://bpe.n2o.space/man/event.htm">EVENT</a></li>
+          <li>PROC</li>
+          <li>N2O</li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <h3><a href="https://kvs.n2o.space">KVS</a></h3>
+      <div>
+        <ul>
+          <li><a href="https://kvs.n2o.space/man/kvs.htm">KVS</a></li>
+          <li><a href="https://kvs.n2o.space/man/kvs_stream.htm">STREAM</a></li>
+          <li><a href="https://kvs.n2o.space/man/kvs_mnesia.htm">MNESIA</a></li>
+          <li><a href="https://kvs.n2o.space/man/kvs_fs.htm">FS</a></li>
+          <li><a href="https://kvs.n2o.space/man/kvs_rocks.htm">ROCKS</a></li>
+          <li><a href="https://kvs.n2o.space/man/kvs_st.htm">ST</a></li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <h3><a href="https://form.n2o.space">FORM</a></h3>
+      <div>
+        <ul>
+          <li>FORM</li>
+          <li>NITRO</li>
+          <li>XML</li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <h3><a href="https://bert.n2o.space">BERT</a></h3>
+      <div>
+        <ul>
+          <li><a href="https://bert.n2o.space/man/bert_swift.htm">SWIFT</a></li>
+          <li><a href="https://bert.n2o.space/man/bert_google.htm">GRPC</a></li>
+          <li><a href="https://bert.n2o.space/man/bert_validator.htm">ERLANG</a></li>
+          <li><a href="https://bert.n2o.space/man/bert_javascript.htm">JS</a></li>
+          <li>KOTLIN</li>
+          <li>ASN1</li>
+        </ul>
+      </div>
+    </section>
+  </article>
+  <article>
+    <section>
+      <h3><a href="https://rest.n2o.space">REST</a></h3>
+      <div>
+        <ul>
+          <li><a href="https://rest.n2o.space/man/rest.htm">REST</a></li>
+          <li><a href="https://rest.n2o.space/man/rest_cowboy.htm">COW</a></li>
+          <li><a href="https://rest.n2o.space/man/rest_kvs.htm">KVS</a></li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <h3><a href="https://ws.n2o.space">N2O</a></h3>
+      <div>
+        <ul>
+          <li><a href="https://ws.n2o.space/man/n2o.htm">N2O</a></li>
+          <li><a href="https://ws.n2o.space/man/n2o_pi.htm">PI</a></li>
+          <li><a href="https://ws.n2o.space/man/n2o_auth.htm">AUTH</a></li>
+          <li><a href="https://ws.n2o.space/man/n2o_mqtt.htm">MQTT</a></li>
+          <li><a href="https://ws.n2o.space/man/n2o_ws.htm">WS</a></li>
+          <li><a href="https://ws.n2o.space/man/n2o_syn.htm">SYN</a></li>
+          <li><a href="https://ws.n2o.space/man/n2o_gproc.htm">GPROC</a></li>
+          <li><a href="https://ws.n2o.space/man/n2o_session.htm">SESSION</a></li>
+          <li><a href="https://ws.n2o.space/man/n2o_cowboy.htm">COWBOY</a></li>
+          <li><a href="https://ws.n2o.space/man/n2o_ftp.htm">FTP</a></li>
+          <li><a href="https://ws.n2o.space/man/n2o_proto.htm">PROTO</a></li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <h3>JS</h3>
+      <div>
+        <ul>
+          <li><a href="https://ws.n2o.space/man/n2o.js.htm">N2O</a></li>
+          <li><a href="https://ws.n2o.space/man/mq.js.htm">MQ</a></li>
+          <li><a href="https://ws.n2o.space/man/bert.js.htm">BERT</a></li>
+          <li><a href="https://ws.n2o.space/man/heart.js.htm">HEART</a></li>
+          <li><a href="https://ws.n2o.space/man/utf8.js.htm">UTF-8</a></li>
+          <li><a href="https://ws.n2o.space/man/ftp.js.htm">FTP</a></li>
+          <li><a href="https://ws.n2o.space/man/nitro.js.htm">NITRO</a></li>
+          <li><a href="https://ws.n2o.space/man/ieee754.js.htm">IEEE-754</a></li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <h3><a href="https://nitro.n2o.space">NITRO</a></h3>
+      <div>
+        <ul>
+          <li><a href="https://ws.n2o.space/man/n2o_nitro.htm">N2O</a></li>
+          <li><a href="https://nitro.n2o.space/man/element_input.htm">INPUT</a></li>
+          <li><a href="https://nitro.n2o.space/man/element_textbox.htm">TEXTBOX</a></li>
+          <li>BIND</li>
+          <li>EVENT</li>
+          <li>RENDER</li>
+          <li>TAGS</li>
+        </ul>
+      </div> 
+    </section>
+  </article>
+  <article>
+    <section>
+      <h3><a href="https://fs.n2o.space">FS</a></h3>
+      <div>
+        <ul>
+          <li><a href="https://fs.n2o.space/man/fs.htm">FS</a></li>
+          <li><a href="https://fs.n2o.space/man/fs_event_bridge.htm">EVENT</a></li>
+          <li><a href="https://fs.n2o.space/man/fs_server.htm">SERVER</a></li>
+          <li><a href="https://fs.n2o.space/man/fsevents.htm">FSEVENTS</a></li>
+          <li><a href="https://fs.n2o.space/man/inotifywait.htm">INOTIFY</a></li>
+          <li><a href="https://fs.n2o.space/man/inotifywait_win32.htm">WIN32</a></li>
+          <li><a href="https://fs.n2o.space/man/kqueue.htm">KQUEUE</a></li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <h3><a href="https://sh.n2o.space">SH</a></h3>
+      <div>
+        <ul>
+          <li><a href="https://sh.n2o.space/man/sh.htm">SH</a></li>
+          <li><a href="https://sh.n2o.space/man/sh_path.htm">PATH</a></li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <h3><a href="https://active.n2o.space">ACTIVE</a></h3>
+      <div>
+        <ul>
+          <li><a href="https://active.n2o.space/man/active.htm">ACTIVE</a></li>
+          <li><a href="https://active.n2o.space/man/active_app.htm">APP</a></li>
+          <li><a href="https://active.n2o.space/man/active_events.htm">EVENTS</a></li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <h3><a href="https://mach.n2o.space">MACH</a></h3>
+      <div>
+        <ul><li>MACH</li></ul>
+       </div>
+    </section>
+  </article>
+  <article>
+    <section>
+      <h3><a href="https://stdlib.n2o.space">STDLIB</a></h3>
+      <div>
+        <ul>
+          <li>LIST</li>
+          <li>RE</li>
+          <li>SUPERVISOR</li>
+          <li>TIMER</li>
+          <li>UNICODE</li>
+          <li>STRING</li>
+          <li>RANDOM</li>
+          <li>GEN_SERVER</li>
+          <li>GEN_EVENT</li>
+          <li>DETS</li>
+          <li>PROC_LIB</li>
+          <li>IO</li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <h3><a href="https://kernel.n2o.space">KERNEL</a></h3>
+      <div>
+        <ul>
+          <li>APPLICATION</li>
+          <li>AUTH</li>
+          <li>CODE</li>
+          <li>DISK_LOG</li>
+          <li>GEN_TCP</li>
+          <li>GEN_UDP</li>
+          <li>HEART</li>
+          <li>INET</li>
+          <li>KERNEL</li>
+          <li>RPC</li>
+          <li>USER</li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <h3><a href="https://mad.n2o.space">MAD</a></h3>
+      <div>
+        <ul>
+          <li><a href="https://mad.n2o.space/man/mad.htm">MAD</a></li>
+          <li><a href="https://mad.n2o.space/man/mad_local.htm">LOCAL</a></li>
+          <li><a href="https://mad.n2o.space/man/mad_git.htm">GIT</a></li>
+          <li><a href="https://mad.n2o.space/man/mad_run.htm">RUN</a></li>
+          <li><a href="https://mad.n2o.space/man/mad_compile.htm">COMPILE</a></li>
+          <li><a href="https://mad.n2o.space/man/mad_app.htm">APP</a></li>
+          <li><a href="https://mad.n2o.space/man/mad_leex.htm">LEEX</a></li>
+          <li><a href="https://mad.n2o.space/man/mad_yecc.htm">YECC</a></li>
+          <li><a href="https://mad.n2o.space/man/mad_erl.htm">ERL</a></li>
+          <li><a href="https://mad.n2o.space/man/mad_dtl.htm">DTL</a></li>
+          <li><a href="https://mad.n2o.space/man/mad_peg.htm">PEG</a></li>
+          <li><a href="https://mad.n2o.space/man/mad_port.htm">PORT</a></li>
+          <li><a href="https://mad.n2o.space/man/mad_script.htm">SCRIPT</a></li>
+          <li><a href="https://mad.n2o.space/man/mad_systools.htm">SYSTOOLS</a></li>
+        </ul>
+      </div> 
+    </section>
+  </article>
+  <article>
+    <section>
+      <h3>RELEASES</h3>
+      <div>
+        <ul>
+          <li><a href="https://tonpa.guru/stream/2019/2019-06-21%20Новые%20версии%20BUD%20и%20BANK.htm">BUD and BANK 6.6</a> <font class="desk" color="#00b8cf">21 JUN 2019</font></li>
+          <li><a href="https://tonpa.guru/stream/2019/2019-06-19%20BPE%20MIX.htm">BPE 6.6 MIX</a> <font class="desk" color="#00b8cf">19 JUN 2019</font></li>
+          <li><a href="https://tonpa.guru/stream/2019/2019-06-10%20N2O%20MIX.htm">N2O 6.6 MIX</a> <font class="desk" color="#00b8cf">10 JUN 2019</font></li>
+          <li><a href="https://tonpa.guru/stream/2019/2019-04-13%20Новая%20версия%20KVX.htm">KVX 6.4</a> <font class="desk" color="#00b8cf">13 APR 2019</font></li>
+          <li><a href="https://tonpa.guru/stream/2019/2019-04-11%20Новая%20версия%20BPE.htm">BPE 4.4</a> <font class="desk" color="#00b8cf">11 APR 2019</font></li>
+          <li><a href="http://tonpa.guru/stream/2019/2019-03-07%20Новая%20версия%20FORMS.htm">FORMS 4.3</a> <font class="desk" color="#00b8cf">19 MAR 2019</font></li>
+          <li><a href="https://tonpa.guru/stream/2019/2019-02-13%20Новая%20версия%20XIO.htm">XIO MQTT 5.0</a> <font class="desk" color="#00b8cf">13 FEB 2019</font></li>
+          <li><a href="https://tonpa.guru/stream/2018/2018-11-30%20Ошечки.htm">O-SERIES</a> <font class="desk" color="#00b8cf">30 NOV 2018</font></li>
+          <li><a href="https://tonpa.guru/stream/2018/2018-11-13%20Новая%20версия%20KVX.htm">KVX 5.11</a> <font class="desk" color="#00b8cf">13 NOV 2018</font></li>
+          <li><a href="https://tonpa.guru/stream/2018/2018-11-13%20Новая%20версия%20MAD.htm">MAD 4.10</a> <font class="desk" color="#00b8cf">13 NOV 2018</font></li>
+          <li><a href="https://tonpa.guru/stream/2018/2018-11-13%20Новая%20версия%20REVIEW.htm">REVIEW 1.10</a> <font class="desk" color="#00b8cf">13 NOV 2018</font></li>
+          <li><a href="https://tonpa.guru/stream/2018/2018-10-22%20Новый%20ролаут%20N2O.htm">N2O 5.10</a> <font class="desk" color="#00b8cf">22 OCT 2018</font></li>
+        </ul>
+      </div>
+      <h3>BOOKS</h3>
+      <div>
+        <ul>
+          <li><a href="https://synrc.com/apps/n2o/doc/book.pdf">N2O BOOK</a></li>
+          <li><a href="https://synrc.com/apps/bpe/doc/book.pdf">BPE BOOK</a></li>
+          <li><a href="https://synrc.com/apps/mad/doc/book.pdf">MAD BOOK</a></li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <h3>ARTICLES</h3>
+      <div>
+        <ul>
+          <li><a href="https://n2o.dev/articles/css.htm">CSS: BOOK</a> <font class="desk" color="#00b8cf">19 AUG 2019</font></li>
+          <li><a href="https://n2o.dev/articles/mq.htm">EMQ: N2O OVER MQTT</a> <font class="desk" color="#00b8cf">26 APR 2017</font></li>
+          <li><a href="https://n2o.dev/articles/streams.htm">PI: 300MB/s LOGGER</a> <font class="desk" color="#00b8cf">15 SEP 2016 </font></li>
+          <li><a href="https://n2o.dev/articles/ftp.htm">FTP: 25MB/s FILE UPLOAD</a> <font class="desk" color="#00b8cf">23 SEP 2015</font></li>
+          <li><a href="https://n2o.dev/articles/web.htm">N2O: WEB APPLICATIONS</a> <font class="desk" color="#00b8cf">3 MAR 2015</font></li>
+          <li><a href="https://n2o.dev/articles/n2o.htm">SPEC: PROTOCOL</a> <font class="desk" color="#00b8cf">1 MAR 2015 </font></li>
+          <li><a href="https://n2o.dev/articles/bpe.htm">BPE: BUSINESS ENGINE</a> <font class="desk" color="#00b8cf">20 OCT 2014 </font></li>
+          <li><a href="https://n2o.dev/articles/history.htm">N2O: HISTORY</a></li>
+          <li><a href="http://synrc.com/apps/cr/doc/cr.htm">CR: DATABASE</a></li>
+          <li><a href="http://5ht.co/spawnproc.htm">PRIVATBANK CASE</a></li>
+        </ul>
+      </div>
+      <h3>SPEC</h3>
+      <div>
+        <ul>
+          <li><a href="https://n2o.tech">EN</a></li>
+          <li><a href="https://n2o.tech/jp/">JP</a></li>
+          <li><a href="https://n2o.tech/cn/">CN</a></li>
+        </ul>
+      </div>
+    </section>
+  </article>
+</aside>
+<main>
+</main>
+<footer>
+  Made with <span class="heart">❤</span> to N2O
+</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body>
 </html>
