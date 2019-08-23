@@ -11,9 +11,13 @@
 <link rel="stylesheet" href="https://n2o.dev/zima.css" />
 </head>
 <body>
+<nav>
+  <a href='https://n2o.dev'>DEV</a>
+  <a href='#' style="background:#ededed;">FTP</a>
+</nav>
 <header>
   <a href="../index.html"><img src="../img/Synrc Neo.svg" /></a>
-  <h1>N2O: File Transfer Protocol</h1>
+  <h1>FTP: File Upload</h1>
 </header>
 <aside>
   <article>
@@ -86,7 +90,7 @@ The other cool thing is that n2o_async supports gen_server's <b>call</b>, <b>cas
     
     <figure>
       <figcaption>Listing 1. <b>n2o_async</b> supervision</figcaption>
-      <pre>
+      <code>
   &#62; pid(0,507,0) ! "hey".
     Received: "hey"
     ok
@@ -104,7 +108,7 @@ The other cool thing is that n2o_async supports gen_server's <b>call</b>, <b>cas
       {"counter",&#60;&#60;"d43adcc79dd64393a1eb559227a2d3fd"&#62;&#62;}},
     &#60;0.11564.0&#62;,worker,
     [n2o_async]}]
-      </pre>
+      </code>
     </figure>
     
     <p>The only mandatory state value you need to hold during file uploading is a file offset that increments after each chunck.
@@ -115,7 +119,7 @@ initialization is clean and portable:
     
     <figure>
       <figcaption>Listing 2. <b>n2o_async</b> initialization</figcaption>
-      <pre>
+      <code>
 info( #ftp { sid=Sid, filename=Filename, hash=Hash,
              status= &#60;&#60;"init"&#62;&#62;, offset=Size, block=B,
              data=Msg } = FTP, Req, State) -&#62;
@@ -139,7 +143,7 @@ info( #ftp { sid=Sid, filename=Filename, hash=Hash,
                              group=n2o, state=F2, name=Name }),
 
   {reply,wf:format(F2),Req,State};
-      </pre>
+      </code>
     </figure>
     
     <p>The async process needs only shifting state's offset and pushing it back to client
@@ -147,7 +151,7 @@ info( #ftp { sid=Sid, filename=Filename, hash=Hash,
     
     <figure>
       <figcaption>Listing 3. Uploader <b>n2o_async</b> process</figcaption>
-      <pre>
+      <code>
   proc( #ftp{ sid=Sid, data=Msg, block=Block, filename=F} = FTP,
         #handler{ state=#ftp{data=State, offset=Offset}} = Async) -&#62;
 
@@ -157,7 +161,7 @@ info( #ftp { sid=Sid, filename=Filename, hash=Hash,
   case file:write_file(?FILE(Sid,F),&#60;&#60;Msg/binary&#62;&#62;,[append,raw]) of
           ok -&#62; {reply, F2#ftp{data=&#60;&#60;""&#62;&#62;}, Async#handler{state=F2}};
   {error,Rw} -&#62; {reply, {error, Rw}, Async} end.
-      </pre>
+      </code>
     </figure>
     
     <h3>JavaScript Client </h3>
@@ -171,7 +175,7 @@ info( #ftp { sid=Sid, filename=Filename, hash=Hash,
     
     <figure>
       <figcaption>Listing 4. <b>ftp.js</b> client module</figcaption>
-      <pre>
+      <code>
 var ftp = {
 
   $file:   undefined,
@@ -198,23 +202,23 @@ var ftp = {
       this.$reader = new FileReader();
       this.$reader.onloadend=function(e) {
            var res=e.target, data=e.target.result;
-           if (res.readyState == FileReader.DONE && data.byteLength > 0)
+           if (res.readyState == FileReader.DONE  &#38; data.byteLength &#60; 0)
                ftp.send(data); };
       this.$reader.readAsArrayBuffer(ftp.$file.slice(start,end)); } }
-      </pre>
+      </code>
     </figure>
     
     <figure>
       <figcaption>Listing 5. <b>n2o_file</b> protocol handler</figcaption>
-      <pre>
+      <code>
 $file.do = function(rsp) {
     var offset = rsp.v[6].v, block = rsp.v[10].v, status = rsp.v[9].v;
     switch (status) {
         case 'init': ftp.$offset = offset; ftp.$block = block; break;
         case 'send': var x = qi('ftp_status'); if(x) x.innerHTML = offset;
-            if (block&#62;0 && ftp.$active)
+            if (block&#62;0 &#38;&#38; ftp.$active)
             ftp.send_slice(offset, offset+block); } }
-      </pre>
+      </code>
     </figure>
     
     <h3>N2O Element</h3>
@@ -225,10 +229,10 @@ only <b>ftp.js</b> API that can plugged to any upload front-end such as <b>dropz
     
     <figure>
       <figcaption>Listing 6. <b>#upload</b> element</figcaption>
-      <pre>
+      <code>
   render_element(#upload{id=Id} = U) -&#62;
       Uid = case Id of undefined -&#62; wf:temp_id(); I -&#62; I end,
-      bind(ftp_open,  click, "qi('upload').click(); e.preventDefault();"),
+      bind(ftp_open,  click, "qi('upload').click(); e.codeventDefault();"),
       bind(ftp_start, click, "ftp.start();"),
       bind(ftp_stop,  click, "ftp.stop();"),
       bind(nitro:to_atom(Uid), change, "ftp.init(this.files[0],1);"),
@@ -243,7 +247,7 @@ only <b>ftp.js</b> API that can plugged to any upload front-end such as <b>dropz
 
     bind(Control,Event,Code) -&#62;
         wf:wire(#bind{target=Control,type=Event,postback=Code}).
-      </pre>
+      </code>
     </figure>
   </section>
 </main>

@@ -1,0 +1,395 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="Maxim Sokhatsky" />
+    <title>CR</title>
+    <link rel="stylesheet" href="https://n2o.dev/blank.css" />
+    <link rel="stylesheet" href="https://n2o.dev/zima.css" />
+</head>
+<body>
+<nav>
+  <a href='https://n2o.dev'>DEV</a>
+  <a href='#' style="background:#ededed;">CR</a>
+</nav>
+<header>
+  <a href="../index.html"><img src="../img/Synrc Neo.svg" /></a>
+  <h1>CR: BFT PROTO</h1>
+</header>
+<main>
+  <section>
+  <h3>Chain Replication Database</h3>
+
+<p>In banking system demands are very tight. Database
+should be at least tripled, stand-by nodes should pick up
+master reads from failover node, writes should be
+accepted on a reasonble quorum, failover must be followed by recovery, database
+should be able to scale even with the RAM/DISC limitations.</p>
+
+<p>No data should be treated as written otherwise that commited to all replicas.
+All this circumstances leads us to chain replication protocol as a simple and natural
+feedback to this challenge.</p>
+
+<p>Different replication techniques exists to satisfy replication demands.
+Master-slave replication is most widely known type of replication
+used before in such products like GFS, HDFS, mongodb, etc. Quorum Intersection
+is another technique used in databases like Cassandra or Amazon Dynamo.
+They mostly provide a consistent distributed repository
+for event tables or for file storage. In banking industry
+we synchronize account balances and need simple and managable
+protocol for storage consistency issuing high demand on system integrity.
+</p>
+
+<p>There are several classes of error usually implied when dealing with failure detection.
+The most weak class is fail-stop events, when the outage is normal or predictable.
+The second class is crash-failures, the ubnormal terminations and outages. The most strong
+type of failures are byzantine failures resistant to bit-flips,
+hacked parties or any types of compromising the transaction objects.
+For banking applications the byzantine fault tolerance is desired,
+despite it affects the latency. However we will show that CR latency
+is acceptible even in compare with web applications.</p>
+
+<h3>Features</h3>
+
+<p>
+<ul>
+<li>CP database</li>
+<li>2N+1 nodes tolerates N failures</li>
+<li>Consistent hashing DHT</li>
+<li>RAFT for managing server configurations timeline</li>
+<li>HMAC signing for Byzantine capabilities</li>
+<li>Various database backends: <b>mnesia</b>, <b>riak</b>, <b>redis</b>, <b>fs</b>, <b>sql</b></li>
+<li>High-performance non-blocking TCP acceptor</li>
+<li>Separate endpoints for HEART, CLIENT and SERVER protocols</li>
+<li>Pure, clean and understandable codebase</li></ul></p>
+
+<h3>Consistent Hash Ring</h3>
+
+<p>Bulding a consistent hash ring is a key feature
+that opens a door to the distributed system.
+CR is using only five functions to model the DHT ring.
+Ring provides a desirable probability in series
+of nines of working event condition.</p>
+
+<figure>
+<code>
+ > cr:ring().
+
+{12,
+ [{0,0},
+  {121791803110908576516973736059690251637994378581,1},
+  {243583606221817153033947472119380503275988757162,1},
+  {365375409332725729550921208179070754913983135743,1},
+  {487167212443634306067894944238761006551977514324,1},
+  {608959015554542882584868680298451258189971892905,2},
+  {730750818665451459101842416358141509827966271486,2},
+  {852542621776360035618816152417831761465960650067,2},
+  {974334424887268612135789888477522013103955028648,2},
+  {1096126227998177188652763624537212264741949407229,3},
+  {1217918031109085765169737360596902516379943785810,3},
+  {1339709834219994341686711096656592768017938164391,3},
+  {1461501637330902918203684832716283019655932542972,3}]}
+</code></figure>
+
+<p>The ring or configuration is partitioned by shards or peers.</p>
+
+<figure>
+<code>
+> cr:peers().
+
+[{'cr1@127.0.0.1',9000,9001,9002},
+ {'cr2@127.0.0.1',9004,9005,9006},
+ {'cr3@127.0.0.1',9008,9009,9010}]
+</code>
+</figure>
+
+<p>Each peer is running several replica protocol vnodes. Each vnode is a
+replica process that serves a specific key-range.</p>
+
+<figure>
+<code>
+> cr:local().
+
+[{487167212443634306067894944238761006551977514324,&#60;0.200.0&#62;},
+ {365375409332725729550921208179070754913983135743,&#60;0.199.0&#62;},
+ {243583606221817153033947472119380503275988757162,&#60;0.198.0&#62;},
+ {121791803110908576516973736059690251637994378581,&#60;0.197.0&#62;}]
+</code></figure>
+
+<figure>
+<code>
+> cr:chain(foo).
+
+[{1461501637330902918203684832716283019655932542972,3},
+ {487167212443634306067894944238761006551977514324,1},
+ {974334424887268612135789888477522013103955028648,2}]</code></figure>
+
+<h3>Chain Replication Protocol</h3>
+
+<h4>Command</h4>
+
+<p>Command is an atomic event that can be performed
+in single process context at a single machine.</p>
+
+<p>CR provides extensible set of possible commands:</p>
+
+<p>
+<ul>
+<li>PUT the object to database</li>
+<li>LINK the object to some doubly-linked list</li>
+<li>REMOVE the object from the list and database</li>
+</ul></p>
+
+<p>This set of commands refers to KVS the database framework for
+storing the doubly linked lists (it can be called chains/feeds/sequences)
+using the two basic record types: <b>#container</b>, who store the top of a chain along
+with chain aggregation counters; and <b>#iterator</b>, who provides next and prev
+fields for traversal.</p>
+
+<h4>Distributed Transaction</h4>
+
+<p>All replicas are sequenced into the chains. Transaction is a
+command performing forward over the ordered chain of replicas. This chain
+is called configuration. All writes come to the chain's head,
+all reads come to chain's tail.</p>
+
+<figure><figcaption>Picture 1. Chain<figcaption><img src="https://synrc.com/apps/cr/doc/images/replicas.svg" height=200 style="border:none;"/></figure>
+
+<h4>Replication Log</h4>
+
+<p>During transaction, the command is saved in replication
+log on each replica of the transaction. This log is append-only
+disk structure and is also called this history of replica's operations.</p></div></p>
+
+<p>The replication log is also uses KVS as underlying storage.
+As a replication log container it uses <b>#log</b> type and command is stored
+as <b>#operation</b> record. Each replica has its own log.</p>
+
+<figure><figcaption>Picture 2. Log</figcaption><img src="https://synrc.com/apps/cr/doc/images/log.svg" height=400 style="border:none;"></figure>
+
+<h4>Replica Protocol</h4>
+
+<p>Some assumptions are implied during protocol description.</p>
+
+<blockquote><ul><li>1) each peer has at least one non-faulty vnode;</li>
+<li>2) ring is tracked by external consensus or</li>
+<li>3) ring has at least one peer with no faulty vnodes.</li>
+</ul></blockquote>
+
+<p><b>#operation</b> [Vnode,Chain,Operation] — Any active replica Vnode in
+configuration Chain can issue an operation command only if each
+preceding replica in Chain, if any, has done likewise and there
+is no conflicting operation for s in its history. Vnode also adds
+a new order proof to its history.</p>
+
+<p><b>#suspend</b> [Vnode] — An active replica Vnode can
+suspend updating its history by becoming immutable at any time.
+Only heart monitor can issue a becomeImmutable message.
+The replica signs a wedged statement to notify heart monitor
+that it is immutable and what its history is.</p>
+
+<p><b>#resume</b> [Vnode,Configuration,History] — A pending
+replica Vnode in Configuration can resume handling operations
+if the Heart Monitor has synchronized the history between
+nodes to the greatest common prefix log.</p>
+
+<h3>Failures</h3>
+
+<h4>Configuration Tracking</h4>
+
+<p>The configuration is a dynamic property of transaction.
+During transaction it may change due to byzantine failures,
+leading us to reconfigure the replicas in a chain. The another consistent
+system is needed to track the dynamic configurations.</p></div></P>
+
+<p>To make the shard highly available, we use replication
+and dynamically change the configuration of replicas
+in order to deal with crash failures and unresponsiveness.
+Each machine in a cluster has single append-only configuration
+log which is not based on KVS due to latency requirements.
+Configuration log is a binary file written by RAFT protocol commands.
+There is only two commands which could be performed over the configuration log:</p>
+
+<p>
+<ul>
+<li>ADD replica to configuration</li>
+<li>DELETE replica from configuration</li>
+</ul></p>
+
+<h4>Heart Monitor Protocol</h4>
+
+<p><b>#reconfig</b> [Node,Configuration,NewConfiguration] —
+The heart monitor waits for a set of valid histories from
+a quorum of replicas in current configuration.
+A valid history contains at most one record per operation.
+The oracle then issues an #resume message for all nodes in NewConfiguration
+with the log position of maximal common prefix (last replica in previous Configuration).
+The heart monitor can issue at most one #resume message per Configuration generation.</p>
+
+<p><b>#ping</b> — Round-Robin ping over nodes of Configuration. In initial
+configuration all nodes are active or resumed.</p>
+
+<h3>Safety</h3>
+
+<h4>Stable Operation Log</h4>
+
+<p>The equation specifies what operations O are safe, when all its replicas are commited.
+but not when or in what order to do them.
+In other words, the system is asynchronous. In this formula we call stable
+operation log having operations commited on all replicas.</p>
+
+<figure>
+<code>
+Stable = [ R || R <- replicas(O),
+                status(R) == commited,
+                length(R) == N ]
+</code></figure>
+
+<p><b>NOTE</b>: due to asynchronous nature of transaction service the operations
+log will be always unordered. As on Picture 3 it should GCP = 2.</p></div>
+
+<figure><figcaption>Picture 3. Greatest common prefix</figcaption>
+<img src="https://synrc.com/apps/cr/doc/images/merging.svg" height=300 style="border:none;"/></figure>
+
+<h3>Liveness</h3>
+
+<p>There is always eventually a configuration in which all replicas
+are correct and do not become suspended. Failure detection of liveness
+is tracked by Heart Monitor which pings each node and reconfigures the
+nodes for synchronizing the configuration consensus log.</p>
+
+
+<h3>OTP protocol</h3>
+
+<p>Some types are embedded in L core to resolve main tasks during
+type inference, type unification and patterm maching compilation.
+L has following basic types which are used by infer/unify/match core.
+These types are also shared with Type Inspector.</p>
+
+<p>INTERCONNECT
+   <ul>
+    <li>transaction</li>
+    <li>get</li>
+    <li>sync</li>
+    </ul></p>
+
+<p>PING<ul>
+    <li>ping</li>
+    <li>join</li>
+    <li>leave</li>
+</ul></p>
+
+<h3>Implementation</h3>
+
+<p>The chain replication protolcol is implementes as <b>Erlang/OTP</b> application <b>cr</b>
+that could be embeded in any toplevel application. We use one supervision
+tree and <b>gen_server</b> per one TCP endpoint along with separate
+<b>vnode_sup</b> supervision for VNODE transactional contexts per hashring vnode.</p>
+
+<p>The Chain Replication Database application is built using Synrc Application Stack.
+Among them we have <b>fs</b> native file-system listener, <b>sh</b> shell executor
+for running external commands, powerful <b>mad</b> rebar replacement which is
+able to pack application inside single-file bundle. During development we
+also use <b>otp.mk</b> and <b>active</b> file reloader that uses native
+filesystem event on each platform. The database itself built using
+<b>kvs</b> with <b>mnesia</b> backend and <b>db</b> banking schema as example.</p>
+
+<figure>
+<code>
+> application:which_applications().
+
+[{cr,"Chain Replication","0.1"},
+ {sh,"VXZ SH Executor","0.9"},
+ {mad,"MAD VXZ Build Tool","2.2"},
+ {db,"Bank Database","1"},
+ {active,"ACT VXZ Continuous Compilation","0.9"},
+ {kvs,"KVS Abstract Term Database","1"},
+ {mnesia,"MNESIA  CXC 138 12","4.12.3"},
+ {fs,"VXZ FS Listener","0.9.1"},
+ {stdlib,"ERTS  CXC 138 10","2.2"},
+ {kernel,"ERTS  CXC 138 10","3.0.3"}]
+</code>
+</figure>
+
+<p>Supervision tree of chain replication supervisor:</p>
+
+<figure><figcaption>Picture 4. Supervision</figcaption><img src="https://synrc.com/apps/cr/doc/images/sup.png" height=400></figure>
+
+<figure>
+<code>
+> cr:sup().
+
+[{vnode_sup,&#60;0.52.0&#62;},
+ {client_sup,&#60;0.51.0&#62;},
+ {client,&#60;0.50.0&#62;},
+ {ping_sup,&#60;0.289.0&#62;},
+ {ping,&#60;0.48.0&#62;},
+ {interconnect_sup,&#60;0.47.0&#62;},
+ {interconnect,&#60;0.46.0&#62;}]
+</code></figure>
+
+<p>For benchmarking database please populate the it with data but without
+overloading the database:</p>
+
+<figure>
+<code>
+    [
+      begin
+          cr:test(500),
+          timer:sleep(1000)
+      end
+          || ___ <- lists:seq(1,10)
+    ].
+
+> cr:dump().
+                                               vnode   i  n        top      log        latency
+    121791803110908576516973736059690251637994378581   1  1       6506     1607       1/315/97
+    243583606221817153033947472119380503275988757162   2  1       6508     1662      1/317/100
+    365375409332725729550921208179070754913983135743   3  1       6510     1658      2/317/105
+    487167212443634306067894944238761006551977514324   4  1       6505     1583      1/317/104
+    608959015554542882584868680298451258189971892905   5  2       6499     1637      3/317/115
+    730750818665451459101842416358141509827966271486   6  2       6510     1664      2/318/117
+    852542621776360035618816152417831761465960650067   7  2       6501     1634      2/311/115
+    974334424887268612135789888477522013103955028648   8  2       6500     1575       3/290/96
+   1096126227998177188652763624537212264741949407229   9  3       6497     1607      3/316/118
+   1217918031109085765169737360596902516379943785810  10  3       6510     1662      3/318/117
+   1339709834219994341686711096656592768017938164391  11  3       6496     1658      3/311/106
+   1461501637330902918203684832716283019655932542972  12  3       6505     1583      2/295/104
+</code></figure>
+
+<h3>Literature</h3>
+
+<p>
+&nbsp;[1]. Hussam Abu-Libdeh, Robbert van Renesse, Ymir Vigfusson.<br>
+<a href="http://www.ymsir.com/papers/sharding-socc.pdf">
+Leveraging Sharding in the Design of Scalable Replication Protocols</a><br><br>
+
+[2]. Robbert van Renesse, Chi Ho, Nicolas Schiper.<br>
+<a href="http://www.cs.cornell.edu/home/rvr/newpapers/opodis2012.pdf">
+Byzantine Chain Replication</a><br><br>
+
+[3]. Robbert van Renesse, Nicolas Schiper.<br>
+<a href="http://www.cs.cornell.edu/home/rvr/papers/osdi04.pdf">
+Chain Replication for Supporting High Throughput and Availability</a>
+</p>
+
+<h3>Credits</h3>
+
+<p>
+<ul>
+<li>Maxim Sokhatsky</li>
+<li>Vladimir Kirillov</li>
+<li>Sergey Klimenko</li>
+<li>Valery Meleshkin</li>
+<li>Victor Sovietov</li>
+</ul></p>
+
+  </section>
+</main>
+<footer>
+  Made with <span class="heart">❤</span> for N2O
+</footer>
+</body>
+</html>

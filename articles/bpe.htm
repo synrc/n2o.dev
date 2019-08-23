@@ -11,6 +11,10 @@
 <link rel="stylesheet" href="https://n2o.dev/zima.css" />
 </head>
 <body>
+<nav>
+  <a href='https://n2o.dev'>DEV</a>
+  <a href='#' style="background:#ededed;">CSS</a>
+</nav>
 <header>
   <a href="../index.html"><img src="../img/Synrc Neo.svg" /></a>
   <h1>BPE</h1>
@@ -57,10 +61,10 @@ BPE это сабсет BPMN 2.0. Не нужно писать бесконеч�
 комплекс математических, лингвистических (как сейчас модно
 говорить DSL) и других обеспечений, которые лежат в основе таких систем.</p>
     
-    <center>
-      <p>Picture 1. Business Process</p>
-      <p><img src="http://5ht.co/img/BPE.svg" width="600" /></p>
-    </center>
+    <figure>
+      <figcaption>Picture 1. Business Process</figcaption>
+      <img src="http://5ht.co/img/BPE.svg" width="600" style="border: none;margin:20px;"/>
+    </figure>
     
     <p>В основе систем управления процессами лежат Сети Петри,
 переходы между состояниями FSM тоже отмечены вершинами.
@@ -129,13 +133,15 @@ input and outputs of processes or function signatures specified in process defin
 In BPE the role of types was taken by document types, which is simple Erlang records,
 so in BPE workflow processing is type-safe on compilation stage with respect to document types.</p>
     
+    </section>
+    <section>
     <h3>BPMN 2.0 in Erlang</h3>
     
     <p>Здесь конечно не все, но здесь как раз эти 20% которые покрывают 80% workflows.</p>
     
     <figure>
       <figcaption>Listing 1. BPMN 2.0 Model</figcaption>
-      <pre style="width:700px">
+      <code>
   -record(task,         { name, roles=[], module }).
   -record(userTask,     { name, roles=[], module }).
   -record(serviceTask,  { name, roles=[], module }).
@@ -151,7 +157,7 @@ so in BPE workflow processing is type-safe on compilation stage with respect to 
                           rules, docs=[],
                           task,
                           beginEvent, endEvent }).
-      </pre>
+      </code>
     </figure>
     
     <p>В каждом FSM есть желание триггернуть состояние напрямую.
@@ -161,7 +167,7 @@ gen_server и gen_fsm. И решил не использовать gen_fsm во�
     
     <figure>
       <figcaption>Listing 2. Boundary Event</figcaption>
-      <pre style="width:700px">
+      <code>
   process_event(Event, Proc) -&#62;
   Targets = bpe_task:targets(Event#messageEvent.name,Proc),
   {Status,{Reason,Target},ProcState} =
@@ -171,12 +177,12 @@ gen_server и gen_fsm. И решил не использовать gen_fsm во�
   FlowReply = fix_reply({Status,{Reason,Target},NewProcState}),
   kvs:put(NewProcState),
   FlowReply.
-      </pre>
+      </code>
     </figure>
     
     <figure>
       <figcaption>Listing 3. Flow Processing</figcaption>
-      <pre style="width:700px">
+      <code>
   process_flow(Proc) -&#62;
   Curr = Proc#process.task,
   Term = [],
@@ -201,12 +207,12 @@ gen_server и gen_fsm. И решил не использовать gen_fsm во�
   FlowReply = fix_reply({Status,{Reason,Target},NewProcState}),
   kvs:put(NewProcState),
   FlowReply.
-      </pre>
+      </code>
     </figure>
     
     <figure>
       <figcaption>Listing 4. gen_server BPE protocol</figcaption>
-      <pre style="width:700px">
+      <code>
   {get}
   {run}
   {until,_}
@@ -215,7 +221,7 @@ gen_server и gen_fsm. И решил не использовать gen_fsm во�
   {amend,_}
   {amend,_,_}
   {event,_}
-      </pre>
+      </code>
     </figure>
     
     <p>In business process management the key feature of is a
@@ -226,7 +232,7 @@ All the processes can be executed in attached console without web application.</
     
     <figure>
       <figcaption>Listing 5. Open Deposit BPE Process</figcaption>
-      <pre style="width:700px">
+      <code>
   deposit_app() -&#62;
 
     #process { name = 'Create Deposit Account',
@@ -254,12 +260,12 @@ All the processes can be executed in attached console without web application.</
        #messageEvent{name="PaymentReceived"}
       ]
     }.
-      </pre>
+      </code>
     </figure>
     
     <figure>
       <figcaption>Listing 5. Open Deposit BPE Process</figcaption>
-      <pre style="width:700px">
+      <code>
   action({request,'Init'}, Proc) -&#62;
     {reply,Proc};
 
@@ -279,12 +285,10 @@ All the processes can be executed in attached console without web application.</
 
   action({request,'Final'}, Proc) -&#62;
     {reply,Proc}.
-      </pre>
+      </code>
     </figure>
-    
-    <p>Thanks to compact process context the 1 million records of
-process states consume only 1GB of storage.
-    </p>
+
+    <p>Thanks to compact process context the 1 million records of process states consume only 1GB of storage.</p>
   </section>
 </main>
 <footer>

@@ -11,9 +11,13 @@
 <link rel="stylesheet" href="https://n2o.dev/zima.css" />
 </head>
 <body>
+<nav>
+  <a href='https://n2o.dev'>DEV</a>
+  <a href='#' style="background:#ededed;">N2O Web</a>
+</nav>
 <header>
   <a href="../index.html"><img src="../img/Synrc Neo.svg" /></a>
-  <h1>N2O Web Applications</h1>
+  <h1>N2O: Web Applications</h1>
 </header>
 <main>
   <section>
@@ -26,7 +30,7 @@ applications placed in apps and deps directories,
 how to resolve them and perform proper starting.
     </p>
     
-    <figure><img src="../img/mad.png" width="800" style="padding:20px;" /></figure>
+    <figure><img src="../img/mad.png" width="800"/></figure>
     
     <h3>Single Page Application</h3>
     
@@ -35,7 +39,7 @@ Also you should specify a list of n2o.js modules, like protocols, components,
 translations or other modules with up to date client functionality. Here is sample SPA:
     </p>
     
-    <figure><img src="../img/n2oindex.png" width="800" style="padding:0px;" /></figure>
+    <figure><img src="../img/n2oindex.png" width="800"/></figure>
     
     <p>During each initial route connection, main/0 function followed by event(init) is
 being called to render postbacks of active controls. Same
@@ -45,7 +49,7 @@ connection and send initial &#60;&#60;"N2O,"&#62;&#62; authorization packet to o
     
     <figure>
       <figcaption>Listing 1. Route module</figcaption>
-      <pre>
+      <code>
 -module(index).
 -compile(export_all).
 -include_lib("n2o/include/wf.hrl").
@@ -61,7 +65,7 @@ body() -&#62; [ #panel{id=history},
 
 event(init) -&#62; wf:info(?MODULE,"init~n",[]);
 event(E)    -&#62; wf:info(?MODULE,"event ~p~n",[E]).
-      </pre>
+      </code>
     </figure>
     
     <p>After establishing WebSocket connection you should be
@@ -72,7 +76,7 @@ event(E)    -&#62; wf:info(?MODULE,"event ~p~n",[E]).
     
     <figure>
       <figcaption>Listing 2. Test WebSocket connection</figcaption>
-      <pre>
+      <code>
 $ tcpkali -T1s --verbose 3 \
    --first-message "N2O," --ws 127.0.0.1:8000/ws/
 
@@ -85,7 +89,7 @@ Data(161): ➧HTTP/1.1 101 Switching Protocols\r\n
   \r\n⬅︎
 Ramped up to 1 connections.
 Data(414): ➧\201~\001\232{"eval":"{ var x = qi('send'); 
-x && x.addEventListener('click',function (event){{ if 
+x &#38;&#38; x.addEventListener('click',function (event){{ if 
 (validateSources(['message'])) ws.send(enc(tuple(atom(
 'pickle'),bin('send'),bin('g2gCaAVkAAJldmQABWluZGV4ZAA
 EY2hhdGsABHNlbmRkAAVldmVudGgDYgAABZFiAAVgSmIABt6n'),
@@ -98,7 +102,7 @@ Total data received: 575 bytes (575 bytes)
 Bandwidth per channel: 0.006 Mbps, 0.7 kBps
 Aggregate bandwidth: 0.005↓, 0.001↑ Mbps
 Test duration: 1.00634 s.
-      </pre>
+      </code>
     </figure>
     
     <h3>Web Logic</h3>
@@ -109,7 +113,7 @@ Web Logic of Deposits Application is powered by N2O WebSocket Application Server
     </p>
     
     <figure>
-      <img src="../img/web1.png" width="800" style="padding:20px;" />
+      <img src="../img/web1.png" width="800"/>
     </figure>
     
     <p><b>Note:</b> Operating clean and minimalistic API will allow you engineers
@@ -134,7 +138,7 @@ or DTL or other template enginer rendering.
     
     <figure>
       <figcaption>Listing 3. OTP Form</figcaption>
-      <pre>
+      <code>
   document(Name,Phone) -&#62; #document { name = Name,
 
   sections = [ #sec { name= [ deposits:translate({?MODULE,message}), 
@@ -147,7 +151,7 @@ or DTL or other template enginer rendering.
   fields   = [ #field { name='otp', type=otp, 
                title= deposits:translate({?MODULE,pass}),
                labelClass=label, fieldClass=column3} ] }.
-      </pre>
+      </code>
     </figure>
     
     <figure>
@@ -157,7 +161,7 @@ or DTL or other template enginer rendering.
     
     <figure>
       <figcaption>Listing 4. Open Application Form</figcaption>
-      <pre>
+      <code>
 document(Name,Curr) -&#62;
   #document { name = Name,
               sections = [ #sec { name= deposits:translate(name) } ],
@@ -222,38 +226,38 @@ document(Name,Curr) -&#62;
                                      tooltips = [deposits:translate({?MODULE, tooltip9}),
                                      deposits:translate(tooltip8)] },
                            #field { name=cardsPercent, type=empty } ] }.
-      </pre>
+      </code>
     </figure>
     
     <figure>
       <figcaption>Rendered DOM javascript command, Bytes:</figcaption>
-      <pre>
+      <code>
 &#62; wf:actions(undefined).
 &#62; wf:update("1",open_app:new('DP00_12_uah')).
 &#62; size(iolist_to_binary(wf:render(wf:actions()))).
 4935
-      </pre>
+      </code>
     </figure>
     
     <figure>
       <figcaption>Compressed DSL form in BERT, Bytes:</figcaption>
-      <pre>
+      <code>
 &#62; size(term_to_binary(open_app:new('DP00_12_uah'),[compressed])).
 2347
 &#62; size(term_to_binary(open_app:new('DP00_12_uah'))).
 56474
-      </pre>
+      </code>
     </figure>
     
     <figure>
       <figcaption>Declarative compressed FORM in BERT, Bytes:</figcaption>
-      <pre>
+      <code>
 &#62; size(term_to_binary(open_app:document(maxim,"uah",y,y,y))).
 3961
 &#62; size(term_to_binary(open_app:document(maxim,"uah",y,y,y),
                         [compressed])).
 1286
-      </pre>
+      </code>
     </figure>
   </section>
 </main>
