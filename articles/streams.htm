@@ -99,10 +99,10 @@ init(Parent, App) -&#62;
     <p>We can make it <b>gen_server</b>-compatible by placing two lines in init
     </p>
     <figure>
-      <pre>
+      <code>
   put('$ancestors', [Parent]),
   put('$initial_call', {application_controller, start, 1}),
-      </pre>
+      </code>
     </figure>
     
     <h3>Loop</h3>
@@ -125,19 +125,19 @@ loop(Parent, Name, State, Mod, Time) -&#62;
 You may think of <b>receive</b> as effectful suspended <b>case</b>.
     </p>
     <figure>
-      <pre>
+      <code>
 drain()        -&#62; receive Input -&#62; Input end.
 drain(Timeout) -&#62; receive Input -&#62; Input
                   after Timeout -> {timeout,[],[]} end.
-      </pre>
+      </code>
     </figure>
     
     <p>Wake up from Hibernate state here:
     </p>
     <figure>
-      <pre>
+      <code>
 hibernate(P, N, S, M) -&#62; server(drain(), P, N, S, M).
-      </pre>
+      </code>
     </figure>
     
     <h3>Session Types in EXE</h3>
@@ -159,13 +159,13 @@ hibernate(P, N, S, M) -&#62; server(drain(), P, N, S, M).
     </figure>
     <figure>
       <figcaption>Effects API</figcaption>
-      <pre>
+      <code>
   data output (Any: Type): Type :=
        (ok:                  Record -&#62; output Any)
        (ok:           Any -&#62; Record -&#62; output Any)
        (error:                 Atom -&#62; output Any)
        (stop: Atom -&#62; Pid -&#62; Record -&#62; output Any)
-      </pre>
+      </code>
     </figure>
     <p>Effects could be stored as persisted trace of <b>ok</b> and/or <b>error</b> events in KVS.
    We could allow process to continue on errors, etc.
@@ -184,7 +184,7 @@ reply({To,Tag},Reply) -&#62; To ! {Tag,Reply}.
       </code>
     </figure>
     <figure>
-      <pre>
+      <code>
 server({Fun, Sender, Msg}, P, N, S, M) -&#62;
 
   try case M:Fun(Msg, Sender, S) of
@@ -195,15 +195,15 @@ server({Fun, Sender, Msg}, P, N, S, M) -&#62;
                      {ok, NS} -&#62; loop(P, N, NS, M, infinity) end
 
   catch _:_ -&#62; reply(Sender, {error,erlang:get_stacktrace() }) end;
-      </pre>
+      </code>
     </figure>
     <p>There is a trick in OTP to handle Any messages built into protocol which is not good for reasoning.
    We will convert them to cast messages (or better deny totally).
     </p>
     <figure>
-      <pre>
+      <code>
 server(Message,P,N,S,M) -&#62; server({'$gen_cast',[],Message},P,N,S,M).
-      </pre>
+      </code>
     </figure>
     
     <h3>Callback Module</h3>
@@ -225,7 +225,7 @@ system(M,R,S) -&#62;
       </code>
     </figure>
     <figure>
-      <pre>
+      <code>
 '$gen_call'(M,R,S) -&#62;
      io:format("$gen_call: ~p~n",[{M,R,S}]),
      {ok,R,S}.
@@ -237,7 +237,7 @@ system(M,R,S) -&#62;
 'EXIT'(M,R,S) -&#62;
      io:format("EXIT: ~p~n",[{M,R,S}]),
      {stop, M, {R,[]}, S}.
-      </pre>
+      </code>
     </figure>
     
     <h3>Callback Module in EXE</h3>
@@ -271,7 +271,7 @@ system(M,R,S) -&#62;
     
     <h3>Let's try!</h3>
     <figure>
-      <pre>
+      <code>
 1&#62; boot:start(1).
 &#60;0.1564.0&#62;
 
@@ -286,7 +286,7 @@ helo
 4&#62; exit(pid(0,1564,0),normal).
 EXIT: {normal,&#60;0.1562.0&#62;,{}}
 true
-      </pre>
+      </code>
     </figure>
   </section>
 </main>
