@@ -112,12 +112,12 @@ and possibly DOM updates.
     </p>
     
     <figure>
-      <pre>
+      <code>
 1. IO tuple {io,EVAL,DATA}
 2. NOP &#60;&#60;&#62;&#62;
 3. N2O init marker &#60;&#60;"N2O,",Session/binary&#62;&#62;
 4. PING message &#60;&#60;"PING"&#62;&#62;
-      </pre>
+      </code>
     </figure>
     
     <p>Heartbeat protocol is essential WebSocket application
@@ -129,10 +129,10 @@ server to reinitialize the context.
     </p>
     
     <figure>
-      <pre>
+      <code>
 ws.send('PING');
 ws.send('N2O,');
-      </pre>
+      </code>
     </figure>
     
     <p>IO events are containers for data and codata.
@@ -142,16 +142,16 @@ IO events are normally not constructed on client.
     
     <figure>
       <figcaption>Haskell</figcaption>
-      <pre>
+      <code>
 TupleTerm [AtomTerm "io", BinaryTerm eval, BinaryTerm data]
-      </pre>
+      </code>
     </figure>
     
     <figure>
       <figcaption>Erlang</figcaption>
-      <pre>
+      <code>
 {io,term(),term()}
-      </pre>
+      </code>
     </figure>
     
     <h3>SPA</h3>
@@ -163,10 +163,10 @@ message should be specified for both server and client.
     </p>
     
     <figure>
-      <pre>
+      <code>
 5. CLIENT tuple {client,DATA}
 6. SERVER tuple {server,DATA}
-      </pre>
+      </code>
     </figure>
     
     <p>Client messages usually originated at client and
@@ -175,25 +175,25 @@ represent the Client API Requests:
     
     <figure>
       <figcaption>JavaScript</figcaption>
-      <pre>
+      <code>
 ws.send(enc(tuple(
       atom('client'),
       tuple(atom('join_game'),1000001))));
-      </pre>
+      </code>
     </figure>
     
     <figure>
       <figcaption>Haskell</figcaption>
-      <pre>
+      <code>
 TupleTerm [AtomTerm "client", Term body]
-      </pre>
+      </code>
     </figure>
     
     <figure>
       <figcaption>Erlang</figcaption>
-      <pre>
+      <code>
 {client,_}
-      </pre>
+      </code>
     </figure>
     
     <h3>Extensions</h3>
@@ -212,10 +212,10 @@ envelop, which could also provide ciphering. N2O supports AES/CBC cypher.
     </p>
     
     <figure>
-      <pre>
+      <code>
 9. PICKLE tuple {pickle,_,_,_}
 10. EV tuple {ev,_,_,_,_}
-      </pre>
+      </code>
     </figure>
     
     <p>You may think of nitrogen as a RPC secured protocol. If is very
@@ -225,7 +225,7 @@ in those cases we use nitrogen as RPC protocol with nitogen-compatible pages.
     
     <figure>
       <figcaption>JavaScript</figcaption>
-      <pre>
+      <code>
 JS> enc(tuple(atom('pickle'),
               atom('deposits'),
               tuple(atom('ev'),
@@ -235,12 +235,12 @@ JS> enc(tuple(atom('pickle'),
                     atom('event')),
               [tuple(atom('user'),'maxim'),
                tuple(atom('pass'),'token')]);
-      </pre>
+      </code>
     </figure>
     
     <figure>
       <figcaption>Erlang</figcaption>
-      <pre>
+      <code>
 {pickle,_,_,_}
 
     ERL> {pickle,deposits,
@@ -250,7 +250,7 @@ JS> enc(tuple(atom('pickle'),
                      event},
                  [{user,&#60;&#60;"maxim"&#62;&#62;},
                   {pass,&#60;&#60;"token"&#62;&#62;}].
-      </pre>
+      </code>
     </figure>
     
     <p>PICKLE events are being sent pickled by server side picklers.
@@ -268,17 +268,17 @@ function, for nitrogen the default type is <b>event</b>.
     
     <figure>
       <figcaption>Haskell</figcaption>
-      <pre>
+      <code>
 TupleTerm [AtomTerm "ev", AtomTerm to, Term body,
                           AtomTerm from, AtomTerm type]
-      </pre>
+      </code>
     </figure>
     
     <figure>
       <figcaption>Erlang</figcaption>
-      <pre>
+      <code>
 {ev,_,_,_,_}
-      </pre>
+      </code>
     </figure>
     
     <h3>MQ</h3>
@@ -287,14 +287,14 @@ and server originated messages MSG.
     </p>
     
     <figure>
-      <pre>
+      <code>
 11. SUB tuple {sub,NAME,OPTIONS}
 12. UNSUB tuple {unsub,NAME}
 13. PUB tuple {pub,NAME,DATA}
 14. SUSPEND tuple {suspend,NAME}
 15. RESUME tuple {suspend,NAME}
 16. MSG tuple {msg,FROM,TO,DATA}
-      </pre>
+      </code>
     </figure>
     
     <h3>BPE</h3>
@@ -305,7 +305,7 @@ messages.
     </p>
     
     <figure>
-      <pre>
+      <code>
 17. GET {get}
 18. RUN {run}
 19. UNTIL {until,Task}
@@ -316,7 +316,7 @@ messages.
              2-tuple {complete,Stage}
 23. PROCESS 15-tuple
 24. START
-      </pre>
+      </code>
     </figure>
     
     <h3>ROSTER</h3>
@@ -330,7 +330,7 @@ PRESENCE.
     </p>
     
     <figure>
-      <pre>
+      <code>
 25. AUTH    {auth,USER,TOKEN,SERVICES}
 26. PERSON  {person,ID,NAMES,SURNAMES,STATUS}
 27. CONTACT {presence,SIZE,USERS}
@@ -340,7 +340,7 @@ PRESENCE.
 28. FRIEND  {friend,USER,STATUS}
 29. CONFIRM {confirm,USER,TYPE}
 31. TYPING  {typing,AUTHOR}
-      </pre>
+      </code>
     </figure>
     
     <h3>MUC</h3>
@@ -349,11 +349,11 @@ and server originated messages ROOM, PUBLIC.
     </p>
     
     <figure>
-      <pre>
+      <code>
 32. ROOM   {room,ID,NAME}
 33. PUBLIC {public,ID,AUTHOR,ROOM,BODY,STATUS}
 34. JOIN   {join,USER,ROOM,ANSWER}
-      </pre>
+      </code>
     </figure>
     
     <h3>REST</h3>
@@ -368,13 +368,13 @@ provided by <b>rest</b> library and <b>kvs</b> abstract database.
     </p>
     
     <figure>
-      <pre>
+      <code>
 33. GET {get,Resource}
         {get,Resource,Id}
 34. PUT {put,Resource,Object}
 35. DELETE  {delete,Resource,Id}
 35. OPTIONS {options,Resource}
-      </pre>
+      </code>
     </figure>
   </section>
 </main>
