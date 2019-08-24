@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<meta name="author" content="Maxim Sokhatsky" />
+<title>ROFF</title>
+<link rel="stylesheet" href="https://n2o.dev/blank.css" />
+<link rel="stylesheet" href="https://n2o.dev/zima.css" />
+</head>
+<body>
+<nav>
+  <a href='https://n2o.dev'>DEV</a>
+  <a href='#' style="background:#ededed;">ROFF</a>
+</nav>
+<header>
+  <a href="../index.html"><img src="../img/Synrc Neo.svg" /></a>
+  <h1>ROFF</h1>
+</header>
+<main>
+  <section>
+    <h3>SETUP</h3>
+    <p>ROFF is a format used in UNIX MAN pages. For reading SYNRC N2O.DEV pages in <nobr>UTF-8</nobr>
+       you need <b>groff</b> supporting <b>-K</b>    option:
+    </p>
+    <figure><code>
+ $ curl https://n2o.dev/deps/n2o/groff/man/ua/bert.js.1 \
+ | groff -i -man -K utf8 -Tutf8
+    </code></figure>
+    <p>This could be achieved with (e.g. in Mac):</p>
+    <figure><code>
+ $ brew install groff
+    </code></figure>
+    <p>Also please ensure that you have following <b>/etc/man.conf</b>:</p>
+    <figure><code>
+ FHS
+
+ MANPATH	/usr/share/man
+ MANPATH	/usr/local/share/man
+
+ MANPATH_MAP	/bin            /usr/share/man
+ MANPATH_MAP	/sbin           /usr/share/man
+ MANPATH_MAP	/usr/bin        /usr/share/man
+ MANPATH_MAP	/usr/sbin       /usr/share/man
+ MANPATH_MAP	/usr/local/bin  /usr/local/share/man
+ MANPATH_MAP	/usr/local/sbin /usr/local/share/man
+ MANPATH_MAP	/usr/bin/mh     /usr/share/man
+
+ TROFF          /usr/bin/groff -Tps -mandoc -c
+ NROFF          /usr/bin/groff -Wall -mtty-char -Tascii -mandoc -c
+ JNROFF         /usr/bin/groff -Tnippon -mandocj -c
+ EQN            /usr/bin/eqn -Tps
+ NEQN           /usr/bin/eqn -Tascii
+ JNEQN          /usr/bin/eqn -Tnippon
+ TBL            /usr/bin/tbl
+ COL            /usr/bin/col
+ REFER          /usr/bin/refer
+ PIC            /usr/bin/pic
+ VGRIND
+ GRAP
+ PAGER          /usr/bin/less -is
+ BROWSER        /usr/bin/less -is
+ HTMLPAGER      /bin/cat
+ CAT            /bin/cat
+ CMP            /usr/bin/cmp -s
+ COMPRESS       /usr/bin/bzip2
+ COMPRESS_EXT   .bz2
+
+ .gz	/usr/bin/gunzip -c
+ .bz2	/usr/bin/bzip2 -c -d
+ .z
+ .Z		/usr/bin/zcat
+ .F
+ .Y
+    </code></figure>
+  </section>
+  <section>
+    <h3>CREDITS</h3>
+    <div>
+      <ul>
+        <li><b><a href="https://github.com/221V">221V</a></b> — Taras Torous <div class="desk">— CSS, GROFF, XHTML, MAD</div></li>
+        <li><b><a href="https://github.com/5HT">5HT</a></b> — Maxim Sokhatsky <div class="desk">— SUP</div></li>
+      </ul>
+    </div>
+    <br/></br/>
+  </section>
+</main>
+<footer>
+  Made with <span class="heart">❤</span> for N2O
+</footer>
+</body>
+</html>
