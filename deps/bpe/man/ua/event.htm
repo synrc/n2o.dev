@@ -7,12 +7,17 @@
 <meta name="description" content="" />
 <meta name="author" content="Maxim Sokhatsky" />
 <title>EVENT</title>
-<link rel="stylesheet" href="https://n2o.dev/blank.css?x=12" />
+<link rel="stylesheet" href="https://n2o.dev/blank.css?x=15" />
+<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
+<link rel="manifest" href="/img/site.webmanifest" />
 </head>
 <body>
 <nav>
   <a href="https://n2o.dev/ua/">DEV</a>
-  <a href="https://bpe.n2o.space">BPE</a>
+  <a href="https://bpe.n2o.space/">BPE</a>
   <div class="dropdown">
     <a onclick="drop()" class="dropbtn">UA</a>
     <div id="dropdown" class="dropdown-content">
@@ -29,18 +34,17 @@
 <main>
   <section>
     <h3>ВСТУП</h3>
-    <p>Модуль <b>bpe_event</b> забезпечує функціональність обробки подій.
-    </p>
+    <p>Модуль <b>bpe_event</b> забезпечує функціональність обробки подій.</p>
   </section>
   <section>
     <h3>API</h3>
     <figure>
       <code>
-handle_event(Event,CurrentTask,Target,Proc) -&#62;
-  {reply,{complete,Target},State} |
-  {reply,{complete,Task},State} |
-  {reply,{unknown_event,Target},Proc} |
-  {stop,{normal,Target},Proc}
+  handle_event(Event,CurrentTask,Target,Proc) -&#62;
+    {reply,{complete,Target},State} |
+    {reply,{complete,Task},State} |
+    {reply,{unknown_event,Target},Proc} |
+    {stop,{normal,Target},Proc}
       </code>
     </figure>
   </section>
@@ -50,9 +54,7 @@ handle_event(Event,CurrentTask,Target,Proc) -&#62;
     </p>
   </section>
 </main>
-<footer>
-  Made with <span class="heart">❤</span> to N2O
-</footer>
+<footer>Made with <span class="heart">❤</span> to N2O</footer>
 <script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
 </body>
 </html>

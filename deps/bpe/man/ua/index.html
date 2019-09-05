@@ -7,7 +7,12 @@
 <meta name="description" content="" />
 <meta name="author" content="Maxim Sokhatsky" />
 <title>BPE</title>
-<link rel="stylesheet" href="https://n2o.dev/blank.css?x=12" />
+<link rel="stylesheet" href="https://n2o.dev/blank.css?x=15" />
+<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
+<link rel="manifest" href="/img/site.webmanifest" />
 </head>
 <body>
 <nav>
@@ -39,9 +44,9 @@
       </div>
       <figure>
         <code>
- $ mad get bpe &#38;&#38; cd bpe
- $ mad com pla rep
- &#62; bpe:start(bpe_account:def(),[]).
+  $ mad get bpe &#38;&#38; cd bpe
+  $ mad com pla rep
+  &#62; bpe:start(bpe_account:def(),[]).
         </code>
       </figure>
     </section>
@@ -67,52 +72,52 @@
     <h3>Приклад сесії оператора</h3>
     <figure>
       <code>
-&#62; bpe:start(bpe_account:def(),[]).
-Process "1562195753535380000" spawned as &#60;0.139.0&#62;.
-{ok,"1562195753535380000"}
+  &#62; bpe:start(bpe_account:def(),[]).
+  Process "1562195753535380000" spawned as &#60;0.139.0&#62;.
+  {ok,"1562195753535380000"}
 
-&#62; bpe:complete("1562195753535380000").
-Process: "1562195753535380000" Task: 'Created' Targets: ['Init']
-Target: 'Init' Status: reply Reason: unknown_task
-{unknown_task,'Init'}
+  &#62; bpe:complete("1562195753535380000").
+  Process: "1562195753535380000" Task: 'Created' Targets: ['Init']
+  Target: 'Init' Status: reply Reason: unknown_task
+  {unknown_task,'Init'}
 
-&#62; bpe:hist("1562195753535380000").
-[ {hist,{1,"1562195753535380000"},
-    feed,[],[],[],[],'IBAN Account',
-    {task,'Init'},
-    [],
-    {{2019,7,4},{2,13,43}}},
-  {hist,{0,"1562195753535380000"},
-    feed,[],[],[],[],'IBAN Account',
-    {task,'Created'},
-    [],
-    {{2019,7,4},{2,13,7}}}]
+  &#62; bpe:hist("1562195753535380000").
+  [ {hist,{1,"1562195753535380000"},
+      feed,[],[],[],[],'IBAN Account',
+      {task,'Init'},
+      [],
+      {{2019,7,4},{2,13,43}}},
+    {hist,{0,"1562195753535380000"},
+      feed,[],[],[],[],'IBAN Account',
+      {task,'Created'},
+      [],
+      {{2019,7,4},{2,13,7}}}]
 
-&#62; bpe:head("1562195753535380000").
-{hist,{1,"1562195753535380000"},
-   feed,[],[],[],[],'IBAN Account',
-   {task,'Init'},
-   [],
-   {{2019,7,4},{2,13,43}}}
+  &#62; bpe:head("1562195753535380000").
+  {hist,{1,"1562195753535380000"},
+     feed,[],[],[],[],'IBAN Account',
+     {task,'Init'},
+     [],
+     {{2019,7,4},{2,13,43}}}
 
-&#62; supervisor:which_children(bpe_otp).
-[{"1562195753535380000",&#60;0.139.0&#62;,worker,[bpe_proc]}]
+  &#62; supervisor:which_children(bpe_otp).
+  [{"1562195753535380000",&#60;0.139.0&#62;,worker,[bpe_proc]}]
       </code>
     </figure>
     
     <figcaption>Як дані зберігаються в KVS</figcaption>
     <figure>
       <code>
-&#62; kvs:all(writer).
-[{writer,"/bpe/proc",1,[],[],[]},
- {writer,"/bpe/hist/1562195753535380000",2,[],[],[]}]
+  &#62; kvs:all(writer).
+  [{writer,"/bpe/proc",1,[],[],[]},
+   {writer,"/bpe/hist/1562195753535380000",2,[],[],[]}]
 
-&#62; kvs:get("/bpe/hist/1562195753535380000",{1,"1562195753535380000"}).
-{ok,{hist,{1,"1562195753535380000"},
-      feed,[],[],[],[],'IBAN Account',
-      {task,'Init'},
-      [],
-      {{2019,7,4},{2,16,7}}}}
+  &#62; kvs:get("/bpe/hist/1562195753535380000",{1,"1562195753535380000"}).
+  {ok,{hist,{1,"1562195753535380000"},
+        feed,[],[],[],[],'IBAN Account',
+        {task,'Init'},
+        [],
+        {{2019,7,4},{2,16,7}}}}
       </code>
     </figure>
   </section>
@@ -120,54 +125,53 @@ Target: 'Init' Status: reply Reason: unknown_task
     <h3>Специфікація BPMN</h3>
     
     <p>Ця схема охоплює 80% всіх робочих процесів та забезпечує лише 20% стандартного покриття.
-   Ми називаємо це Легким BPMN, або BPE.
-    </p>
+      Ми називаємо це Легким BPMN, або BPE.</p>
     <figcaption>Легкий BPMN</figcaption>
     <figure>
       <code>
--type bst()    :: binary() | string() | atom().
--type procId() :: [] | integer() | {atom(),any()}.
--type histId() :: [] | integer() | {atom()|string(),any()}.
+  -type bst()    :: binary() | string() | atom().
+  -type procId() :: [] | integer() | {atom(),any()}.
+  -type histId() :: [] | integer() | {atom()|string(),any()}.
 
--record(hist, { id        = [] :: histId(),
-                container = feed :: [] | atom(),
-                feed_id   = [] :: any(),
-                prev      = [] :: [] | integer(),
-                next      = [] :: [] | integer(),
-                feeds     = [] :: list(),
-                name      = [] :: [] | binary(),
-                task      = [] :: [] | {atom()|string(),any()},
-                docs      = [] :: list(tuple()),
-                time      = [] :: term() }).
+  -record(hist, { id        = [] :: histId(),
+                  container = feed :: [] | atom(),
+                  feed_id   = [] :: any(),
+                  prev      = [] :: [] | integer(),
+                  next      = [] :: [] | integer(),
+                  feeds     = [] :: list(),
+                  name      = [] :: [] | binary(),
+                  task      = [] :: [] | {atom()|string(),any()},
+                  docs      = [] :: list(tuple()),
+                  time      = [] :: term() }).
 
--type tasks() :: #task{} | #serviceTask{} | #userTask{}
-                 | #receiveTask{} | #beginEvent{} | #endEvent{}.
+  -type tasks() :: #task{} | #serviceTask{} | #userTask{}
+                   | #receiveTask{} | #beginEvent{} | #endEvent{}.
 
--type events() :: #messageEvent{} | #boundaryEvent{}
-                  | #timeoutEvent{}.
+  -type events() :: #messageEvent{} | #boundaryEvent{}
+                    | #timeoutEvent{}.
 
--record(process, { id            = [] :: procId(),
-                   container     = feed :: [] | atom(),
-                   feed_id       = [] :: [] | term(),
-                   prev          = [] :: [] | integer(),
-                   next          = [] :: [] | integer(),
-                   name          = [] :: [] | bst(),
-                   feeds         = [] :: list(),
-                   roles         = [] :: list(),
-                   tasks         = [] :: list(tasks()),
-                   events        = [] :: list(events()),
-                   hist          = [] :: [] | term(),
-                   flows         = [] :: list(#sequenceFlow{}),
-                   rules         = [] :: [] | term(),
-                   docs          = [] :: list(tuple()),
-                   options       = [] :: term(),
-                   task          = 'Created' :: [] | atom(),
-                   timer         = [] :: [] | reference(),
-                   notifications = [] :: [] | term(),
-                   result        = [] :: [] | binary(),
-                   started       = [] :: [] | calendat:datetime(),
-                   beginEvent    = [] :: [] | atom(),
-                   endEvent      = [] :: [] | atom()}).
+  -record(process, { id            = [] :: procId(),
+                     container     = feed :: [] | atom(),
+                     feed_id       = [] :: [] | term(),
+                     prev          = [] :: [] | integer(),
+                     next          = [] :: [] | integer(),
+                     name          = [] :: [] | bst(),
+                     feeds         = [] :: list(),
+                     roles         = [] :: list(),
+                     tasks         = [] :: list(tasks()),
+                     events        = [] :: list(events()),
+                     hist          = [] :: [] | term(),
+                     flows         = [] :: list(#sequenceFlow{}),
+                     rules         = [] :: [] | term(),
+                     docs          = [] :: list(tuple()),
+                     options       = [] :: term(),
+                     task          = 'Created' :: [] | atom(),
+                     timer         = [] :: [] | reference(),
+                     notifications = [] :: [] | term(),
+                     result        = [] :: [] | binary(),
+                     started       = [] :: [] | calendat:datetime(),
+                     beginEvent    = [] :: [] | atom(),
+                     endEvent      = [] :: [] | atom()}).
       </code>
     </figure>
   </section>
@@ -176,35 +180,34 @@ Target: 'Init' Status: reply Reason: unknown_task
   <figcaption>Приклад визначення процесу</figcaption>
   <figure>
       <code>
--module(bpe_account).
--compile(export_all).
-def() -&#62;
-  #process { name = 'IBAN Account',
-  flows = [
-    #sequenceFlow { source='Created',   target='Init'},
-    #sequenceFlow { source='Init',      target='Upload'},
-    #sequenceFlow { source='Upload',    target='Payment'},
-    #sequenceFlow { source='Payment',   target=['Signatory','Process']},
-    #sequenceFlow { source='Process',   target=['Process','Final']},
-    #sequenceFlow { source='Signatory', target=['Process','Final']} ],
-  tasks = [
-    #userTask    { name='Init',      module = bpe_account },
-    #userTask    { name='Upload',    module = bpe_account },
-    #userTask    { name='Signatory', module = bpe_account },
-    #serviceTask { name='Payment',   module = bpe_account },
-    #serviceTask { name='Process',   module = bpe_account }, 
-    #endEvent    { name='Final',     module = bpe_account } ],
-  beginEvent = 'Init',
-  endEvent   = 'Final',
-  events = [ #messageEvent{name='PaymentReceived'} ] }.
+  -module(bpe_account).
+  -compile(export_all).
+  def() -&#62;
+    #process { name = 'IBAN Account',
+    flows = [
+      #sequenceFlow { source='Created',   target='Init'},
+      #sequenceFlow { source='Init',      target='Upload'},
+      #sequenceFlow { source='Upload',    target='Payment'},
+      #sequenceFlow { source='Payment',   target=['Signatory','Process']},
+      #sequenceFlow { source='Process',   target=['Process','Final']},
+      #sequenceFlow { source='Signatory', target=['Process','Final']} ],
+    tasks = [
+      #userTask    { name='Init',      module = bpe_account },
+      #userTask    { name='Upload',    module = bpe_account },
+      #userTask    { name='Signatory', module = bpe_account },
+      #serviceTask { name='Payment',   module = bpe_account },
+      #serviceTask { name='Process',   module = bpe_account }, 
+      #endEvent    { name='Final',     module = bpe_account } ],
+    beginEvent = 'Init',
+    endEvent   = 'Final',
+    events = [ #messageEvent{name='PaymentReceived'} ] }.
       </code>
     </figure>
   </section>
   <section>
     <a name="plugin"></a>
     <h3>Впровадження</h3>
-    <p>Компанії, які використовують BPE:
-    </p>
+    <p>Компанії, які використовують BPE:</p>
     <div>
       <ul>
         <li><a href="https://pb.ua/depozit">pb.ua/depozit</a> — АТ КБ "ПриватБанк"</li>
@@ -225,9 +228,7 @@ def() -&#62;
     </div>
   </section>
 </main>
-<footer>
-  Зроблено з любов'ю <span class="heart">❤</span> до N2O
-</footer>
+<footer>Зроблено з любов'ю <span class="heart">❤</span> до N2O</footer>
 <script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
 </body>
 </html>
