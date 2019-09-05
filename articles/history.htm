@@ -7,163 +7,141 @@
 <meta name="description" content="" />
 <meta name="author" content="Maxim Sokhatsky" />
 <title>LOG</title>
-<link rel="stylesheet" href="https://n2o.dev/blank.css" />
-<link rel="stylesheet" href="https://n2o.dev/zima.css" />
+<link rel="stylesheet" href="https://n2o.dev/blank.css?x=15" />
+<link rel="stylesheet" href="https://n2o.dev/zima.css?x=15" />
+<link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png" />
+<link rel="manifest" href="../img/site.webmanifest" />
 </head>
 <body>
 <nav>
-  <a href='https://n2o.dev'>DEV</a>
-  <a href='#' style="background:#ededed;">HISTORY</a>
+  <a href="https://n2o.dev/">DEV</a>
+  <a href="#" style="background:#ededed;">HISTORY</a>
 </nav>
 <header>
   <a href="../index.html"><img src="../img/Synrc Neo.svg" /></a>
   <h1>HISTORY</h1>
 </header>
 <main>
+<article>
   <section>
     <h3>2013</h3>
     <p>The N2O was born in 2013 in spring. It's started as a process of
-reimplementation of Nitrogen Web Framework behavior for better
-performance and code reduce. The initial version had its own
-render core along with pure websocket nature of the IO protocol.
-    </p>
-    
+      reimplementation of Nitrogen Web Framework behavior for better
+      performance and code reduce. The initial version had its own
+      render core along with pure websocket nature of the IO protocol.</p>
     <p>First official release of N2O was made in October 2013 when
-N2O was presented as one having AES/CBC pickling,
-REST transformations, own TeX handbook and
-JavaScript compiler. It is also known as version 0.10.
-    </p>
-    
+      N2O was presented as one having AES/CBC pickling,
+      REST transformations, own TeX handbook and
+      JavaScript compiler. It is also known as version 0.10.</p>
     <p>In this minor release BERT transformations mainly were improved using parse_transform.
-Was introduced ETS caching. Tiny 50 LOC Makefile called <b>otp.mk</b> was
-suggested for easy production deployment. It's still best option to deploy
- applications. It was release 0.11.
-    </p>
-    
+      Was introduced ETS caching. Tiny 50 LOC Makefile called <b>otp.mk</b> was
+      suggested for easy production deployment. It's still best option to deploy
+      applications. It was release 0.11.</p>
   </section>
   <section>
     <h3>2014</h3>
     <p>In January 2014 release xen hosting in LING VM
-was initially introduced. Dependencies
-start to freezing; asset and deploy options were improved.
-    </p>
-    
+      was initially introduced. Dependencies
+      start to freezing; asset and deploy options were improved.</p>
     <p>April 2014 release was a giving hand to pure
-JavaScript SPA applications. Now pages could be served
-in nginx behind Erlang cowboy web server. Initial version of
-N2O protocol was introduced in this release. New twitter-format
-stack trace messages was added for error reporting. <b>bert.js</b>
-was rewritten and jQuery was removed in this release. In 1.4 release
-was also introduced unified logging schema for KVS and N2O. And main
-WebSocket endpoint was totally rewritten to support N2O protocol.
-    </p>
-    
+      JavaScript SPA applications. Now pages could be served
+      in nginx behind Erlang cowboy web server. Initial version of
+      N2O protocol was introduced in this release. New twitter-format
+      stack trace messages was added for error reporting. <b>bert.js</b>
+      was rewritten and jQuery was removed in this release. In 1.4 release
+      was also introduced unified logging schema for KVS and N2O. And main
+      WebSocket endpoint was totally rewritten to support N2O protocol.</p>
     <p>The release of May 2014 is still supported. In this release
-new build tool <b>mad</b> was initially introduced. Version 1.5.
-    </p>
-    
+      new build tool <b>mad</b> was initially introduced. Version 1.5.</p>
     <p>August 2014 version 1.8 received new cookie session manager
-synchronized with ETS table where all entries zipped with session keys.
-Client binary requests was made to exists in <b>bin</b> sub-protocol.
-KVS was first added to sample application in this release.
-Full HTML elements and attributes were added, which caused the growth of
-the nitrogen DSL size to the size of N2O.
-    </p>
-    
+      synchronized with ETS table where all entries zipped with session keys.
+      Client binary requests was made to exists in <b>bin</b> sub-protocol.
+      KVS was first added to sample application in this release.
+      Full HTML elements and attributes were added, which caused the growth of
+      the nitrogen DSL size to the size of N2O.</p>
     <p>September 2014 release was numbered 1.9.
-New client side protocol pipeline along with new <b>n2o.js</b>.
-For mad was issued new dynamic loader
-which is able to host working directory inside ETS table and readable
-from erlang executable script on Windows, Linux and Mac. UTF-8 support
-was optimized in <b>utf8.js</b>.
-    </p>
-    
+      New client side protocol pipeline along with new <b>n2o.js</b>.
+      For mad was issued new dynamic loader
+      which is able to host working directory inside ETS table and readable
+      from erlang executable script on Windows, Linux and Mac. UTF-8 support
+      was optimized in <b>utf8.js</b>.</p>
     <p>October 2014 version 1.10 was minor again. The only message in changelog
-were added: "nothing special". The first malfunction bug which was fixed is the
-racing which happened during async DOM bulding. Yes, N2O is faster than browser.
-    </p>
-    
+      were added: &#34;nothing special&#34;. The first malfunction bug which was fixed is the
+      racing which happened during async DOM bulding. Yes, N2O is faster than browser.</p>
   </section>
   <section>
     <h3>2015</h3>
     <p>January 2015 version 2.1. Major Release. N2O book from now
-on can be purchased in a hardcover print. For business
-applications validations were introduced. <b>n2o.js</b>, <b>binary.js</b>, <b>nitrogen.js</b>,
-<b>template.js</b> were slightly optimized. KJELL color support from now on enabled in
-new <b>review</b> sample application.
-Log level support and several field and racing fixes in HTML elements.
-    </p>
-    
+      on can be purchased in a hardcover print. For business
+      applications validations were introduced. <b>n2o.js</b>, <b>binary.js</b>, <b>nitrogen.js</b>,
+      <b>template.js</b> were slightly optimized. KJELL color support from now on enabled in
+      new <b>review</b> sample application.
+      Log level support and several field and racing fixes in HTML elements.</p>
     <p>March 2015 version 2.3. Initial Haskell implentation of N2O server is introduced.
-New N2O WebSocket protocol specification for all stack of applications.
-New auto-expiring cookie-based session and cache managers. Revised and more sane XHR fallback.
-Automatic language detection from routes in context.
-Several element fixes and latest Cowboy 1.0.1.
-    </p>
-    
+      New N2O WebSocket protocol specification for all stack of applications.
+      New auto-expiring cookie-based session and cache managers. Revised and more sane XHR fallback.
+      Automatic language detection from routes in context.
+      Several element fixes and latest Cowboy 1.0.1.</p>
   </section>
   <section>
     <h3>2016</h3>
-    
     <center><p>•</p></center>
     <p>N2O is fast energy efficient binary protocol for IoT and WebSocket applications.
-I hope you will find this retrospective useful in your discovering of N2O.
-    </p>
-    
+      I hope you will find this retrospective useful in your discovering of N2O.</p>
   </section>
   <section>
-    <p><b>Fact:</b> fetched and built in <b>41s</b> and boot under <b>1s</b>. Win.
-    </p>
-    
+    <p><b>Fact:</b> fetched and built in <b>41s</b> and boot under <b>1s</b>. Win.</p>
     <figure>
       <code>
-$ mad app web sample
-Create File: "sample/sys.config"
-Create File: "sample/apps/sample/priv/static/synrc.css"
-Create File: "sample/apps/sample/src/web_app.erl"
-Create File: "sample/apps/rebar.config"
-Create File: "sample/apps/sample/rebar.config"
-Create File: "sample/apps/sample/src/sample.app.src"
-Create File: "sample/apps/sample/src/index.erl"
-Create File: "sample/apps/sample/src/web_sup.erl"
-Create File: "sample/apps/sample/priv/static/spa/index.htm"
-Create File: "sample/rebar.config"
-Create File: "sample/apps/sample/priv/templates/index.html"
-Create File: "sample/apps/sample/src/routes.erl"
-$ cd sample
-$ time mad dep com pla
-...
-Ordered: [kernel,stdlib,fs,cowlib,crypto,
-          compiler,syntax_tools,ranch,gproc,
-          cowboy,erlydtl,n2o,sample,active,mad,sh]
+  $ mad app web sample
+  Create File: &#34;sample/sys.config&#34;
+  Create File: &#34;sample/apps/sample/priv/static/synrc.css&#34;
+  Create File: &#34;sample/apps/sample/src/web_app.erl&#34;
+  Create File: &#34;sample/apps/rebar.config&#34;
+  Create File: &#34;sample/apps/sample/rebar.config&#34;
+  Create File: &#34;sample/apps/sample/src/sample.app.src&#34;
+  Create File: &#34;sample/apps/sample/src/index.erl&#34;
+  Create File: &#34;sample/apps/sample/src/web_sup.erl&#34;
+  Create File: &#34;sample/apps/sample/priv/static/spa/index.htm&#34;
+  Create File: &#34;sample/rebar.config&#34;
+  Create File: &#34;sample/apps/sample/priv/templates/index.html&#34;
+  Create File: &#34;sample/apps/sample/src/routes.erl&#34;
+  $ cd sample
+  $ time mad dep com pla
+  ...
+  Ordered: [kernel,stdlib,fs,cowlib,crypto,
+            compiler,syntax_tools,ranch,gproc,
+            cowboy,erlydtl,n2o,sample,active,mad,sh]
 
-real    0m41.901s
-user    0m17.785s
-sys     0m5.108s
-$ mad rep
-Configuration: [{n2o,[{port,8000},
-                      {route,routes},
-                      {log_modules,web_app}]},
-                {kvs,[{dba,store_mnesia},
-                      {schema,[kvs_user,
-                               kvs_acl,kvs_feed,
-                               kvs_subscription]}]}]
-Applications: [kernel,stdlib,fs,cowlib,crypto,
-               compiler,syntax_tools,ranch,
-               gproc,cowboy,erlydtl,n2o,
-               sample,active,mad,sh]
+  real    0m41.901s
+  user    0m17.785s
+  sys     0m5.108s
+  $ mad rep
+  Configuration: [{n2o,[{port,8000},
+                        {route,routes},
+                        {log_modules,web_app}]},
+                  {kvs,[{dba,store_mnesia},
+                        {schema,[kvs_user,
+                                 kvs_acl,kvs_feed,
+                                 kvs_subscription]}]}]
+  Applications: [kernel,stdlib,fs,cowlib,crypto,
+                 compiler,syntax_tools,ranch,
+                 gproc,cowboy,erlydtl,n2o,
+                 sample,active,mad,sh]
 
-Erlang/OTP 17 [erts-6.2] [source] [64-bit] [smp:4:4]
-       [async-threads:10] [hipe] [kernel-poll:false]
+  Erlang/OTP 17 [erts-6.2] [source] [64-bit] [smp:4:4]
+         [async-threads:10] [hipe] [kernel-poll:false]
 
-Eshell V6.2  (abort with ^G)
-1&#62;
+  Eshell V6.2  (abort with ^G)
+  1&#62;
       </code>
     </figure>
   </section>
+</article>
 </main>
-<footer>
-  Made with <span class="heart">❤</span> for N2O
-</footer>
+<footer>Made with <span class="heart">❤</span> for N2O</footer>
 </body>
 </html>

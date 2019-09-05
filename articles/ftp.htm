@@ -7,122 +7,107 @@
 <meta name="description" content="" />
 <meta name="author" content="Maxim Sokhatsky" />
 <title>HISTORY</title>
-<link rel="stylesheet" href="https://n2o.dev/blank.css" />
-<link rel="stylesheet" href="https://n2o.dev/zima.css" />
+<link rel="stylesheet" href="https://n2o.dev/blank.css?x=15" />
+<link rel="stylesheet" href="https://n2o.dev/zima.css?x=15" />
+<link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png" />
+<link rel="manifest" href="../img/site.webmanifest" />
 </head>
 <body>
 <nav>
-  <a href='https://n2o.dev'>DEV</a>
-  <a href='#' style="background:#ededed;">FTP</a>
+  <a href="https://n2o.dev/">DEV</a>
+  <a href="#" style="background:#ededed;">FTP</a>
 </nav>
 <header>
   <a href="../index.html"><img src="../img/Synrc Neo.svg" /></a>
   <h1>FTP</h1>
 </header>
 <aside>
-  <article>
-    <section>
-      <h3>Intro</h3>
-      <div>
-        FTP defines a pure WebSocket way of File Transfer rising the HTTP speed.
-      </div>
-      <br />
-      <div>
-        23 SEP 2015 © <a href="http://5ht.co/license.htm">ISC LICENSE</a>
-      </div>
-    </section>
-  </article>
+<article>
+  <section>
+    <h3>Intro</h3>
+    <div>FTP defines a pure WebSocket way of File Transfer rising the HTTP speed.</div>
+    <br />
+    <div>23 SEP 2015 © <a href="http://5ht.co/license.htm">ISC LICENSE</a></div>
+  </section>
+</article>
 </aside>
 <main>
+<article>
   <section>
     <p>TL;DR — Sick and tired of XML, jQuery, Base64, XHR, MIME, miltipart?
-    Here is clean and simple WebSocket file transfer!
-    </p>
-    
+      Here is clean and simple WebSocket file transfer!</p>
     <center>
       <p>
-        <iframe width="600" height="400" src="https://www.youtube.com/embed/6894J2If78c?wmode=opaque" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+        <iframe width="600" height="400" src="https://www.youtube.com/embed/6894J2If78c?wmode=opaque" frameborder="0"
+          allowfullscreen="allowfullscreen"></iframe>
       </p>
     </center>
-    
     <h3>Background</h3>
-    
     <p>When we started to craft N2O framework we strive to provide latest technologies on the market.
-Late in 2011 WebSocket protocol was not yet supported on all browsers and we spawned N2O
-on pure WebSocket stack blindly without knowing the future. Now we are sure it was right decision.
-We were sick and tired of XML, Base64, jQuery and XHR polling request known as comet. By numerous requests
-XHR is supported in N2O started from 2.4 but we engage everyone to decline this power-consuming technology.
-    </p>
-    
+      Late in 2011 WebSocket protocol was not yet supported on all browsers and we spawned N2O
+      on pure WebSocket stack blindly without knowing the future. Now we are sure it was right decision.
+      We were sick and tired of XML, Base64, jQuery and XHR polling request known as comet. By numerous requests
+      XHR is supported in N2O started from 2.4 but we engage everyone to decline this power-consuming technology.</p>
     <h3>Microservices vs Ad-hoc protocols</h3>
-    
     <p>Once we got a project that involved Blu-ray disc file uploading through web browser.
-N2O was fit this case thanks to binary nature of WebSocket channel. We were pioneers who implemented
-simple and clean binary file upload, without all this multipart HTTP bullshit. We really engage anybody
-to deny both HTTP/1 and HTTP/2 profiles and use pure WebSocket channel. It is much easier, code is clean,
-no headers, no states, no codes, no mimes. You can build your own ad-hoc protocol easily without trying to fit your
-API language to resource-based REST endpoints architecture. Yes, we really think that all this microservices buzz
-are exactly just like design patterns: it solves nothing.
-    </p>
-    
+      N2O was fit this case thanks to binary nature of WebSocket channel. We were pioneers who implemented
+      simple and clean binary file upload, without all this multipart HTTP bullshit. We really engage anybody
+      to deny both HTTP/1 and HTTP/2 profiles and use pure WebSocket channel. It is much easier, code is clean,
+      no headers, no states, no codes, no mimes. You can build your own ad-hoc protocol easily without trying to fit your
+      API language to resource-based REST endpoints architecture. Yes, we really think that all this microservices buzz
+      are exactly just like design patterns: it solves nothing.</p>
     <p>Naturally there still some cases REST is useful like existing systems integration;
-still WebSockets set of utilities lacks some usefull things like <b>curl</b> and <b>wrk</b>;
-but WebSockets is young technlology and tools like <b>tcpkali</b> arises and more to come.
-    </p>
-    
+      still WebSockets set of utilities lacks some usefull things like <b>curl</b> and <b>wrk</b>;
+      but WebSockets is young technlology and tools like <b>tcpkali</b> arises and more to come.</p>
     <p>Binary File Transfer Protocol is simple example of task that is hard to fit REST HTTP/2 approach.
-This is exactly where WebSocket protocol shines. FTP and BIN protocols were presented from the begining of formalizing
-<a href="n2o.htm">N2O</a> protocol stack and this document will guide you N2O FTP implementation. This implementation was made
-by the original N2O co-author Andrii Zadorozhnii and was designed to be limited by 100 LOC for both
-JavaScript and Erlang.
-    </p>
-    <p></p>
+      This is exactly where WebSocket protocol shines. FTP and BIN protocols were presented from the begining of formalizing
+      <a href="n2o.htm">N2O</a> protocol stack and this document will guide you N2O FTP implementation. This implementation was made
+      by the original N2O co-author Andrii Zadorozhnii and was designed to be limited by 100 LOC for both
+      JavaScript and Erlang.</p>
     <h3>Erlang Supervision</h3>
-    
     <p>Usually we encourage to build stateless N2O applications. This allows you easy scaling but sometimes
-you to really need access to global state, especialy in web frameworks: sessions, cache and other global
-resources like processes. Starting from N2O version 2.9 provides powerful <b>n2o_async</b> gen_server process under supervision.
-Currently N2O supports several clasess of async processes: <b>file</b> for file upload workers;
-<b>async</b> for web pages workers; and other custom clasess for you needs. The cool thing is that <b>n2o_async</b>
-hides verbose OTP <b>gen_server</b> templates and provides clean <b>proc/2</b> callback API for any Erlang module.
-The other cool thing is that n2o_async supports gen_server's <b>call</b>, <b>cast</b> and <b>info</b> functions.
-    </p>
-    
+      you to really need access to global state, especialy in web frameworks: sessions, cache and other global
+      resources like processes. Starting from N2O version 2.9 provides powerful <b>n2o_async</b> gen_server process under supervision.
+      Currently N2O supports several clasess of async processes: <b>file</b> for file upload workers;
+      <b>async</b> for web pages workers; and other custom clasess for you needs. The cool thing is that <b>n2o_async</b>
+      hides verbose OTP <b>gen_server</b> templates and provides clean <b>proc/2</b> callback API for any Erlang module.
+      The other cool thing is that n2o_async supports gen_server's <b>call</b>, <b>cast</b> and <b>info</b> functions.</p>
     <figure>
       <figcaption>Listing 1. <b>n2o_async</b> supervision</figcaption>
       <code>
-  &#62; pid(0,507,0) ! "hey".
-    Received: "hey"
+  &#62; pid(0,507,0) ! &#34;hey&#34;.
+    Received: &#34;hey&#34;
     ok
 
-  &#62; n2o_async:send("ho!","hola").
-    Received: "hola"
+  &#62; n2o_async:send(&#34;ho!&#34;,&#34;hola&#34;).
+    Received: &#34;hola&#34;
     ok
 
-  &#62; gen_server:call(pid(0,507,0),"sync").
-    Received: "sync"
+  &#62; gen_server:call(pid(0,507,0),&#34;sync&#34;).
+    Received: &#34;sync&#34;
     ok
 
   &#62; supervisor:which_children(n2o).
     [{{async,
-      {"counter",&#60;&#60;"d43adcc79dd64393a1eb559227a2d3fd"&#62;&#62;}},
+      {&#34;counter&#34;,&#60;&#60;&#34;d43adcc79dd64393a1eb559227a2d3fd&#34;&#62;&#62;}},
     &#60;0.11564.0&#62;,worker,
     [n2o_async]}]
       </code>
     </figure>
-    
     <p>The only mandatory state value you need to hold during file uploading is a file offset that increments after each chunck.
-However user may want to put some additional metainformation from FTP packet during upload. For that purposes N2O implements
-File Transfer Protocol as supevised n2o_async backed by gen_server. By implementing N2O <b>info/3</b> protocol API the FTP
-initialization is clean and portable:
-    </p>
-    
+      However user may want to put some additional metainformation from FTP packet during upload. For that purposes N2O implements
+      File Transfer Protocol as supevised n2o_async backed by gen_server. By implementing N2O <b>info/3</b> protocol API the FTP
+      initialization is clean and portable:
+      </p>
     <figure>
       <figcaption>Listing 2. <b>n2o_async</b> initialization</figcaption>
       <code>
-info( #ftp { sid=Sid, filename=Filename, hash=Hash,
-             status= &#60;&#60;"init"&#62;&#62;, offset=Size, block=B,
-             data=Msg } = FTP, Req, State) -&#62;
+  info( #ftp { sid=Sid, filename=Filename, hash=Hash,
+               status= &#60;&#60;&#34;init&#34;&#62;&#62;, offset=Size, block=B,
+               data=Msg } = FTP, Req, State) -&#62;
 
   application:set_env(n2o,formatter,bert),
 
@@ -145,114 +130,103 @@ info( #ftp { sid=Sid, filename=Filename, hash=Hash,
   {reply,wf:format(F2),Req,State};
       </code>
     </figure>
-    
-    <p>The async process needs only shifting state's offset and pushing it back to client
-    </p>
-    
+    <p>The async process needs only shifting state's offset and pushing it back to client</p>
     <figure>
       <figcaption>Listing 3. Uploader <b>n2o_async</b> process</figcaption>
       <code>
   proc( #ftp{ sid=Sid, data=Msg, block=Block, filename=F} = FTP,
         #handler{ state=#ftp{data=State, offset=Offset}} = Async) -&#62;
 
-  F2 = FTP#ftp{status= "send", offset=Offset + Block },
-  wf:info(?MODULE,"send ~p", [F2#ftp{data= &#60;&#60;""&#62;&#62;}]),
+  F2 = FTP#ftp{status= &#34;send&#34;, offset=Offset + Block },
+  wf:info(?MODULE,&#34;send ~p&#34;, [F2#ftp{data= &#60;&#60;&#34;&#34;&#62;&#62;}]),
 
   case file:write_file(?FILE(Sid,F),&#60;&#60;Msg/binary&#62;&#62;,[append,raw]) of
-          ok -&#62; {reply, F2#ftp{data=&#60;&#60;""&#62;&#62;}, Async#handler{state=F2}};
+          ok -&#62; {reply, F2#ftp{data=&#60;&#60;&#34;&#34;&#62;&#62;}, Async#handler{state=F2}};
   {error,Rw} -&#62; {reply, {error, Rw}, Async} end.
       </code>
     </figure>
-    
-    <h3>JavaScript Client </h3>
+    <h3>JavaScript Client</h3>
     <p>The main idea was to create unified client for node.js and web browser.
-   As you may want to use <b>dropzone.js</b> or other file uploader front ends.
-   At the heart of <b>ftp.js</b> is a <b>bert.js</b> packaging as FTP is working
-   only with BERT formatter. We deny using XHR or other transports for file uploading.
-   However by abstracting <b>enc</b> client formatting function we are saving the ability to
-   use any underlying transpots.
-    </p>
-    
+      As you may want to use <b>dropzone.js</b> or other file uploader front ends.
+      At the heart of <b>ftp.js</b> is a <b>bert.js</b> packaging as FTP is working
+      only with BERT formatter. We deny using XHR or other transports for file uploading.
+      However by abstracting <b>enc</b> client formatting function we are saving the ability to
+      use any underlying transpots.</p>
     <figure>
       <figcaption>Listing 4. <b>ftp.js</b> client module</figcaption>
       <code>
-var ftp = {
+  var ftp = {
 
-  $file:   undefined,
-  $reader: undefined,
-  $block:  undefined,
-  $offset: undefined,
+    $file:   undefined,
+    $reader: undefined,
+    $block:  undefined,
+    $offset: undefined,
 
-  init: function(file, force) {
-           ftp.$file = file; ftp.send('', 'init', 1); },
+    init: function(file, force) {
+             ftp.$file = file; ftp.send('', 'init', 1); },
 
-  start: function() {
-           ftp.$active = true;
-           ftp.send_slice(ftp.$offset, ftp.$offset + ftp.$block); },
+    start: function() {
+              ftp.$active = true;
+              ftp.send_slice(ftp.$offset, ftp.$offset + ftp.$block); },
 
-  stop: function() { ftp.$active = false; },
+    stop: function() { ftp.$active = false; },
 
-  send: function(data, status, force) {
-      ws.send(enc(tuple(atom('ftp'),number(1),bin(ftp.$file.name),
-              number(3),number(4),number(5),number(6),
-              number(7),bin(data),bin(status||'send'),
-              number(force || data.byteLength),number(11)))); },
+    send: function(data, status, force) {
+        ws.send(enc(tuple(atom('ftp'),number(1),bin(ftp.$file.name),
+                number(3),number(4),number(5),number(6),
+                number(7),bin(data),bin(status||'send'),
+                number(force || data.byteLength),number(11)))); },
 
-  send_slice: function(start, end) {
-      this.$reader = new FileReader();
-      this.$reader.onloadend=function(e) {
-           var res=e.target, data=e.target.result;
-           if (res.readyState == FileReader.DONE  &#38; data.byteLength &#60; 0)
-               ftp.send(data); };
-      this.$reader.readAsArrayBuffer(ftp.$file.slice(start,end)); } }
+    send_slice: function(start, end) {
+        this.$reader = new FileReader();
+        this.$reader.onloadend=function(e) {
+             var res=e.target, data=e.target.result;
+             if (res.readyState == FileReader.DONE  & data.byteLength &#60; 0)
+                 ftp.send(data); };
+        this.$reader.readAsArrayBuffer(ftp.$file.slice(start,end)); } }
       </code>
     </figure>
-    
     <figure>
       <figcaption>Listing 5. <b>n2o_file</b> protocol handler</figcaption>
       <code>
-$file.do = function(rsp) {
-    var offset = rsp.v[6].v, block = rsp.v[10].v, status = rsp.v[9].v;
-    switch (status) {
-        case 'init': ftp.$offset = offset; ftp.$block = block; break;
-        case 'send': var x = qi('ftp_status'); if(x) x.innerHTML = offset;
-            if (block&#62;0 &#38;&#38; ftp.$active)
-            ftp.send_slice(offset, offset+block); } }
+  $file.do = function(rsp) {
+      var offset = rsp.v[6].v, block = rsp.v[10].v, status = rsp.v[9].v;
+      switch (status) {
+          case 'init': ftp.$offset = offset; ftp.$block = block; break;
+          case 'send': var x = qi('ftp_status'); if(x) x.innerHTML = offset;
+              if (block&#62;0 && ftp.$active)
+              ftp.send_slice(offset, offset+block); } }
       </code>
     </figure>
-    
     <h3>N2O Element</h3>
     <p>The NITRO element will consist of three buttons:
-one select the file, other two start and stop uploading process. It should use
-only <b>ftp.js</b> API that can plugged to any upload front-end such as <b>dropzone.js</b>.
-    </p>
-    
+      one select the file, other two start and stop uploading process. It should use
+      only <b>ftp.js</b> API that can plugged to any upload front-end such as <b>dropzone.js</b>.</p>
     <figure>
       <figcaption>Listing 6. <b>#upload</b> element</figcaption>
       <code>
   render_element(#upload{id=Id} = U) -&#62;
       Uid = case Id of undefined -&#62; wf:temp_id(); I -&#62; I end,
-      bind(ftp_open,  click, "qi('upload').click(); e.codeventDefault();"),
-      bind(ftp_start, click, "ftp.start();"),
-      bind(ftp_stop,  click, "ftp.stop();"),
-      bind(nitro:to_atom(Uid), change, "ftp.init(this.files[0],1);"),
+      bind(ftp_open,  click, &#34;qi('upload').click(); e.codeventDefault();&#34;),
+      bind(ftp_start, click, &#34;ftp.start();&#34;),
+      bind(ftp_stop,  click, &#34;ftp.stop();&#34;),
+      bind(nitro:to_atom(Uid), change, &#34;ftp.init(this.files[0],1);&#34;),
       Upload = #panel  { body = [
-               #input  { id   = Uid,        type  = &#60;&#60;"file"&#62;&#62; },
+               #input  { id   = Uid,        type  = &#60;&#60;&#34;file&#34;&#62;&#62; },
                #span   { id   = ftp_status, body  = [] },
                #span   { body = [
-               #button { id   = ftp_open,  body = "Browse" },
-               #button { id   = ftp_start, body = "Upload" },
-               #button { id   = ftp_stop,  body = "Stop" }
+               #button { id   = ftp_open,  body = &#34;Browse&#34; },
+               #button { id   = ftp_start, body = &#34;Upload&#34; },
+               #button { id   = ftp_stop,  body = &#34;Stop&#34; }
       ] } ] }, wf:render(Upload).
 
-    bind(Control,Event,Code) -&#62;
-        wf:wire(#bind{target=Control,type=Event,postback=Code}).
+  bind(Control,Event,Code) -&#62;
+      wf:wire(#bind{target=Control,type=Event,postback=Code}).
       </code>
     </figure>
   </section>
+</article>
 </main>
-<footer>
-  Made with <span class="heart">❤</span> for N2O
-</footer>
+<footer>Made with <span class="heart">❤</span> for N2O</footer>
 </body>
 </html>
