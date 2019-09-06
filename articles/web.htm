@@ -232,9 +232,9 @@ document(Name,Curr) -&#62;
     <figure>
       <figcaption>Rendered DOM javascript command, Bytes:</figcaption>
       <code>
-&#62; wf:actions(undefined).
-&#62; wf:update("1",open_app:new('DP00_12_uah')).
-&#62; size(iolist_to_binary(wf:render(wf:actions()))).
+> wf:actions(undefined).
+> wf:update("1",open_app:new('DP00_12_uah')).
+> size(iolist_to_binary(wf:render(wf:actions()))).
 4935
       </code>
     </figure>
@@ -242,9 +242,9 @@ document(Name,Curr) -&#62;
     <figure>
       <figcaption>Compressed DSL form in BERT, Bytes:</figcaption>
       <code>
-&#62; size(term_to_binary(open_app:new('DP00_12_uah'),[compressed])).
+> size(term_to_binary(open_app:new('DP00_12_uah'),[compressed])).
 2347
-&#62; size(term_to_binary(open_app:new('DP00_12_uah'))).
+> size(term_to_binary(open_app:new('DP00_12_uah'))).
 56474
       </code>
     </figure>
@@ -252,9 +252,9 @@ document(Name,Curr) -&#62;
     <figure>
       <figcaption>Declarative compressed FORM in BERT, Bytes:</figcaption>
       <code>
-&#62; size(term_to_binary(open_app:document(maxim,"uah",y,y,y))).
+> size(term_to_binary(open_app:document(maxim,"uah",y,y,y))).
 3961
-&#62; size(term_to_binary(open_app:document(maxim,"uah",y,y,y),
+> size(term_to_binary(open_app:document(maxim,"uah",y,y,y),
                         [compressed])).
 1286
       </code>
