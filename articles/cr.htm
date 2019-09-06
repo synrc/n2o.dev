@@ -155,19 +155,21 @@ command performing forward over the ordered chain of replicas. This chain
 is called configuration. All writes come to the chain's head,
 all reads come to chain's tail.</p>
 
-<figure><figcaption>Picture 1. Chain<figcaption><img src="https://synrc.com/apps/cr/doc/images/replicas.svg" height=200 style="border:none;"/></figure>
+<figure><figcaption>Picture 1. Chain</figcaption>
+<img src="https://synrc.com/apps/cr/doc/images/replicas.svg" height="200" style="border:none;"/></figure>
 
 <h4>Replication Log</h4>
 
 <p>During transaction, the command is saved in replication
 log on each replica of the transaction. This log is append-only
-disk structure and is also called this history of replica's operations.</p></div></p>
+disk structure and is also called this history of replica's operations.</p>
 
 <p>The replication log is also uses KVS as underlying storage.
 As a replication log container it uses <b>#log</b> type and command is stored
 as <b>#operation</b> record. Each replica has its own log.</p>
 
-<figure><figcaption>Picture 2. Log</figcaption><img src="https://synrc.com/apps/cr/doc/images/log.svg" height=400 style="border:none;"></figure>
+<figure><figcaption>Picture 2. Log</figcaption>
+<img src="https://synrc.com/apps/cr/doc/images/log.svg" height="400" style="border:none;"/></figure>
 
 <h4>Replica Protocol</h4>
 
@@ -202,7 +204,7 @@ nodes to the greatest common prefix log.</p>
 <p>The configuration is a dynamic property of transaction.
 During transaction it may change due to byzantine failures,
 leading us to reconfigure the replicas in a chain. The another consistent
-system is needed to track the dynamic configurations.</p></div></P>
+system is needed to track the dynamic configurations.</p>
 
 <p>To make the shard highly available, we use replication
 and dynamically change the configuration of replicas
@@ -242,16 +244,16 @@ operation log having operations commited on all replicas.</p>
 
 <figure>
 <code>
-Stable = [ R || R <- replicas(O),
+Stable = [ R || R &#60;- replicas(O),
                 status(R) == commited,
                 length(R) == N ]
 </code></figure>
 
 <p><b>NOTE</b>: due to asynchronous nature of transaction service the operations
-log will be always unordered. As on Picture 3 it should GCP = 2.</p></div>
+log will be always unordered. As on Picture 3 it should GCP = 2.</p>
 
 <figure><figcaption>Picture 3. Greatest common prefix</figcaption>
-<img src="https://synrc.com/apps/cr/doc/images/merging.svg" height=300 style="border:none;"/></figure>
+<img src="https://synrc.com/apps/cr/doc/images/merging.svg" height="300" style="border:none;"/></figure>
 
 <h3>Liveness</h3>
 
@@ -315,7 +317,8 @@ filesystem event on each platform. The database itself built using
 
 <p>Supervision tree of chain replication supervisor:</p>
 
-<figure><figcaption>Picture 4. Supervision</figcaption><img src="https://synrc.com/apps/cr/doc/images/sup.png" height=400></figure>
+<figure><figcaption>Picture 4. Supervision</figcaption>
+<img src="https://synrc.com/apps/cr/doc/images/sup.png" height="400"/></figure>
 
 <figure>
 <code>
@@ -340,7 +343,7 @@ overloading the database:</p>
           cr:test(500),
           timer:sleep(1000)
       end
-          || ___ <- lists:seq(1,10)
+          || ___ &#62;- lists:seq(1,10)
     ].
 
 > cr:dump().
@@ -362,15 +365,15 @@ overloading the database:</p>
 <h3>Literature</h3>
 
 <p>
-&nbsp;[1]. Hussam Abu-Libdeh, Robbert van Renesse, Ymir Vigfusson.<br>
+[1]. Hussam Abu-Libdeh, Robbert van Renesse, Ymir Vigfusson.<br/>
 <a href="http://www.ymsir.com/papers/sharding-socc.pdf">
-Leveraging Sharding in the Design of Scalable Replication Protocols</a><br><br>
+Leveraging Sharding in the Design of Scalable Replication Protocols</a><br/><br/>
 
-[2]. Robbert van Renesse, Chi Ho, Nicolas Schiper.<br>
+[2]. Robbert van Renesse, Chi Ho, Nicolas Schiper.<br/>
 <a href="http://www.cs.cornell.edu/home/rvr/newpapers/opodis2012.pdf">
-Byzantine Chain Replication</a><br><br>
+Byzantine Chain Replication</a><br/><br/>
 
-[3]. Robbert van Renesse, Nicolas Schiper.<br>
+[3]. Robbert van Renesse, Nicolas Schiper.<br/>
 <a href="http://www.cs.cornell.edu/home/rvr/papers/osdi04.pdf">
 Chain Replication for Supporting High Throughput and Availability</a>
 </p>
