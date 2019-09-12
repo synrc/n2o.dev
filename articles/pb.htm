@@ -337,8 +337,6 @@ $ du -hs Mnesia.privat48@127.0.0.1
 
 <h3>Business Processes</h3>
 
-<div class=message>
-
 <p>In business process management the key feature of is a
 compact process definitions. Here is example of Deposit Opening process
 definition in simple and clean BPMN 2.0 aware language. The web application is an
@@ -391,23 +389,23 @@ Here is sample business process that involves most external heavy services.</p>
 <figure>
         <code>
 
-     EKBID = wf:qp(<<"ekbid">>,Req),
+     EKBID = wf:qp(&#60;&#60;"ekbid"&#62;&#62;,Req),
      Phone = #phone { number = "+38000000000" },
        Sid = #sid { sid = "15080" },
     Client = #client { phone = "+38000000000",
                        ekb_id = EKBID,
-                       names = <<"Тест"/utf8>>,
-                       surnames = <<"Тест"/utf8>> },
+                       names = &#60;&#60;"Тест"/utf8&#62;&#62;,
+                       surnames = &#60;&#60;"Тест"/utf8&#62;&#62; },
 
     Deposit = #deposit_app {
-        program  = <<"DE00">>,
-        currency = <<"980">>,
+        program  = &#60;&#60;"DE00"&#62;&#62;,
+        currency = &#60;&#60;"980"&#62;&#62;,
         rate     = [{rate,24},{bonus,0},{renewal_bonus,0.5}],
         duration = 12,
-        type     = <<"TEST">>,
+        type     = &#60;&#60;"TEST"&#62;&#62;,
         amount   = 2,
         chargeDeposit = card,
-        cardForCharge = #card{pan = <<"0000000000000000">>} },
+        cardForCharge = #card{pan = &#60;&#60;"0000000000000000"&#62;&#62;} },
 
     {ok,Pid} = bpe:start(deposit:def(), [ {dep_atom,'DE00_12_uah'},
                                           {notification, self()},
@@ -478,7 +476,8 @@ in 1 second on single Depository Application node.</p>
   </section>
 </main>
 <footer>
-<table border=0 style="padding-right:7%;" align=right cellspacing=10><tr><td style="font-size:16pt;color:white;">Made with ♡  for  </td> <td valign=bottom>
+<table border="0" style="padding-right:7%;" align="right" cellspacing="10"><tr>
+<td style="font-size:16pt;color:white;">Made with ♡  for  </td> <td valign="bottom">
     <svg width="238px" height="86px" viewBox="0 0 508 86">
         <g id="PrivatBank" sketch:type="MSLayerGroup">
             <path d="M96.261,74.199 L83.742,74.199 L83.742,29.962 L128.789,29.962 L128.789,74.199 L116.279,74.199 L116.279,38.555 L96.261,38.555 L96.261,74.199" id="Fill-7" fill="#6CA939" sketch:type="MSShapeGroup"></path>
