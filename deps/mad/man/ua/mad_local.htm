@@ -1,0 +1,80 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" /><meta name="author" content="Maxim Sokhatsky" />
+<title>LOCAL</title>
+<link rel="stylesheet" href="https://n2o.dev/blank.css" />
+<link rel="stylesheet" href="https://n2o.dev/zima.css" />
+</head><body><nav>
+    <a href="https://n2o.dev">DEV</a>
+    <a href="https://mad.n2o.space">MAD</a>
+    <a href="#" style="background:#ededed;">LOCAL</a>
+  <div class="dropdown">
+    <a onclick="drop()" class="dropbtn">UA</a>
+    <div id="dropdown" class="dropdown-content">
+      <a href="https://n2o.dev/deps/mad/man/ua/mad_local.htm">UA</a>
+      <a href="https://mad.n2o.space/man/mad_local.htm">EN</a>
+    </div>
+  </div>
+</nav><header>
+    <a href="../index.html"><img src="https://n2o.space/img/Synrc Neo.svg" /></a>
+    <h1>LOCAL</h1>
+</header>
+<main>
+<article>
+    <section>
+
+<h3>ВСТУП</h3>
+
+   <p>MAD LOCAL profile надає бекенд-інтерфейс MAD профілю
+      для середовища POSIX та цілей розробника.</p>
+
+    </section>
+    <section>
+
+<h3>PROFILE</h3>
+
+<p>В sys.config вам слід вказати kvs бекенд та список модулів, які
+   містять експортовану функцію <b>metainfo/0</b>.</p>
+
+    <figure><code>
+ application:get_env(mad,profile,mad_local).
+    </code></figure>
+
+    <figure><code>
+ -module(mad_local).
+ -include("mad.hrl").
+ -export(?MAD).
+
+ compile(Params)   -> mad_compile:compile(Params).
+ app(Params)       -> mad_static:app(Params).
+ get(Params)       -> mad_git:get_repo(Params).
+ release(Params)   -> mad_release:release(Params).
+ resolve(Params)   -> mad_resolve:main(Params).
+ clean(Params)     -> mad_run:clean(Params).
+ start(Params)     -> mad_run:start(Params).
+ attach(Params)    -> mad_run:attach(Params).
+ stop(Params)      -> mad_run:stop(Params).
+ sh(Params)        -> mad_repl:sh(Params).
+ deps(Params)      -> mad_git:deps(Params).
+ up(Params)        -> mad_git:up(Params).
+ fetch(Params)     -> mad_git:fetch(Params).
+ static(Params)    -> mad_static:main([],Params).
+ eunit(Params)     -> mad_eunit:main_test(Params).
+ strip(Params)     -> mad_strip:main(Params).
+    </code></figure>
+
+    </section>
+    <section>
+
+<p>Цей модуль може бути пов'язаним з:
+<a href="mad.htm"><b>mad</b></a>.
+</p>
+
+    </section>
+</article>
+</main><footer>
+    2005—2018 © Synrc Research Center
+</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body></html>
