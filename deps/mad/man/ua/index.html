@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Maxim Sokhatsky"/>
+    <title>MAD</title>
+    <link rel="stylesheet" href="https://n2o.dev/blank.css"/>
+    <link rel="stylesheet" href="https://n2o.dev/zima.css"/>
+</head>
+<body>
+<nav>
+    <a href="https://n2o.dev">DEV</a>
+    <a href="https://mad.n2o.space" style="background:#ededed;">MAD</a>
+  <div class="dropdown">
+    <a onclick="drop()" class="dropbtn">UA</a>
+    <div id="dropdown" class="dropdown-content">
+      <a href="https://n2o.dev/deps/mad/man/ua/index.html">UA</a>
+      <a href="https://mad.n2o.space/">EN</a>
+    </div>
+  </div>
+</nav>
+<header>
+    <a href="https://github.com/synrc/mad">
+    <img src="https://synrc.space/images/Synrc Neo.svg?v=1"/></a>
+    <h1>MAD</h1>
+</header>
+<aside>
+    <article>
+        <section>
+            <h3>СИНОПИС</h3>
+            <div>MAD &#8211; це невеликий та швидкий інструмент збірки для Erlang.
+                 Нижче наведено приклад конфігураційного файла MAD:</div><br/>
+            <figure>
+            <code>
+ {deps_dir,"deps"}.
+ {erl_opts,[nowarn_export_all]}.
+ {deps,[{sh,".*",{git,
+    "git://github.com/synrc/sh",
+         {branch, "master"}}}]}.
+            </code>
+        </figure><br/>
+        </section>
+        <section>
+            <a name="install"></a><h3>Встановлення</h3>
+            <div>Помістіть виконуваний бінарний файл MAD у <b>$PATH</b> або
+                 <b>/usr/local/bin</b>. Для прикладу, за допомогою curl:</div><br/>
+        <figure>
+        <code> $ curl -fsSL \
+   https://git.io/fpYm4 \
+   > mad &#38;&#38; chmod +x mad \
+   &#38;&#38; sudo cp mad /usr/local/bin</code>
+        </figure><br/>
+            <div>
+                APR 2018 © <a href="https://github.com/5HT">Namdak Tonpa</a> ISC<br/>
+                VER 6.9 6.8 6.7
+            </div>
+        </section>
+    </article>
+</aside>
+<main>
+<article>
+    <section>
+        <h3>Допомога</h3>
+        <p> MAD приймає список слів.
+            Цей список слів складається з спеціальних слів, відомих як роздільники, або команди.
+            Слова між командами &#8211; це аргументи для найближчої команди зліва.
+        </p>
+        <figure><code>
+ MAD Manage Dependencies 5.4-14-g7810b8d
+
+    invoke = mad | mad list
+      list = []  | command [options] list
+   command = app [zero|nitro] &#60;name&#62; | deps | clean | compile | strip
+           | bundle [beam|script] &#60;name&#62; | man | get &#60;repo&#62; | up [name]
+           | start | stop | attach | repl | static &#60;min&#62;
+        </code></figure>
+        <div>
+        <ul>
+        <li><b><a href="man/mad.htm">mad</a></b> — Головний модуль MAD</li>
+        <li><b><a href="man/mad_local.htm">mad_local</a></b> — MAD POSIX Profile</li>
+        </ul>
+        </div>
+    </section>
+    <section>
+        <a name="app"></a><h3>APP</h3>
+        <p>Створює нову програму із заздалегідь визначеного шаблону прикладу.
+           MAD містить два вбудованих приклади програм: <b>zero</b> та <b>nitro</b>.
+           Нижче наведено приклад програми <b>zero</b>:</p>
+        <figure><code>
+ $ mad app zero sample
+ OK
+        </code></figure>
+        <p>sample.app.src</p>
+        <figure><code>
+ {application, sample,
+  [{description, "sample application"},
+   {vsn, "0.8.0"},
+   {registered, []},
+   {applications, [kernel,stdlib]},
+   {mod, { sample, []}},
+   {env, []}]}.
+        </code></figure>
+        <p>sample.erl</p>
+        <figure><code>
+ -module(sample).
+ -compile(export_all).
+ -behaviour(application).
+ -behaviour(supervisor).
+ -export([start/2, stop/1, init/1]).
+
+ start(_, _) -> supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+ stop(_) -> ok.
+ init([]) -> {ok, { {one_for_one, 5, 10}, []} }.
+        </code></figure>
+        <div>
+         <ul><li><b><a href="man/mad_static.htm">mad_static</a></b> — MAD Static</li></ul>
+        </div>
+    </section>
+    <section>
+        <a name="deps"></a><h3>DEPS</h3>
+        <div>
+        <figure><code>
+ $ cd sample
+ $ cat rebar.config
+ {sub_dirs,["apps"]}.
+ {deps_dir,"deps"}.
+ {deps, [
+    {erlydtl,".*", {git, "git://github.com/voxoz/erlydtl",   []  }},
+    {cowboy, ".*", {git, "git://github.com/voxoz/cowboy",    []  }},
+    {gproc,  ".*", {git, "git://github.com/voxoz/gproc",     []  }},
+    {fs,     ".*", {git, "git://github.com/synrc/fs",        {tag, "4.10"} }},
+    {sh,     ".*", {git, "git://github.com/synrc/sh",        {tag, "2.10"} }},
+    {mad,    ".*", {git, "git://github.com/synrc/mad",       {tag, "4.10"} }},
+    {active, ".*", {git, "git://github.com/synrc/active",    {tag, "4.10"} }},
+    {nitro,  ".*", {git, "git://github.com/synrc/nitro",     {tag, "3.10"} }},
+    {n2o,    ".*", {git, "git://github.com/synrc/n2o",       {tag, "5.10"} }}
+ ]}
+        </code></figure>
+        <figure><code>
+ $ mad deps
+ ==> dependency: "git://github.com/voxoz/erlydtl" tag: []
+ ==> dependency: "git://github.com/voxoz/cowlib" tag: []
+ ==> dependency: "git://github.com/voxoz/ranch" tag: []
+ ==> dependency: "git://github.com/voxoz/gproc" tag: []
+ ==> dependency: "git://github.com/synrc/fs" tag: {tag,"4.10"}
+ ==> dependency: "git://github.com/synrc/sh" tag: {tag,"2.10"}
+ ==> dependency: "git://github.com/synrc/mad" tag: {tag,"4.10"}
+ ==> dependency: "git://github.com/synrc/active" tag: {tag,"4.10"}
+ ==> dependency: "git://github.com/synrc/nitro" tag: {tag,"3.10"}
+ ==> dependency: "git://github.com/synrc/n2o" tag: {tag,"5.10"}
+ OK
+        </code></figure>
+        </div>
+        <a name="get"></a><h3>GET</h3>
+        <figure><code>
+ $ mad get kvx
+ ==> dependency: "https://github.com/synrc/kvx" tag: []
+ OK
+        </code></figure>
+        <a name="up"></a><h3>UP</h3>
+        <figure><code>
+ $ mad up
+ OK
+        </code></figure>
+        <div>
+        <ul><li><b><a href="man/mad_git.htm">mad_git</a></b> — MAD Git</li></ul></div>
+    </section>
+    <section>
+        <a name="clean"></a><h3>CLEAN</h3>
+        <div>
+        <figure><code>
+ $ mad clean
+ OK
+        </code></figure>
+        </div>
+        <a name="start"></a><h3>START</h3>
+        <figure><code>
+ $ mad start
+ Scripting: "/Users/maxim/depot/synrc/mad/mad"
+ OK
+        </code></figure>
+        <a name="attach"></a><h3>ATTACH</h3>
+        <figure><code>
+ $ $(mad attach)
+ Attaching to . (^D to exit)
+
+ 1>
+        </code></figure>
+        <a name="stop"></a><h3>STOP</h3>
+        <figure><code>
+ $ eval $(mad stop)
+ Attaching to . (^D to exit)
+
+ [EOF]
+        </code></figure>
+        <div>
+        <ul><li><b><a href="man/mad_run.htm">mad_run</a></b> — MAD Runner</li></ul></div>
+    </section>
+    <section>
+        <a name="compile"></a><h3>COMPILE</h3>
+        <figure><code>
+ $ mad compile
+ Writing /apps/sample/ebin/sample.app
+ OK
+        </code></figure>
+        <div>
+        <ul>
+        <li><b><a href="man/mad_compile.htm">mad_compile</a></b> — MAD Компілятор</li>
+        <li><b><a href="man/mad_app.htm">mad_app</a></b> — Файли OTP Програми</li>
+        <li><b><a href="man/mad_cubical.htm">mad_cubical</a></b> — cubicaltt файли</li>
+        <li><b><a href="man/mad_dtl.htm">mad_dtl</a></b> — DTL файли</li>
+        <li><b><a href="man/mad_erl.htm">mad_erl</a></b> — Erlang сирцеві файли</li>
+        <li><b><a href="man/mad_leex.htm">mad_leex</a></b> — Erlang leex файли</li>
+        <li><b><a href="man/mad_yecc.htm">mad_yecc</a></b> — Erlang yecc файли</li>
+        <li><b><a href="man/mad_port.htm">mad_port</a></b> — C/C++ файли</li>
+        <li><b><a href="man/mad_script.htm">mad_script</a></b> — .script файли</li>
+        </ul>
+        </div>
+    </section>
+    <section>
+        <a name="plan"></a><h3>PLAN</h3>
+        <figure><code>
+ $ mad plan
+ OK
+        </code></figure>
+        <a name="strip"></a><h3>STRIP</h3>
+        <figure><code>
+ $ mad strip
+ OK
+        </code></figure>
+        <a name="bundle"></a><h3>BUNDLE</h3>
+        <figure><code>
+ $ mad bundle script sample
+ OK
+        </code></figure>
+        <figure><code>
+ $ mad bundle beam sample
+ OK
+        </code></figure>
+        <div>
+        <ul>
+        <li><b><a href="man/mad_release.htm">mad_release</a></b> — MAD Bundler</li>
+        <li><b><a href="man/mad_escript.htm">mad_escript</a></b> — MAD escript bundler</li>
+        <li><b><a href="man/mad_systools.htm">mad_systools</a></b> — MAD BEAM release bundler</li>
+        </ul>
+        </div>
+    </section>
+    <section>
+        <a name="repl"></a><h3>REPL</h3>
+        <figure><code>
+ $ mad repl
+ $ open http://127.0.0.1:8001/app/index.htm
+        </code></figure>
+        <div>
+        <ul><li><b><a href="man/mad_repl.htm">mad_repl</a></b> — MAD REPL</li></ul></div>
+    </section>
+    <section>
+        <a name="articles"></a><h3>Статті</h3>
+        <div>
+        <ul><li><a href="https://n2o.dev/articles/n2o.htm">N2O: PROTOCOL</a></li>
+            <li><a href="https://n2o.dev/articles/web.htm">N2O: SERVER</a></li>
+            <li><a href="https://n2o.dev/articles/history.htm">N2O: HISTORY</a></li></ul></div>
+    </section>
+</article>
+</main><footer>
+    Зроблено з любов'ю <span class="heart">❤</span> до N2O
+</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body></html>
