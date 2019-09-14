@@ -37,63 +37,63 @@
         <h3>Мотивація</h3>
         <p>Path clobbering та перезавантаження може відбутись навіть якщо емейл відповідає RFC!</p>
         <figure><code>
- > Email = "proger+/&#38;reboot%23@hackndev.com".
- > os:cmd(["mkdir -p ", Email]).
+ &#62; Email = "proger+/&#38;reboot%23@hackndev.com".
+ &#62; os:cmd(["mkdir -p ", Email]).
         </code></figure>
         <p>Ми можемо виправити це за допомогою правильного екранування, наприклад:</p>
         <figure><code>
- > Path = sh_path:escape("email+=/subdir@example.com").
+ &#62; Path = sh_path:escape("email+=/subdir@example.com").
  "email+=%2Fsubdir@example.com"
         </code></figure>
         <h3>ESSENCE</h3>
         <figure><code>
- reduce() -> fun({_, Chunk}, Acc) -> [Chunk|Acc] end.
+ reduce() -&#62; fun({_, Chunk}, Acc) -&#62; [Chunk|Acc] end.
 
- run(Args) ->
+ run(Args) -&#62;
     erlang:open_port({spawn_executable, os:find_executable("sh")},
         [stream, in, out, eof, use_stdio, stderr_to_stdout, binary, exit_status,
             {args, ["-c",Args]}, {cd, element(2,file:get_cwd())}, {env, []}]).
 
- sh(Port) -> sh(Port, reduce(), []).
- sh(Port, Fun, Acc) -> receive
-   {Port, {exit_status, Status}} -> 
+ sh(Port) -&#62; sh(Port, reduce(), []).
+ sh(Port, Fun, Acc) -&#62; receive
+   {Port, {exit_status, Status}} -&#62; 
           {done, Status, iolist_to_binary(lists:reverse(Acc))};
-   {Port, {data, {eol, Line}}} ->
+   {Port, {data, {eol, Line}}} -&#62;
           sh(Port, Fun, Fun({eol, Line}, Acc));
-   {Port, {data, {noeol, Line}}} ->
+   {Port, {data, {noeol, Line}}} -&#62;
           sh(Port, Fun, Fun({noeol, Line}, Acc));
-   {Port, {data, Data}} ->
-          case { binary:match(Data, &#60;&#60;"Sign the certificate? [y/n]:">>) 
+   {Port, {data, Data}} -&#62;
+          case { binary:match(Data, &#60;&#60;"Sign the certificate? [y/n]:"&#62;&#62;) 
                  =/= nomatch,
-                 binary:match(Data, &#60;&#60;"requests certified, commit?">>)
+                 binary:match(Data, &#60;&#60;"requests certified, commit?"&#62;&#62;)
                  =/= nomatch} of
-               { true , _} -> Port ! {self(),{command,&#60;&#60;"y\n">>}};
-               { _ , true} -> Port ! {self(),{command,&#60;&#60;"y\n">>}};
-               {_,_}       -> skip end,
+               { true , _} -&#62; Port ! {self(),{command,&#60;&#60;"y\n"&#62;&#62;}};
+               { _ , true} -&#62; Port ! {self(),{command,&#60;&#60;"y\n"&#62;&#62;}};
+               {_,_}       -&#62; skip end,
           sh(Port, Fun, Fun({data,Data}, Acc)) end.
         </code></figure>
         <h3>Використання</h3>
         <p>Сімейство функцій та портів, що включають взаємодію з system shell,
            шляхами та зовнішніми програмами.</p>
         <figure><code>
- > Url = "https://github.com/proger/darwinkit.git",
- > sh:run(["git", "clone", Url], binary, "/tmp").
- {done,0,&lt;&lt;"Cloning into 'darwinkit'...\n">>}
+ &#62; Url = "https://github.com/proger/darwinkit.git",
+ &#62; sh:run(["git", "clone", Url], binary, "/tmp").
+ {done,0,&lt;&lt;"Cloning into 'darwinkit'...\n"&#62;&#62;}
         </code></figure>
         <figure><code>
- > UserUrl = "https://github.com/proger/darwinkit.git".
- > sh:run(["git", "clone", UserUrl], binary, "/tmp").
+ &#62; UserUrl = "https://github.com/proger/darwinkit.git".
+ &#62; sh:run(["git", "clone", UserUrl], binary, "/tmp").
  {done,128,
       &lt;&lt;"fatal: destination path 'darwinkit' ",
-        "already exists and is not an empty directory.\n">>}
+        "already exists and is not an empty directory.\n"&#62;&#62;}
         </code></figure>
         <figure><code>
- > sh:run(["ifconfig"], "/tmp/output.log", "/tank/proger/vxz/otp").
+ &#62; sh:run(["ifconfig"], "/tmp/output.log", "/tank/proger/vxz/otp").
  {done,0,"/tmp/output.log"}
         </code></figure>
         <figure><code>
  % cat /tmp/output.log
- >>> {{2013,8,28},{8,39,14}} /sbin/ifconfig
+ &#62;&#62;&#62; {{2013,8,28},{8,39,14}} /sbin/ifconfig
  lo0: flags=8049 mtu 16384
  	options=3
  	inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1
@@ -111,23 +111,23 @@
 	ether 0e:d1:c3:e9:24:65
 	media: autoselect
 	status: inactive
- >>> {{2013,8,28},{8,39,14}} exit status: 0
+ &#62;&#62;&#62; {{2013,8,28},{8,39,14}} exit status: 0
         </code></figure>
         <figure><code>
- > sh:oneliner(["touch", filename:join("/tmp/", Path)]).
+ &#62; sh:oneliner(["touch", filename:join("/tmp/", Path)]).
  {done,0,&lt;&lt;>>}
         </code></figure>
         <figure><code>
- > sh:oneliner("uname -mnprs").
- {done,0,&lt;&lt;"Darwin mac 18.2.0 x86_64 i386">>}
+ &#62; sh:oneliner("uname -mnprs").
+ {done,0,&lt;&lt;"Darwin mac 18.2.0 x86_64 i386"&#62;&#62;}
         </code></figure>
         <figure><code>
- > sh:oneliner("git describe --always").
- {done,128,&lt;&lt;"fatal: Not a valid object name HEAD">>}
+ &#62; sh:oneliner("git describe --always").
+ {done,128,&lt;&lt;"fatal: Not a valid object name HEAD"&#62;&#62;}
         </code></figure>
         <figure><code>
- > sh:oneliner("git describe --always", "/tank/proger/vxz/otp").
- {done,0,&lt;&lt;"OTP_R16B01">>}
+ &#62; sh:oneliner("git describe --always", "/tank/proger/vxz/otp").
+ {done,0,&lt;&lt;"OTP_R16B01"&#62;&#62;}
         </code></figure>
     </section>
     <section>
@@ -146,8 +146,8 @@
         <p> Якщо ви зупиняєте ноду, <b>beam stdin</b> доступний для вас:</p>
 
         <figure><code>
- > Fdlink = sh:fdlink_executable().
- > erlang:open_port({spawn_executable, Fdlink},
+ &#62; Fdlink = sh:fdlink_executable().
+ &#62; erlang:open_port({spawn_executable, Fdlink},
    [stream, exit_status, {args, ["/usr/bin/socat"|Args]}).
         </code></figure>
         <p><b>fdlink</b> також закриє стандартний вхід його дочірнього процесу.</p>
