@@ -5,8 +5,14 @@
 <title>KVS</title><link rel="stylesheet" href="https://n2o.dev/blank.css"/></head><body><nav>
     <a href="https://n2o.dev">DEV</a>
     <a href="https://kvs.n2o.space" style="background:#ededed;">KVS</a>
-    <a href="#" style="background:#ededed;">DE</a>
-    <a href="https://kvs.n2o.space">EN</a>
+  <div class="dropdown">
+    <a onclick="drop()" class="dropbtn">DE</a>
+    <div id="dropdown" class="dropdown-content">
+      <a href="https://n2o.dev/deps/kvs/man/ua/index.html">UA</a>
+      <a href="https://n2o.dev/deps/kvs/man/de/index.html">DE</a>
+      <a href="https://kvs.n2o.space/">EN</a>
+    </div>
+  </div>
 </nav><header>
     <a href="https://github.com/synrc/kvs"><img src="https://synrc.space/images/Synrc Neo.svg?v=1" /></a>
     <h1>KVS</h1>
@@ -103,4 +109,6 @@
 </article>
 </main><footer>
     Made with <span class="heart">❤</span> to N2O
-</footer></body></html>
+</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body></html>
