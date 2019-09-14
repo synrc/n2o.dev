@@ -3,7 +3,6 @@
 <meta name="description" content="" /><meta name="author" content="Maxim Sokhatsky" />
 <title>EXE</title>
 <link rel="stylesheet" href="https://n2o.dev/blank.css" />
-<link rel="stylesheet" href="https://n2o.dev/zima.css" />
 </head><body><nav>
         <a href="https://n2o.dev">DEV</a>
         <a href="https://exe.n2o.dev" style="background:#ededed;">EXE</a>
@@ -64,12 +63,12 @@
    {Port, {data, {noeol, Line}}} ->
           sh(Port, Fun, Fun({noeol, Line}, Acc));
    {Port, {data, Data}} ->
-          case { binary:match(Data, <<"Sign the certificate? [y/n]:">>) 
+          case { binary:match(Data, &#60;&#60;"Sign the certificate? [y/n]:">>) 
                  =/= nomatch,
-                 binary:match(Data, <<"requests certified, commit?">>)
+                 binary:match(Data, &#60;&#60;"requests certified, commit?">>)
                  =/= nomatch} of
-               { true , _} -> Port ! {self(),{command,<<"y\n">>}};
-               { _ , true} -> Port ! {self(),{command,<<"y\n">>}};
+               { true , _} -> Port ! {self(),{command,&#60;&#60;"y\n">>}};
+               { _ , true} -> Port ! {self(),{command,&#60;&#60;"y\n">>}};
                {_,_}       -> skip end,
           sh(Port, Fun, Fun({data,Data}, Acc)) end.
         </code></figure>
