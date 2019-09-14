@@ -13,8 +13,13 @@
 <nav>
     <a href="https://n2o.dev/ua/">DEV</a>
     <a href="#" style="background:#ededed;">REST</a>
-    <a href="#" style="background:#ededed;">UA</a>
-    <a href="https://rest.n2o.space">EN</a>
+  <div class="dropdown">
+    <a onclick="drop()" class="dropbtn">UA</a>
+    <div id="dropdown" class="dropdown-content">
+      <a href="https://n2o.dev/deps/rest/man/ua/index.html">UA</a>
+      <a href="https://rest.n2o.space/">EN</a>
+    </div>
+  </div>
 </nav>
 <header>
     <a href="https://github.com/synrc/rest"><img src="https://synrc.space/images/Synrc Neo.svg?v=1" /></a>
@@ -111,5 +116,6 @@
 <footer>
     Зроблено з любов'ю <span class="heart">❤</span> до Erlang
 </footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
 </body>
 </html>
