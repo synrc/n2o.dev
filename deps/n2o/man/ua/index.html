@@ -4,7 +4,14 @@
 <title>N2O</title><link rel="stylesheet" href="../../../../blank.css?v=2" /></head><body><nav>
     <a href="https://n2o.dev/ua/">DEV</a>
     <a href="#" style="background:#ededed;">N2O</a>
-    <a href="#" style="background:#ededed;">UA</a>
+  <div class="dropdown">
+    <a onclick="drop()" class="dropbtn">UA</a>
+    <div id="dropdown" class="dropdown-content">
+      <a href="https://n2o.dev/deps/n2o/man/ua/index.html">UA</a>
+      <a href="https://n2o.dev/deps/n2o/man/de/index.html">DE</a>
+      <a href="https://ws.n2o.space/">EN</a>
+    </div>
+  </div>
     <a href="https://ws.n2o.space">EN</a>
 </nav>
 <header>
@@ -170,4 +177,6 @@
 </article>
 </main><footer>
     Зроблено з любов'ю <span class="heart">❤</span> до Erlang
-</footer></body></html>
+</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body></html>

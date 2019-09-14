@@ -1,8 +1,14 @@
 <!DOCTYPE html><html><head><meta charset="utf-8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="" /><meta name="author" content="Maxim Sokhatsky" /><title>N2O</title><link rel="stylesheet" href="https://synrc.space/synrc.css" /></head><body><nav>
     <a href="https://n2o.dev">DEV</a>
     <a href="https://ws.n2o.space" style="background:#ededed;">N2O</a>
-    <a href="#" style="background:#ededed;">DE</a>
-    <a href="https://ws.n2o.space">EN</a>
+  <div class="dropdown">
+    <a onclick="drop()" class="dropbtn">DE</a>
+    <div id="dropdown" class="dropdown-content">
+      <a href="https://n2o.dev/deps/n2o/man/ua/index.html">UA</a>
+      <a href="https://n2o.dev/deps/n2o/man/de/index.html">DE</a>
+      <a href="https://ws.n2o.space/">EN</a>
+    </div>
+  </div>
 </nav><header>
     <a href="https://github.com/synrc/n2o"><img src="https://synrc.space/images/Synrc Neo.svg?v=1" /></a>
     <h1>N2O</h1>
@@ -161,4 +167,6 @@
 </article>
 </main><footer>
     Made with <span class="heart">❤</span> to Erlang
-</footer></body></html>
+</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body></html>

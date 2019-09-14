@@ -2,8 +2,14 @@
     <a href="https://n2o.dev/ua/">DEV</a>
     <a href="index.html">N2O</a>
     <a href="#" style="background:#ededed;">STATIC</a>
-    <a href="#" style="background:#ededed;">UA</a>
-    <a href="https://ws.n2o.space/man/n2o_static.htm">EN</a>
+  <div class="dropdown">
+    <a onclick="drop()" class="dropbtn">UA</a>
+    <div id="dropdown" class="dropdown-content">
+      <a href="https://n2o.dev/deps/n2o/man/ua/n2o_static.htm">UA</a>
+      <a href="https://n2o.dev/deps/n2o/man/de/n2o_static.htm">DE</a>
+      <a href="https://ws.n2o.space/man/n2o_static.htm">EN</a>
+    </div>
+  </div>
 </nav><header>
     <a href="index.html"><img src="https://n2o.space/img/Synrc Neo.svg" /></a>
     <h1>STATIC</h1>
@@ -24,4 +30,6 @@ MAN_MODULES
 </article>
 </main><footer>
     2005—2019 © Synrc Research Center
-</footer></body></html>
+</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body></html>
