@@ -14,7 +14,7 @@
     </div>
   </div>
     </nav><header>
-        <a href="https://github.com/synrc/exe"><img src="https://synrc.space/images/Synrc Neo.svg?v=1" /></a>
+        <a href="https://github.com/synrc/exe"><img src="https://synrc.space/images/Synrc Neo.svg" /></a>
         <h1>EXE</h1>
     </header><aside>
         <article>
@@ -63,12 +63,12 @@
    {Port, {data, {noeol, Line}}} ->
           sh(Port, Fun, Fun({noeol, Line}, Acc));
    {Port, {data, Data}} ->
-          case { binary:match(Data, <<"Sign the certificate? [y/n]:">>) 
+          case { binary:match(Data, &#60;&#60;"Sign the certificate? [y/n]:"&#62;&#62;) 
                  =/= nomatch,
-                 binary:match(Data, <<"requests certified, commit?">>)
+                 binary:match(Data, &#60;&#60;"requests certified, commit?"&#62;&#62;)
                  =/= nomatch} of
-               { true , _} -> Port ! {self(),{command,<<"y\n">>}};
-               { _ , true} -> Port ! {self(),{command,<<"y\n">>}};
+               { true , _} -> Port ! {self(),{command,&#60;&#60;"y\n"&#62;&#62;}};
+               { _ , true} -> Port ! {self(),{command,&#60;&#60;"y\n"&#62;&#62;}};
                {_,_}       -> skip end,
           sh(Port, Fun, Fun({data,Data}, Acc)) end.
         </code></figure>
