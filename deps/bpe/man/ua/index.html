@@ -64,6 +64,27 @@
 </aside>
 <main>
 <article>
+  <section>                                                         
+    <h3>Стандарт ISO 19510</h3>
+    <p>Підтримка сутностей BPMN в BPE:</p>
+    <p>beginEvent — початкова подія<br/>
+       subProcess — виклик підпроцесу<br/>
+       gateway — абстрактне розгалуження<br/>
+       exclusiveGateway — розгалуження<br/>
+       parallelGateway — паралельне розгалуження<br/>
+       eventBasedGateway — розгалуження запущене подією<br/>
+       messageEvent — асинхронне повідомлення через чергу Erlang-процесу<br/>
+       messageFlow — ребро від події до задачі<br/>
+       sequenceFlow — ребро від задачі до задачі<br/>
+       boundaryEvent — таймаут усього процесу<br/>
+       timeoutEvent — автоперехід на наступний крок БП<br/>
+       endEvent — кінцева подія<br/>
+       userTask — веб-користувач<br/>
+       serviceTask — алгоритм який миттєво виконується<br/>
+       sendTask — крок, який інкапсулює KVS #writer<br/>
+       receiveTask — крок, який інкапсулює KVS #reader<br/>
+    </p>
+  </section>  
   <section>
     <h3>Приклад сесії оператора</h3>
     <figure>
