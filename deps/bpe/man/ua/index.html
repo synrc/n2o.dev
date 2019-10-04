@@ -8,6 +8,11 @@
 <meta name="author" content="Maxim Sokhatsky" />
 <title>BPE</title>
 <link rel="stylesheet" href="https://n2o.dev/blank.css"/>
+<link rel="shortcut icon" type="image/x-icon" href="https://n2o.dev/img/favicon.ico"/>
+<link rel="apple-touch-icon" sizes="180x180" href="https://n2o.dev/img/apple-touch-icon.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="https://n2o.dev/img/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="https://n2o.dev/img/favicon-16x16.png"/>
+<link rel="manifest" href="https://n2o.dev/img/site.webmanifest"/>
 </head>
 <body>
 <nav>
@@ -29,7 +34,7 @@
 <aside>
   <article>
     <section>
-      <h3>СИНОПИС</h3>
+      <h3>СИНОПСИС</h3>
       <div>
         Бізнес-процеси підприємства (БПП) визначають інфраструктуру
         для оркестрування виробничих процесів згідно стандарту BPMN,
@@ -74,8 +79,8 @@
        parallelGateway — паралельне розгалуження<br/>
        eventBasedGateway — розгалуження запущене подією<br/>
        messageEvent — асинхронне повідомлення через чергу Erlang-процесу<br/>
-       messageFlow — ребро від події до задачі<br/>
-       sequenceFlow — ребро від задачі до задачі<br/>
+       messageFlow — асинхронне повідомлення через чергу KVS<br/>
+       sequenceFlow — ребро між задачою та/або розгалуженням<br/>
        boundaryEvent — таймаут усього процесу<br/>
        timeoutEvent — автоперехід на наступний крок БП<br/>
        endEvent — кінцева подія<br/>
@@ -210,13 +215,14 @@ def() -&#62;
     #sequenceFlow { source='Process',   target=['Process','Final']},
     #sequenceFlow { source='Signatory', target=['Process','Final']} ],
   tasks = [
+    #beginEvent  { name='Created',   module = bpe_account },
     #userTask    { name='Init',      module = bpe_account },
     #userTask    { name='Upload',    module = bpe_account },
     #userTask    { name='Signatory', module = bpe_account },
     #serviceTask { name='Payment',   module = bpe_account },
     #serviceTask { name='Process',   module = bpe_account }, 
     #endEvent    { name='Final',     module = bpe_account } ],
-  beginEvent = 'Init',
+  beginEvent = 'Created',
   endEvent   = 'Final',
   events = [ #messageEvent{name='PaymentReceived'} ] }.
       </code>
