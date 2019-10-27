@@ -4,23 +4,23 @@ N2O User Manuals
 Legend
 ------
 
-📁 — fs
-🧾 — form
-♾ — active
-💠 — bpe
-☀ — rt, base, pi
-🔥 — nitro
-⚡ — mad
-⭕ — n2o
-💿 — kvs
-🖥️ — exe
-☕ — rest
-☎️ — rpc
-💬 — chat
-🔒 — ns
-💧 — sample
-🔑 — ca
-🌐 — n2o.dev
+📁 — fs <br/>
+🧾 — form <br/>
+♾ — active <br/>
+💠 — bpe <br/>
+☀ — rt, base, pi <br/>
+🔥 — nitro <br/>
+⚡ — mad <br/>
+⭕ — n2o <br/>
+💿 — kvs <br/>
+🖥️ — exe <br/>
+☕ — rest <br/>
+☎️ — rpc <br/>
+💬 — chat <br/>
+🔒 — ns <br/>
+🔑 — ca <br/>
+💧 — sample, review <br/>
+🌐 — n2o.dev <br/>
 
 Languages
 ---------
@@ -38,3 +38,4 @@ Credits
 * Taras — [UA] — https://t.me/TTaraskin
 * Namdak Tonpa — [EN,RU] — https://t.me/tonpa
 * Radostin Dimitrov — [BG]
+ <br/>
