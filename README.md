@@ -1,6 +1,27 @@
 N2O User Manuals
 ================
 
+Legend
+------
+
+📁 — fs
+🧾 — form
+♾ — active
+💠 — bpe
+☀ — rt, base, pi
+🔥 — nitro
+⚡ — mad
+⭕ — n2o
+💿 — kvs
+🖥️ — exe
+☕ — rest
+☎️ — rpc
+💬 — chat
+🔒 — ns
+💧 — sample
+🔑 — ca
+🌐 — n2o.dev
+
 Languages
 ---------
 
