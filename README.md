@@ -1,10 +1,10 @@
 N2O User Manuals
 ================
 
-Discourse
----------
+Board Discussions
+-----------------
 
-* https://n2o.discourse.group
+* https://n2o.discourse.group/categories
 
 Legend
 ------
