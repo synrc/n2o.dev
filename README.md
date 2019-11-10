@@ -1,6 +1,11 @@
 N2O User Manuals
 ================
 
+Discourse
+---------
+
+* https://n2o.discourse.group
+
 Legend
 ------
 
