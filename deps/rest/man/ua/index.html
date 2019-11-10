@@ -19,7 +19,7 @@
     <a href="https://n2o.dev/ua/">DEV</a>
     <a href="#" style="background:#ededed;">REST</a>
     <a href="#" style="background:#ededed;">UA</a>
-    <a href="https://rest.n2o.space">EN</a>
+    <a href="https://rest.n2o.dev">EN</a>
 </nav>
 <header>
     <a href="https://github.com/synrc/rest"><img src="https://synrc.space/images/Synrc Neo.svg?v=1" /></a>
@@ -39,7 +39,6 @@
                  роутингу та інших сумнівних моментів.
             </div>
         </section>
-
         <section>
             <h3>ВИКОРИСТАННЯ</h3>
             <div>Просто підключіть кінцеву точку REST безпосередньо до вашого Cowboy роутера:</div>
@@ -52,7 +51,7 @@
         </code>
         </figure>
             <div>
-                OCT 2018 © <a href="https://github.com/5HT">5HT</a> <a href="https://5ht.co/license.htm">ISC</a><br />
+                OCT 2019 © <a href="https://github.com/5HT">5HT</a> <a href="https://5ht.co/license.htm">ISC</a><br />
                 VER 5.10
             </div>
         </section>
@@ -61,10 +60,8 @@
 <main>
 <article>
     <section>
-        <h3>Модуль</h3>
-        <p>
-            Приклад реалізації REST API:
-        </p>
+        <h3>ETS JSON</h3>
+        <p>Приклад реалізації табличного інтерфейсу без параметрів:</p>
         <figure>
         <code>
  -module(users).
@@ -97,24 +94,83 @@
  $ curl -i -X DELETE localhost:8005/rest/users/5HT
         </code></figure>
     </section>
+    <section>
+        <a name="kvs"></a><h3>KVS JSON</h3>
+        <p>Приклад універсального багатопараметричного інтерфейсу до баз даних.
+           Додайте вашу схему у <b>mix.exs</b></p>
+        <figure><code>
+ {:erp, "~> 0.10.2"},
+        </code></figure>
+        <p>або <b>rebar.config</b>:</p>
+        <figure><code>
+ {erp, ".*", {git, "git://github.com/erpuno/erp", {tag,"master"}}},
+        </code></figure>
+        <p>Запит організаційної структури підприємства:</p>
+        <figure><code>
+ $ curl -X GET http://localhost:8005/rest/kvs/0/erp/group
+ {"\/erp\/group":[{"name":"Quanterall","url":"quanterall.com",
+ "location":[],"type":[]}]}
+        </code></figure>
+        <p>Перелік інвойсів компанії ФінаТех:</p>
+        <figure><code>
+ $ curl -i -X GET localhost:8005/rest/kvs/0/plm/FinaTech-Stamps/income
+ HTTP/1.1 200 OK
+ content-length: 1718
+ content-type: application/json
+ date: Fri, 04 Oct 2019 15:58:16 GMT
+ server: Cowboy
 
+ {"\/plm\/FinaTech-Stamps\/income":[{"invoice":"APR-2018-PAY-FTST","account":[],
+ "subaccount":[],"volume":{"fraction":0,"digits":12000},"price":{"fraction":0,
+ "digits":1},"instrument":"USD","type":"crypto","from":[],"to":[]},{"invoice":
+ "AUG-2018-PAY-FTST","account":[],"subaccount":[],"volume":{"fraction":0,
+ "digits":12000},"price":{"fraction":0,"digits":1},"instrument":"USD","type":
+ "crypto","from":[],"to":[]},{"invoice":"FEB-2018-PAY-FTST","account":[],
+ "subaccount":[],"volume":{"fraction":0,"digits":7000},"price":{"fraction":0,
+ "digits":1},"instrument":"USD","type":"crypto","from":[],"to":[]},{"invoice":
+ "JAN-2018-PAY-FTST","account":[],"subaccount":[],"volume":{"fraction":0,"digits":
+ 5000},"price":{"fraction":0,"digits":1},"instrument":"USD","type":"crypto","from":
+ [],"to":[]},{"invoice":"JUL-2018-PAY-FTST","account":[],"subaccount":[],"volume":
+ {"fraction":0,"digits":10000},"price":{"fraction":0,"digits":1},"instrument":
+ "USD","type":"crypto","from":[],"to":[]},{"invoice":"JUN-2018-PAY-FTST",
+ "account":[],"subaccount":[],"volume":{"fraction":0,"digits":10000},"price":
+ {"fraction":0,"digits":1},"instrument":"USD","type":"crypto","from":[],"to":[]},
+ {"invoice":"MAR-2018-PAY-FTST","account":[],"subaccount":[],"volume":
+ {"fraction":0,"digits":10000},"price":{"fraction":0,"digits":1},"instrument":
+ "USD","type":"crypto","from":[],"to":[]},{"invoice":"MAY-2018-PAY-FTST",
+ "account":[],"subaccount":[],"volume":{"fraction":0,"digits":15000},
+ "price":{"fraction":0,"digits":1},"instrument":"USD","type":"crypto",
+ "from":[],"to":[]},{"invoice":"SEP-2018-PAY-FTST","account":[],"subaccount":
+ [],"volume":{"fraction":0,"digits":15000},"price":{"fraction":0,"digits":1},
+ "instrument":"USD","type":"crypto","from":[],"to":[]}]}
+        </code></figure>
+        <p>Запит конктретного інвойса:</p>
+        <figure><code>
+ $ curl -i -X GET localhost:8005/rest/kvs/1/APR-2018-PAY-FTST/plm/FinaTech-Stamps/income
+ HTTP/1.1 200 OK
+ content-length: 187
+ content-type: application/json
+ date: Fri, 04 Oct 2019 16:58:42 GMT
+ server: Cowboy
+
+ {"invoice":"APR-2018-PAY-FTST","account":[],"subaccount":[],"volume":
+ {"fraction":0,"digits":12000},"price":{"fraction":0,"digits":1},
+ "instrument":"USD","type":"crypto","from":[],"to":[]}
+        </code></figure>
+    </section>
     <section>
         <h3>Модулі</h3>
         <ul><li><b><a href="rest.htm">rest</a></b> — rest</li>
-            <li><b><a href="rest_app.htm">rest_app</a></b> — rest_app</li>
-            <li><b><a href="rest_cowboy.htm">rest_cowboy</a></b> — rest_cowboy</li>
-            <li><b><a href="rest_sup.htm">rest_sup</a></b> — rest_sup</li>
+            <li><b><a href="rest_cowboy.htm">rest_cowboy</a></b> — простий міст у Erlang модулі</li>
+            <li><b><a href="rest_kvs.htm">rest_kvs</a></b> — багатопараметричний інтерфейс до баз даних</li>
         </ul>
     </section>
-
     <section>
-        <a name="credits"></a><h3>Credits</h3>
+        <a name="credits"></a><h3>Автор</h3>
         <ul><li>Dmitry Bushmelev</li></ul>
     </section>
 </article>
 </main>
-<footer>
-    Зроблено з любов'ю <span class="heart">❤</span> до Erlang
-</footer>
+<footer>Зроблено з любов'ю <span class="heart">❤</span> до Erlang</footer>
 </body>
 </html>
