@@ -1,11 +1,6 @@
 N2O User Manuals
 ================
 
-Board Discussions
------------------
-
-* https://n2o.discourse.group/categories
-
 Legend
 ------
 
@@ -26,6 +21,11 @@ Legend
 🔑 — ca <br/>
 💧 — sample, review <br/>
 🌐 — n2o.dev <br/>
+
+Board Discussions
+-----------------
+
+* https://n2o.discourse.group/categories
 
 Languages
 ---------
