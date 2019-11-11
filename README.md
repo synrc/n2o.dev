@@ -7,9 +7,9 @@ Legend
 📁 — fs <br/>
 🧾 — form <br/>
 ♾ — active <br/>
-💠 — bpe <br/>
+💠 — bpe, mach, rete <br/>
 ☀ — rt, base, pi <br/>
-🔥 — nitro <br/>
+🔥 — nitro, svg <br/>
 ⚡ — mad <br/>
 ⭕ — n2o <br/>
 💿 — kvs <br/>
@@ -19,7 +19,7 @@ Legend
 💬 — chat <br/>
 🔒 — ns <br/>
 🔑 — ca <br/>
-💧 — sample, review <br/>
+💧 — sample, review, crm, wms, plm<br/>
 🌐 — n2o.dev <br/>
 
 Board Discussions
