@@ -4,21 +4,21 @@ N2O User Manuals
 Legend
 ------
 
-📁 — fs <br/>
-🧾 — form <br/>
-♾ — active <br/>
-💠 — bpe, mach, rete <br/>
 ☀ — rt, base, pi <br/>
-🔥 — nitro, svg <br/>
-⚡ — mad <br/>
-⭕ — n2o <br/>
-💿 — kvs <br/>
+♾ — active <br/>
 🖥️ — exe <br/>
-☕ — rest <br/>
-☎️ — rpc <br/>
 💬 — chat <br/>
+☕ — rest <br/>
+💿 — kvs <br/>
+🧾 — form <br/>
+☎️ — rpc <br/>
+⭕ — n2o <br/>
+🔥 — nitro, svg <br/>
 🔒 — ns <br/>
 🔑 — ca <br/>
+📁 — fs <br/>
+⚡ — mad <br/>
+💠 — bpe, mach, rete <br/>
 💧 — sample, review, crm, wms, plm<br/>
 🌐 — n2o.dev <br/>
 
