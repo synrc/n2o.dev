@@ -4,7 +4,6 @@ N2O User Manuals
 Legend
 ------
 
-☀ — rt, base, pi <br/>
 ♾ — active <br/>
 🖥️ — exe <br/>
 💬 — chat <br/>
@@ -18,6 +17,7 @@ Legend
 🔑 — ca <br/>
 📁 — fs <br/>
 ⚡ — mad <br/>
+☀ — rt, base, pi <br/>
 💠 — bpe, mach, rete <br/>
 💧 — sample, review, crm, wms, plm<br/>
 🌐 — n2o.dev <br/>
