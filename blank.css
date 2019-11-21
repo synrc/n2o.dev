@@ -24,7 +24,7 @@ nav a { font-size: 16px; border: 2px solid #dedede; cursor: pointer; text-decora
         margin: 5px 5px; padding: 7px 12px; text-align: center; color: #5BC2E7; }
 
 header { padding-top: 80px; padding-bottom: 40px; text-align: center; background-color: white; }
-header img { margin-right: 25px; margin-bottom:-35px; width: 100px; }
+header img { margin-right: 25px; margin-bottom:-25px; width: 100px; }
 header h1 { line-height: 1; margin: 40px 0px 40px 0px; padding-left: 20px;
             font-size: 38px; display: inline-block; text-align: left; }
 
