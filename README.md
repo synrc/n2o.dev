@@ -43,4 +43,4 @@ Credits
 * Taras — [UA] — https://t.me/TTaraskin
 * Namdak Tonpa — [EN,RU] — https://t.me/tonpa
 * Radostin Dimitrov — [BG]
- <br/>
+
