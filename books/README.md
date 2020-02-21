@@ -1,5 +1,5 @@
-N2O BOOKS
-=========
+N2O.DEV Books
+=============
 
 #1 N2O: No Bullshit Sane Framework for Wild Web
 --------------------------------------------
