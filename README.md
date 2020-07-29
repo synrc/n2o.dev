@@ -1,5 +1,5 @@
-Welcome to the N2O!
-===================
+Welcome to N2O!
+===============
 
 <img src="https://n2o.dev/DEV.png?v=1"/>
 
