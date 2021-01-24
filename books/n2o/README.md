@@ -58,19 +58,21 @@
 
 ## N2O API
 
-### 06-01 SESSION
-### 06-01 CACHE
-### 06-01 MQ
-### 06-01 PICKLE
-### 06-01 FORMAT
+### 06-01 Host Variables
+### 06-01 Session Variables
+### 06-01 Global Cache
+### 06-01 Message Queue
+### 06-01 Pickling
+### 06-01 Logging
 
 ## NITRO API
 
-### 06-01 Q/QC
-### 06-02 JSE HTE XSS
-### 06-03 WIRE
-### 06-04 RENDER
-### 06-05 INSERT
-### 06-06 UPDATE
-### 06-07 REMOVE
-### 06-08 CLEAR
+### 06-01 Q: Post Variables
+### 06-02 XSS: JavaScript and HTML escaping
+### 06-03 WIRE: Flush JavaScript to client
+### 06-04 RENDER: Generate HTML
+### 06-05 INSERT: Send insert DOM command
+### 06-06 UPDATE: Send update DOM command
+### 06-07 REMOVE: Send remove DOM command
+### 06-08 CLEAR: Clear DOM element
+
