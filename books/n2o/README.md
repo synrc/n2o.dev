@@ -29,7 +29,7 @@
 ### 02-01 Clone: ERP samples
 ### 02-02 Build: MIX and MAD
 ### 02-03 Run: Releases
-### 02-03 Publish: HEX.PM
+### 02-04 Publish: HEX.PM
 
 ## PROCESSES
 
@@ -42,7 +42,7 @@
 
 ### 04-01 Async (WS/MQTT) and Sync (HTTP) endpoints
 
-### 04-04 N2O/MQTT applications
+### 04-02 N2O/MQTT applications
 
 <img src="images/mqtt.n2o.png"/>
 
@@ -50,7 +50,7 @@
 
 <img src="images/ws.n2o.png"/>
 
-### 04-02 REST HTTP applications
+### 04-04 REST HTTP applications
 ### 04-05 Routing
 ### 04-06 SPA Conrollers
 
@@ -69,20 +69,20 @@
 ## N2O API
 
 ### 06-01 Host Variables
-### 06-01 Session Variables
-### 06-01 Global Cache
-### 06-01 Message Queue
-### 06-01 Pickling
-### 06-01 Logging
+### 06-02 Session Variables
+### 06-03 Global Cache
+### 06-04 Message Queue
+### 06-05 Pickling
+### 06-06 Logging
 
 ## NITRO API
 
-### 06-01 Q: Postback Variables
-### 06-02 XSS: JavaScript and HTML escaping
-### 06-03 WIRE: Flush JavaScript to client
-### 06-04 RENDER: Generate HTML
-### 06-05 INSERT: Send insert DOM command
-### 06-06 UPDATE: Send update DOM command
-### 06-07 REMOVE: Send remove DOM command
-### 06-08 CLEAR: Clear DOM element
+### 07-01 Q: Postback Variables
+### 07-02 XSS: JavaScript and HTML escaping
+### 07-03 WIRE: Flush JavaScript to client
+### 07-04 RENDER: Generate HTML
+### 07-05 INSERT: Send insert DOM command
+### 07-06 UPDATE: Send update DOM command
+### 07-07 REMOVE: Send remove DOM command
+### 07-08 CLEAR: Clear DOM element
 
