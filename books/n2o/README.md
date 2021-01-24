@@ -67,7 +67,7 @@
 
 ## NITRO API
 
-### 06-01 Q: Post Variables
+### 06-01 Q: Postback Variables
 ### 06-02 XSS: JavaScript and HTML escaping
 ### 06-03 WIRE: Flush JavaScript to client
 ### 06-04 RENDER: Generate HTML
