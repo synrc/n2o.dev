@@ -42,14 +42,11 @@
 
 ### 04-01 Async (WS/MQTT) and Sync (HTTP) endpoints
 
-### 04-02 N2O/MQTT applications
-
 <img src="images/mqtt.n2o.png"/>
-
-### 04-03 N2O/WebSocket applications
-
 <img src="images/ws.n2o.png"/>
 
+### 04-02 N2O/MQTT applications
+### 04-03 N2O/WebSocket applications
 ### 04-04 REST HTTP applications
 ### 04-05 Routing
 ### 04-06 SPA Conrollers
