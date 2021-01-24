@@ -5,19 +5,20 @@ The secret to reducing latency is simple. We try to deliver rendered HTML
 as soon as possible and render JavaScript only when WebSocket initialization is complete.
 It takes three steps and three Erlang processes for doing that.
 
-\includeimage{images/page-lifetime.png}{Page Lifetime}
+\includeimage{images/mqtt.n2o.png}{N2O\/MQTT Agent Lifetime}
+
+\includeimage{images/ws.n2o.png}{N2O\/WS Page Lifetime}
+
+\includeimage{images/nitro.png}{NITRO Page Lifetime}
 
 \paragraph{}
 N2O request lifetime begins with the start of HTTP process serving the first HTML page.
-After that it dies and spawns Transition process.
 Then the browser initiates WebSocket connections to the similar URL endpoint.
-N2O creates persistent WebSocket process and the Transition process dies.
 
 \paragraph{}
-Your page could also spawn processes with {\bf wf:async}.
-These are persistent processes that act like regular Erlang processes.
-This is a usual approach to organize non-blocking UI for file uploads
-and other time consuming operations.
+Your page could also spawn child processes with {\bf n2o\_pi}.
+These are persistent processes that act like regular Erlang processes under the N2O supervisor.
+This is a usual approach to organize non-blocking UI for file uploads and other time consuming operations.
 
 \newpage
 \subsection{Page Serving Process}
