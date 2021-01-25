@@ -1,5 +1,7 @@
 # Посібник користувача N2O
 
+Версія 8.0
+
 ## Зміст
 
 * [01-00](https://github.com/synrc/n2o.dev/blob/master/books/n2o/md/01.PROLOGUE.md) Пролог
