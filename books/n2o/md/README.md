@@ -1,5 +1,7 @@
 # Посібник користувача N2O
 
+Версія 8.0
+
 * [01-00](https://github.com/synrc/n2o.dev/blob/master/books/n2o/md/01.PROLOGUE.md) Пролог
 * [02-00](https://github.com/synrc/n2o.dev/blob/master/books/n2o/md/02.SETUP.md) Запуск та робота з пакетами
 * [03-00](https://github.com/synrc/n2o.dev/blob/master/books/n2o/md/03.PROCESSES.md) Процеси
@@ -13,4 +15,4 @@
 * [0B-00]() Управління пакетами
 * [0C-00]() Епілог
 
-Версія 8.0
+<hr>
