@@ -20,6 +20,11 @@ process orchestration, rule based production systems and as transactional log.
 
 MAD is a small and fast build tool for Erlang.
 
+#4 ERP: Formal, Effective and Secure Platform
+--------------------------------------------
+
+ERP Book on how to write ERP software.
+
 Render Books
 ------------
 
