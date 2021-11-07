@@ -12,7 +12,14 @@
 @font-face { src: url('https://tonpa.guru/Geometria-Light.otf');
              font-family: 'local'; font-weight: normal; font-style: normal; }
 
-body { background-color: white; font-family: 'local', sans-serif; font-size: 16px; min-width: 125%; transform: scale(0.8); transform-origin: 0 0; }
+body {
+   background-color: white;
+   font-family: 'local', sans-serif;
+   font-size: 16px;
+   min-width: 125%;
+   transform: scale(0.8);
+   transform-origin: 0 0;
+}
 hr { margin-top: 10px; margin-bottom: 10px; }
 h1, h2, h3, h4 { font-weight: normal; border-left: 2px solid #5BC2E7; }
 
