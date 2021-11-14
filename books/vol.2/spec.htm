@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<meta name="author" content="Maxim Sokhatsky" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat:900" rel="stylesheet" />
+<title>Vol.2</title>
+<link rel="stylesheet" href="https://n2o.dev/blank.css?v=2"/>
+<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
+<link rel="manifest" href="/img/site.webmanifest" />
+<style>
+@media print {
+    .pagebreak { page-break-after: always; }
+}
+</style>
+</head>
+<body>
+<nav>
+    <a href="../../ua/index.html">DEV</a>
+    <a href="../index.html">BOOKS</a>
+    <a href="index.html">VOL.2</a>
+    <a href="#" style="background:#ededed;">SPEC</a>
+</nav>
+<header>
+  <a href="https://github.com/synrc/n2o.tech"><img src="https://openmoji.org/data/color/svg/1F4D7.svg" /></a>
+  <h1>МОДЕЛЬ</h1>
+</header>
+<aside>
+  <article>
+    <section>
+      <h3>КНИГА N2O</h3>
+      <div>Глава МОДЕЛЬ показує формальну специфікацію для основних бібліотек платформи N2O ТЕХ.
+      </div>
+      <br>
+      <div>2016—2021 © <a href="https://5ht.co/license.htm">ISC LICENSE</a></div>
+      <div>8.11 7.1 6.6 5.10</div>
+    </section>
+    <section>
+      <h3>ЗМІСТ</h3>
+      <div><ul>
+          <li><a href="index.html">ПЕРЕДМОВА</a></li>
+          <li><a href="intro.htm">ВСТУП</a></li>
+          <li><a href="samples.htm">ПРИКЛАДИ</a></li>
+          <li><a href="protocols.htm">ПРОТОКОЛИ</a></li>
+          <li><a href="interface.htm">ІНТЕРФЕЙС</a></li>
+          <li><a href="data.htm">СХОВИЩЕ</a></li>
+          <li><a href="logic.htm">ЛОГІКА</a></li>
+          <li><a href="spec.htm">МОДЕЛЬ</a></li>
+      </ul></div>
+    </section>
+  </article>
+</aside>
+<main>
+<article>
+  <section>
+     <h3>Erlang</h3>
+     <h4>N2O</h4>
+     <figure><code>
+ -type n2o()       :: #bert{} | #json{} | #binary{} | #default{}.
+ -type cx()        :: #cx{}.
+ -type formatter() :: binary | json | bert | text | default | atom().
+ -type response()  :: { formatter(), binary() }.
+
+ -record(ok,      { data     :: term() }).
+ -record(error    { data     :: term() }.
+ -record(reply,   { msg      :: n2o(), req :: term(), ctx :: cx() } ).
+ -record(unknown, { msg      :: n2o(), req :: term(), ctx :: cx() } ).
+
+ -spec start(#pi{}) -> {pid(),term()} | #error{}.
+ -spec stop(term(),atom()) -> #pi{} | #error{}.
+ -spec proc(atom(),#pi{}) -> term().
+ -spec info(term(),term(),#cx{}) -> #reply{} | #unknown{}.
+
+ -record(pi, { name     :: term(),
+               table    :: atom(),
+               sup      :: atom(),
+               module   :: atom(),
+               state    :: term()  }).
+
+ -record(cx, { handlers  = [] :: list({atom(),atom()}),
+               actions   = [] :: list(tuple()),
+               req       = [] :: [] | term(),
+               module    = [] :: [] | atom(),
+               lang      = [] :: [] | atom(),
+               path      = [] :: [] | binary(),
+               session   = [] :: [] | binary(),
+               formatter = bert :: bert | json | atom(),
+               params    = [] :: [] | list(tuple()),
+               node      = [] :: [] | atom(),
+               client_pid= [] :: [] | term(),
+               state     = [] :: [] | term(),
+               from      = [] :: [] | binary(),
+               vsn       = [] :: [] | binary() }).
+
+ -type memtable()  :: atom().
+ -spec encode(tuple()) -> binary().
+ -spec decode(binary()) -> tuple().
+ -spec session(term(),term()) -> term().
+ -spec session(term()) -> term().
+ -spec cache(memtable(),term(),term()) -> term().
+ -spec cache(memtable(),term()) -> term().
+</code></figure>
+     <h4>KVS</h4>
+     <figure><code>
+-spec seq(atom() | [], integer() | []) -> term().
+-spec count(atom()) -> integer().
+-spec dir() -> list({'table',atom()}).
+-spec ver() -> {'version',string()}.
+-spec leave() -> ok.
+-spec destroy() -> ok.
+-spec join() -> ok | {error,any()}.
+-spec join(Node :: string()) -> [{atom(),any()}].
+-spec modules() -> list(atom()).
+-spec cursors() -> list({atom(),list(atom())}).
+-spec tables() -> list(#table{}).
+-spec table(Tab :: atom()) -> #table{} | false.
+
+-spec top(#reader{})  -> #reader{}.
+-spec bot(#reader{})  -> #reader{}.
+-spec next(#reader{}) -> #reader{}.
+-spec prev(#reader{}) -> #reader{}.
+-spec drop(#reader{}) -> #reader{}.
+-spec take(#reader{}) -> #reader{}.
+-spec feed (term())   -> list().
+-spec load_reader (term()) -> #reader{}.
+-spec writer (term()) -> #writer{}.
+-spec reader (term()) -> #reader{}.
+-spec save (#reader{} | #writer{}) -> #reader{} | #writer{}.
+-spec add(#writer{}) -> #writer{}.
+-spec append(tuple(),term()) -> any().
+-spec remove(tuple(),term()) -> integer().
+
+-spec put(tuple() | list(tuple())) -> ok | {error,any()}.
+-spec get(term() | any(), any()) -> {ok,any()} | {error,not_found}.
+-spec delete(term(), any()) -> ok | {error,not_found}.
+-spec dump() -> ok.
+-spec start() -> ok.
+-spec stop() -> ok.
+-spec index(term(), any(), any()) -> list(tuple()).
+
+-record(writer, { id    = [] :: term(),
+                  count =  0 :: integer(),
+                  cache = [] :: [] | {term(),term()} | {term(),term(),term()},
+                  args  = [] :: [] | term(),
+                  first = [] :: [] | tuple() } ).
+
+-record(reader, { id    = [] :: [] | integer(),
+                pos   =  0 :: integer() | atom(),
+                cache = [] :: [] | {term(),term()} | {term(),term(),term()},
+                args  = [] :: [] | integer() | term(),
+                feed  = [] :: term(),
+                seek = [] :: term(),
+                count = 0 :: integer(),
+                dir   =  0 :: 0 | 1 } ).
+
+-record(id_seq, { thing = []::term(), id =  0 :: integer() } ).
+-record(it,     { id    = []::[] | integer() } ).
+-record(ite,    { id    = []::[] | integer(), next  = []::[] | integer() } ).
+-record(kvs,    { mod   = kvs_mnesia :: kvs_mnesia | kvs_rocks | kvs_fs,
+                  st    = kvs_stream :: kvs_stream | kvs_st,
+                  cx    = []::term() }).
+
+</code></figure>
+
+     <h4>BPE</h4>
+     <figure><code>
+
+-type bst()    :: binary() | string() | atom().
+-type procId() :: [] | integer() | {atom(),any()}.
+-type histId() :: [] | integer() | {atom()|string(),any()}.
+
+-record(hist, { id        = [] :: histId(),
+                container = feed :: [] | atom(),
+                feed_id   = [] :: any(),
+                prev      = [] :: [] | integer(),
+                next      = [] :: [] | integer(),
+                feeds     = [] :: list(),
+                name      = [] :: [] | binary(),
+                task      = [] :: [] | {atom()|string(),any()},
+                docs      = [] :: list(tuple()),
+                time      = [] :: term() }).
+
+-type tasks() :: #task{} | #serviceTask{} | #userTask{}
+                 | #receiveTask{} | #beginEvent{} | #endEvent{}.
+
+-type events() :: #messageEvent{} | #boundaryEvent{}
+                  | #timeoutEvent{}.
+
+-record(process, { id            = [] :: procId(),
+                   container     = feed :: [] | atom(),
+                   feed_id       = [] :: [] | term(),
+                   prev          = [] :: [] | integer(),
+                   next          = [] :: [] | integer(),
+                   name          = [] :: [] | bst(),
+                   feeds         = [] :: list(),
+                   roles         = [] :: list(),
+                   tasks         = [] :: list(tasks()),
+                   events        = [] :: list(events()),
+                   hist          = [] :: [] | term(),
+                   flows         = [] :: list(#sequenceFlow{}),
+                   rules         = [] :: [] | term(),
+                   docs          = [] :: list(tuple()),
+                   options       = [] :: term(),
+                   task          = 'Created' :: [] | atom(),
+                   timer         = [] :: [] | reference(),
+                   notifications = [] :: [] | term(),
+                   result        = [] :: [] | binary(),
+                   started       = [] :: [] | calendat:datetime(),
+                   beginEvent    = [] :: [] | atom(),
+                   endEvent      = [] :: [] | atom()}).
+</code></figure>
+
+     <h4>NITRO</h4>
+     <figure><code>
+ -spec render(list(#element{})) -> binary().
+ -spec wire(list(#action{})) -> [].
+ -spec insert_top(atom(), list(#element{})) -> [].
+ -spec insert_bottom(atom(), list(#element{})) -> [].
+ -spec update(atom(), list(#element{})) -> [].
+ -spec clear(atom()) -> [].
+ -spec remove(atom()) -> [].
+
+ -record(init,    { token  = [] :: [] | binary() }).
+ -record(pickle,  { source = [], pickled=[], args=[] }).
+ -record(flush,   { data   = [] :: [] | term() }).
+ -record(direct,  { data   = [] :: [] | term() }).
+ -record(ev,      { module = [] :: [] | atom(),
+                    msg    = [] :: [] | term(),
+                    trigger= [] :: [] | atom() | binary(),
+                    name   = [] :: [] | atom() | binary() }).
+</code></figure>
+  </section>
+
+  <section>
+     <h3>Anders</h3>
+     <figure><code>
+  module N2O-KVS-BPE where
+  import BASE
+
+  axiom pickle : Binary -> Binary
+  axiom depickle : Binary -> Binary
+  axiom encode : Π (k: U), k -> Binary
+  axiom decode : Π (k: U), Binary -> IO k
+  axiom reg: Π (k: U), k -> IO k
+  axiom unreg : Π (k: U), k -> IO k
+  axiom send : Π (k v z: U), k -> v -> IO z
+  axiom getSession : Π (k v: U), k -> IO v
+  axiom putSession : Π (k v: U), k -> v -> IO v
+  axiom getCache : Π (k v: U), Atom -> k -> IO v
+  axiom putCache : Π (k v: U), Atom -> k -> v -> IO v
+  axiom start : PI -> IO Sup
+
+  axiom get : Π (f k v: U), f -> k -> IO (Maybe v)
+  axiom put : Π (r: U), r -> IO StoreResult
+  axiom delete : Π (f k: U), f -> k -> StoreResult
+  axiom index : Π (f p v r: U), f -> Atom -> v -> List r
+  axiom next : Reader -> IO Reader
+  axiom prev : Reader -> IO Reader
+  axiom take : Reader -> IO Reader
+  axiom drop : Reader -> IO Reader
+  axiom save : Reader -> IO Reader
+  axiom append : Π (f r: U), f -> r -> IO StoreResult
+  axiom remove : Π (f r: U), f -> r -> IO StoreResult
+
+  axiom start : Proc -> IO Sup
+  axiom stop : String -> IO Sup
+  axiom next : ProcId -> IO ProcRes
+  axiom amend : Π (k: U), ProcId -> k -> IO ProcRes
+  axiom discard : Π (k: U), ProcId -> k -> IO ProcRes
+  axiom modify : Π (k: U), ProcId -> k -> Atom -> IO ProcRes
+  axiom event : ProcId -> String -> IO ProcRes
+  axiom head : ProcId -> IO Hist
+  axiom hist : ProcId -> IO (List Hist)
+</code></figure>
+  </section>
+</article>
+</main>
+<footer>Namdak Tonpa <span class="heart">❤</span> N2O</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body>
+</html>

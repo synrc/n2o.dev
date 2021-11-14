@@ -1,0 +1,239 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="" /><meta name="author" content="Namdak Tonpa" /><title>2019-07-17</title><link rel="stylesheet" href="https://n2o.dev/blank.css?v=2" /></head>
+<body>
+<nav>
+    <a href="../../ua/index.html">DEV</a>
+    <a href="../index.html">BOOKS</a>
+    <a href="index.html">VOL.3</a>
+    <a href="#" style="background:#ededed;">APPS</a>
+</nav>
+<header>
+  <a href="https://github.com/synrc/n2o.tech"><img src="https://openmoji.org/data/color/svg/1F4D8.svg" /></a>
+  <h1>ДОДАТКИ</h1>
+</header>
+<aside>
+  <article>
+    <section>
+      <h3>КНИГА ERP</h3>
+      <div>
+        Друге видання КНИГИ ERP (англ. ERP BOOK VOL.3 Blue Book) визначає математичну
+        специфікацію ERP UNO.</div>
+
+      <br>
+      <div>2016—2021 © <a href="https://5ht.co/license.htm">ISC LICENSE</a></div>
+      <div>8.11 7.1 6.6 5.10</div>
+    </section>
+    <section>
+      <h3>ЗМІСТ</h3>
+      <div><ul>
+          <li><a href="index.html">ПЕРЕДМОВА</a></li>
+          <li><a href="intro.htm">ВСТУП</a></li>
+          <li><a href="structure.htm">СТРУКТУРА</a></li>
+          <li><a href="feeds.htm">ЛАНЦЮЖКИ</a></li>
+          <li><a href="kvs.htm">СХОВИЩЕ</a></li>
+          <li><a href="bpe.htm">ЛОГІКА</a></li>
+          <li><a href="apps.htm">ДОДАТКИ</a></li>
+      </ul></div>
+    </section>
+  </article>
+</aside>
+<main>
+    <section>
+        <h3>Частина 6. Структура додатку PLM</h3>
+
+    </section>
+    <section>
+
+       <h3>Постановка задачі</h3>
+
+    <p>У Частинах 3 і 4 ми показали, як писати прості універсальні адмінки для головних
+       об'єктів підприємства — даних і процесів. У цій частині ми покажемо структуру першого
+       еліксир додатку PLM для управління підприємством, що здійснює аутсорсную діяльність.
+       Вимоги до цього додатка були сформульовані в Частині 1, а первинна структура
+       самого підприємства і його ресурсів захована в додатку ERP (яке повинно
+       публікуватися в приватному репозиторії). Але для прикладу, і заради прозорості бухгалтерського обліку
+       між самими програмістами, організаційна структура підприємства заекспожена публічно повністю,
+       разом з інвойсами і агрегованими сумами за зарплатними відомостями, але без деталізації по ЗП,
+       проте з часовими аллокаціями робочого часу (рейтинги анонімні, опціони нараховуються незалежно від рейтингів).
+       Окрім опціонів можна здійснювати інвестування в проекти цієї аутсорс компанії під заставу
+       самих же проектів компанії, яка акумулюється у відповідному субконто рахунку, після
+       обчислення чистого нерозподіленого прибутку. Всього статей для розподілу не є багато:
+       1) резерв компанії; 2) кредитування інших проектів; 3) опціони програмістів; 4) дослідження і розробка.
+       </p>
+
+
+        <h3>Конфигурація</h3>
+
+        <p>Щоб не писати кожен раз цю прелюдію для кожної програми, покажемо
+           на прикладі PLM проекту, який вже включає майже весь стек: N2O, KVS, BPE,
+           а також інші N2O протоколи CHAT, NITRO. NITRO — є портом
+           написаного Расті Клопхаусом Nitrogen Web Framework.</p>
+
+        <h4>config/config.exs</h4>
+   <figure><code>
+use Mix.Config
+
+config :n2o,
+  pickler: :n2o_secret,
+  mq: :n2o_syn,
+  port: 8043,
+  proto: CHAT.Server
+  mqtt_services: ['erp', 'plm'],
+  ws_services: ['chat'],
+  upload: "./priv/static",
+  routes: <font color="red">KVS.Routes</font>,
+  protocols:
+  [
+    :n2o_heart,
+    :n2o_nitro,
+    :n2o_ftp,
+    :bpe_n2o,
+    CHAT.TXT
+  ]
+
+config :kvs,
+  dba: :kvs_rocks,
+  dba_st: :kvs_st,
+  schema:
+  [
+    :kvs,
+    :kvs_stream,
+    :bpe_metainfo
+  ]
+
+config :erp,
+  boot:
+  [
+    :erp_boot,
+    :acc_boot,
+    :pay_boot,
+    :plm_boot,
+    :fin_boot
+  ]
+      </code></figure>
+
+        <h3>Публікація</h3>
+
+        <h4>mix.exs</h4>
+   <figure><code>
+defmodule PLM.Mixfile do
+  use Mix.Project
+
+  def project() do
+    [
+      app: :plm,
+      version: "0.7.1",
+      elixir: "~> 1.8.1",
+      description: "PLM",
+      deps: deps()
+    ]
+  end
+
+  def application() do
+    [
+      mod: {PLM.Application, []},
+      applications:
+      [
+        :ranch,
+        :cowboy,
+        :rocksdb,
+        :kvs,
+        :syn,
+        :erp,
+        :bpe,
+        :n2o,
+        :chat
+      ]
+    ]
+  end
+
+  def deps() do
+    [
+      {:ex_doc, "~> 0.20.2", only: :dev},
+      {:cowboy, "~> 2.5.0"},
+      {:rocksdb, "~> 1.2.0"},
+      {:chat, "~> 3.7.2"},
+      {:n2o, "~> 6.7.1"},
+      {:syn, "~> 1.6.3"},
+      {:kvs, "~> 6.7.4"},
+      {:erp, "~> 0.7.6"},
+      {:bpe, "~> 4.7.3"},
+      {:nitro, "~> 4.7.3"}
+    ]
+  end
+emd
+    </code></figure>
+
+       <h3>Сторінки</h3>
+
+       <figure><img src="../images/1.png" /></figure>
+
+       <h3>PLM</h3>
+
+       <h4>PLM.Index</h4>
+       <figure><img src="../images/6.png" /></figure>
+
+    <figure><code>
+def event(:init)
+def event({:chart, code, x, y, z, i})
+def event({:invest, code})
+    </code></figure>
+
+       <h4>PLM.CashFlow</h4>
+       <figure><img src="../images/7.png" /></figure>
+
+    <figure><code>
+def event(:init)
+def event(:create_investment)
+def event(:create_income)
+def event(:create_outcome)
+def event({:discard, []})
+    </code></figure>
+
+       <h3>FIN</h3>
+       <h4>FIN.Index</h4>
+       <figure><img src="../images/5.png" /></figure>
+       <figure><img src="../images/11.png" /></figure>
+
+    <figure><code>
+def event(:init)
+def event({:txs, proc})
+def event({:off, form})
+    </code></figure>
+
+       <h3>LDAP</h3>
+       <h4>LDAP.Index</h4>
+       <figure><img src="../images/9.png" /></figure>
+       <figure><img src="../images/4.png" /></figure>
+
+    <figure><code>
+def event(:init)
+def event(:on)
+def event({:auth, form})
+def event({:close, form})
+def event({:revoke, x})
+def event({:off, form})
+    </code></figure>
+
+        <h3>Роутер </h3>
+
+        <p>Роутер контролерів сторінок Nitrogen Web фреймворку.
+          У цьому роутері ми подключаємо всі наші модулі, разроблені в Частинах 3 і 4,
+           тобто адміністратори даних та процесів.</p>
+
+   <p>
+ldap — LDAP.Index<br />
+form — FORM.Index<br />
+act — BPE.Actor<br />
+bpe — BPE.Index<br />
+kvs — KVS.Index<br />
+plm — PLM.Index<br />
+cashflow — PLM.CashFlow<br />
+    </p>
+
+
+       <p>— <a href="https://github.com/enterprizing/plm">enterprizing/plm</a></p>
+    </section>
+</main><footer>Namdak Tonpa <span class="heart">&#160;❤&#160;</span> 2009—2019</footer>
+<script type="text/javascript" src="https://n2o.dev/drop.js"></script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<meta name="author" content="Maxim Sokhatsky" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat:900" rel="stylesheet" />
+<title>Vol.2</title>
+<link rel="stylesheet" href="https://n2o.dev/blank.css?v=2"/>
+<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
+<link rel="manifest" href="/img/site.webmanifest" />
+<style>
+@media print {
+    .pagebreak { page-break-after: always; }
+}
+</style>
+</head>
+<body>
+<nav>
+    <a href="../../ua/index.html">DEV</a>
+    <a href="../index.html">BOOKS</a>
+    <a href="index.html">VOL.2</a>
+    <a href="#" style="background:#ededed;">SAMPLES</a>
+</nav>
+<header>
+  <a href="https://github.com/synrc/n2o.tech"><img src="https://openmoji.org/data/color/svg/1F4D7.svg" /></a>
+  <h1>ПРИКЛАДИ</h1>
+</header>
+<aside>
+  <article>
+    <section>
+      <h3>КНИГА N2O</h3>
+      <div>Глава ПРИКЛАДИ разказує як налаштувати середовище, вибрати приклад
+           для вичення та підготуватися до аналізу матеріалу.
+      </div>
+      <br>
+      <div>2016—2021 © <a href="https://5ht.co/license.htm">ISC LICENSE</a></div>
+      <div>8.11 7.1 6.6 5.10</div>
+    </section>
+    <section>
+      <h3>ЗМІСТ</h3>
+      <div><ul>
+          <li><a href="index.html">ПЕРЕДМОВА</a></li>
+          <li><a href="intro.htm">ВСТУП</a></li>
+          <li><a href="samples.htm">ПРИКЛАДИ</a></li>
+          <li><a href="protocols.htm">ПРОТОКОЛИ</a></li>
+          <li><a href="interface.htm">ІНТЕРФЕЙС</a></li>
+          <li><a href="data.htm">СХОВИЩЕ</a></li>
+          <li><a href="logic.htm">ЛОГІКА</a></li>
+          <li><a href="spec.htm">МОДЕЛЬ</a></li>
+      </ul></div>
+    </section>
+  </article>
+</aside>
+<main>
+<article>
+  <section>
+
+    <h3>ПРЕРЕКВІЗИТИ</h3>
+
+    <p>Для розгортання N2O SAMPLE вам знадобиться остання версія Ерланг
+       з пакетного менеджера вашої ОС. N2O SAMPLE сумісний з операційними
+       системами Ubuntu (apt), Windows (WSL), Android (termux),
+       та MacOS (brew), Arch (pacman).</p>
+
+    <figure><code>$ sudo apt install erlang elixir build-essential cmake git</code></figure>
+
+    <p>Оскільки філософія N2O мотивована мінімалізмом, природнім є використання
+       спартанського сетапу для розробника: ванільні редактори vim, emacs чи mc.</p>
+
+    <figure><code>$ sudo apt emacs vim mc</code></figure>
+
+    <h3>ПРИКЛАДИ</h3>
+
+    <p>Перша видання книги "N2O: No Bullshit Sane Framework for Wild Web" містила
+       лише ідіоматичний приклад [SAMPLE] використання Nitrogen веб-фреймворку.
+       КНИГА N2O (N2O BOOK Vol. 2) містить розширений набір
+       прикладів [CHAT,REST,REVIEW,SAMPLE,PLM,CRM] який демонструє
+       широкий спектр технічних засобів для автоматизації процесів на виробництві.</p>
+
+    <p>Також, перше видання книги містило приклади Erlang синтаксису у той час
+       як КНИГА N2O містить програми на мові Elixir. Незважаючи на це усі бібліотеки є
+       сумісними з обома мовами, а деякі приклади [CHAT,SAMPLE] реалізовані окремо
+       для двох мов одночасно, щоб користувачі могли порівняти синтаксис Erlang та Elixir.</p>
+
+    <p>Перевірка працездатності кожного прикладу здійснюється за допомогою <b>mix</b>:</p>
+
+<figure><code>$ mix deps.get
+$ iex -S mix
+</code></figure>
+
+    <h4>CHAT</h4>
+
+    <p><b>Використані бібліотеки:</b></p>
+
+<figure><code>[
+   {:cowboy, "~> 2.8"},
+   {:rocksdb, "~> 1.6.0"},
+   {:syn, "~> 2.1.1"},
+   {:n2o, "~> 8.8.1"},
+   {:kvs, "~> 8.10.4"}
+]
+</code></figure>
+
+    <p><b>Налаштування бібліотек N2O та KVS:</b></p>
+
+<figure><code>
+config :n2o,
+  port: 8042,
+  proto: CHAT.Server,
+  mqtt_services: [],
+  pickler: :n2o_secret,
+  mq: :n2o_syn,
+  upload: "./priv/static",
+  protocols: [:n2o_heart, CHAT.TXT]
+
+config :kvs,
+  dba: :kvs_rocks,
+  dba_st: :kvs_st,
+  schema: [:kvs, :kvs_stream, CHAT]
+</code></figure>
+
+    <p><b>Демонстрація використання:</b></p>
+
+    <figure><code>
+ $ wscat --no-check -c wss://localhost:8042/ws
+ > HELP
+ < N2O <user>
+ | SEND <user> <msg>
+ | BOX
+ | CUT <id>.
+ > N2O maxim
+ < USER maxim
+ > SEND vlad HELO
+ < ERROR user doesn't exist.
+ > N2O vlad
+ < USER vlad
+ > SEND maxim OK
+ < NOTIFY vlad:maxim:1556151953113322286:OK
+ < ACK "1556151953113322286"
+ > N2O maxim
+ < USER maxim
+ > BOX
+ < LIST
+ vlad:maxim:1556151953113322286:OK
+ > SEND maxim this is me
+ < NOTIFY maxim:maxim:1556152151055371152:this is me
+ < ACK "1556152151055371152"
+ > SEND maxim back again
+ < NOTIFY maxim:maxim:1556152157283311935:back again
+ < ACK "1556152157283311935"
+ > BOX
+ < LIST
+ vlad:maxim:1556151953113322286:OK
+ maxim:maxim:1556152151055371152:this is me
+ maxim:maxim:1556152157283311935:back again
+ > CUT 1556152157283311935
+ < ERASED 3
+ > BOX
+ < LIST
+ >
+</code></figure>
+
+    <h4>SAMPLE</h4>
+
+    <p><b>Використані бібліотеки:</b></p>
+
+<figure><code>[
+   {:cowboy, "~> 2.8.0"},
+   {:rocksdb, "~> 1.6.0"},
+   {:n2o, "~> 8.8.1"},
+   {:syn, "~> 2.1.1"},
+   {:kvs, "~> 8.10.4"},
+   {:nitro, "~> 6.11.4"},
+]
+
+</code></figure>
+
+    <p><b>Налаштування бібліотек N2O та KVS:</b></p>
+
+<figure><code>config :n2o,
+  port: 8002,
+  pickler: :n2o_secret,
+  mq: :n2o_syn,
+  upload: "./priv/static",
+  protocols: [:nitro_n2o, :n2o_ftp],
+  routes: Sample.Routes
+
+config :kvs,
+  dba: :kvs_rocks,
+  dba_st: :kvs_st,
+  schema: [:kvs, :kvs_stream]
+
+</code></figure>
+
+    <p><b>Демонстрація використання:</b></p>
+
+<figure><code>&lt;main>
+    &lt;form>&lt;/form>
+    &lt;textarea id="message" rows="4" autofocus="true"
+      placeholder="Just type what you think about this">&lt;/textarea>
+    &lt;button id="upload">Browse&lt;/button>
+    &lt;button id="send">chat&lt;/button>
+    &lt;history id="history">&lt;/history>
+&lt;/main>
+</code></figure>
+
+    <p>У цьому прикладі наведена проста ініціалізація HTML контрольного
+       елементу постбеком login, в процесі якого (після натискання кнопки),
+       на сервер буде відправлений зміст контрольних елментів з іменами user
+       та room. На сервері реакція на цю подію буде у вигляді редіректу на
+       інший контролер сторінки index, з параметром кімнати room.</p>
+
+     <figure><code>  def event(:init) do
+    room = Sample.Application.room
+    KVS.ensure(writer(id: room))
+    N2O.reg({:topic, room})
+    N2O.reg(N2O.sid())
+    NITRO.update(:upload, upload())
+    NITRO.update(:heading, h2(id: :heading, body: room))
+    NITRO.update(:logout, button(id: :logout, postback: :logout, body: "Logout"))
+    NITRO.update(:send, button(id: :send, body: "Chat", postback: :chat, source: [:message]))
+
+    room
+    |> KVS.all()
+    |> Enum.each(fn {:msg, _, user, message} ->
+      event({:client, {user, message}})
+    end)
+  end
+
+  def event(:logout) do
+    N2O.user([])
+    NITRO.redirect("/app/login.htm")
+  end
+
+  def event(:chat) do
+    chat(NITRO.q(:message))
+  end
+
+  def event({:client, {user, message}}) do
+    NITRO.wire(jq(target: :message, method: [:focus, :select]))
+    NITRO.insert_top(:history, message(body: [author(body: user), NITRO.jse(message)]))
+  end
+
+  def chat(message) do
+    room = Sample.Application.room
+    user = N2O.user()
+
+    room
+    |> KVS.writer()
+    |> writer(args: {:msg, KVS.seq([], []), user, message})
+    |> KVS.add()
+    |> KVS.save()
+
+    N2O.send({:topic, room}, client(data: {user, message}))
+  end
+
+</code></figure>
+
+
+    <figure><code>$ open http://localhost:8001/app/index.htm</code></figure>
+
+    <figure><img src="https://n2o.dev/img/n2o-ws.png"></figure>
+
+    <h4>PLM</h4>
+
+    <p><b>Використані бібліотеки:</b></p>
+
+<figure><code>[
+   {:kvs, "~> 6.7.7"},
+   {:n2o, "~> 6.8.1"},
+   {:nitro, "~> 4.7.7"},
+   {:cowboy, "~> 2.5.0"},
+   {:rocksdb, "~> 1.2.0"},
+   {:chat, "~> 3.8.1"},
+   {:syn, "~> 1.6.3"},
+   {:erp, "~> 0.7.17"},
+   {:bpe, "~> 4.7.5"},
+   {:form, "~> 4.7.0"}
+]
+</code></figure>
+
+    <p><b>Налаштування бібліотек N2O, KVS, FORM та SCHEMA:</b></p>
+
+<figure><code>config :n2o,
+  pickler: :n2o_secret,
+  mq: :n2o_syn,
+  port: 8043,
+  ttl: 60*3,
+  proto: CHAT.Server,
+  nitro_prolongate: true,
+  mqtt_services: [:erp, :plm],
+  ws_services: [:chat],
+  upload: "./priv/static",
+  protocols: [:n2o_heart, :n2o_nitro, CHAT.TXT, :n2o_ftp],
+  routes: PLM.Routes
+
+config :schema,
+  boot: [:erp_boot, :plm_boot, :acc_boot, :pay_boot, :fin_boot]
+
+config :kvs,
+  dba: :kvs_rocks,
+  dba_st: :kvs_st,
+  schema: [:kvs, :kvs_stream, :bpe_metainfo]
+
+config :form,
+  registry: [
+    LDAP.Forms.Credentials,
+    LDAP.Forms.Access,
+    BPE.Forms.Create,
+    BPE.Rows.Trace,
+    BPE.Rows.Process,
+    FIN.Rows.Account,
+    FIN.Rows.Transaction,
+    PLM.Forms.Error,
+    PLM.Rows.Payment,
+    PLM.Rows.Investment,
+    PLM.Rows.Product
+  ]
+</code></figure>
+
+    <p><b>Демонстрація використання:</b></p>
+
+    <figure><img src="https://plm.erp.uno/man/images/6.png"></figure>
+
+    <h4>CRM</h4>
+
+    <figure><img src="https://crm.erp.uno/img/HOME-RMK.svg?v=1"></figure>
+
+  </section>
+</article>
+</main>
+<footer>Namdak Tonpa <span class="heart">❤</span> N2O</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body>
+</html>

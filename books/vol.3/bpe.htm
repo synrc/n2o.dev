@@ -1,0 +1,116 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="" /><meta name="author" content="Namdak Tonpa" /><title>2019-07-09</title><link rel="stylesheet" href="https://n2o.dev/blank.css?v=2" /></head><body>
+<nav>
+    <a href="../../ua/index.html">DEV</a>
+    <a href="../index.html">BOOKS</a>
+    <a href="index.html">VOL.3</a>
+    <a href="#" style="background:#ededed;">LOGIC</a>
+
+</nav>
+<header>
+  <a href="https://github.com/synrc/n2o.tech"><img src="https://openmoji.org/data/color/svg/1F4D8.svg" /></a>
+  <h1>ЛОГІКА</h1>
+</header>
+<aside>
+  <article>
+    <section>
+      <h3>КНИГА ERP</h3>
+      <div>
+        Друге видання КНИГИ ERP (англ. ERP BOOK VOL.3 Blue Book) визначає математичну
+        специфікацію ERP UNO.</div>
+
+      <br>
+      <div>2016—2021 © <a href="https://5ht.co/license.htm">ISC LICENSE</a></div>
+      <div>8.11 7.1 6.6 5.10</div>
+    </section>
+    <section>
+      <h3>ЗМІСТ</h3>
+      <div><ul>
+          <li><a href="index.html">ПЕРЕДМОВА</a></li>
+          <li><a href="intro.htm">ВСТУП</a></li>
+          <li><a href="structure.htm">СТРУКТУРА</a></li>
+          <li><a href="feeds.htm">ЛАНЦЮЖКИ</a></li>
+          <li><a href="kvs.htm">СХОВИЩЕ</a></li>
+          <li><a href="bpe.htm">ЛОГІКА</a></li>
+          <li><a href="apps.htm">ДОДАТКИ</a></li>
+      </ul></div>
+    </section>
+  </article>
+</aside>
+<main>
+    <section>
+        <h3>Частина 5. Адміністратор процесів</h3>
+
+        <p>У цій статті ми покажемо, як написати простий адміністратор процесів для BPE
+           на NITRO.</p>
+
+    </section>
+    <section>
+    <h3>Постановка задачі</h3>
+    <h3>Процеси</h3>
+
+    <h4>Протокол процессу BPE.Account</h4>
+
+   <figure><code>
+def action({:request, :Created:})
+def action({:request, :Init})
+def action({:request, :Upload})
+def action({:request, :Payment})
+def action({:request, :Process})
+def action({:request, :Final})
+   </code></figure>
+    <h3>Сторінки</h3>
+
+    <h4>BPE.Index</h4>
+    <figure><img src="../images/3.png" /></figure>
+    <figure><code>
+def event(:init)
+def event(:create)
+def event({:discard, form})
+def event({:spawn, what})
+def event({:complete, id})
+    </code></figure>
+
+    <h4>BPE.Actor</h4>
+    <figure><img src="../images/8.png" /></figure>
+    <figure><img src="../images/10.png" /></figure>
+    <figure><code>
+def event(:init)
+def event({:txs, proc})
+def event({:off, form})
+    </code></figure>
+
+
+    <h3>Редактори</h3>
+
+    <h4>Форма BPE.Forms.Create</h4>
+
+    <figure><img src="../images/12.png" /></figure>
+
+    <h3>Вектори</h3>
+
+    <h4>Рядок BPE.Rows.Process</h4>
+
+    <figure><img src="../images/13.png" /></figure>
+
+    <h4>Рядок BPE.Rows.Trace</h4>
+
+    <figure><img src="../images/14.png" /></figure>
+
+    <h3>Роутер</h3>
+
+    <p>Роутер сторінки модуля BPE.</p>
+
+   <p>
+act — BPE.Actor<br />
+bpe — BPE.Index<br />
+    </p>
+
+    <p>Код додатку можна знайти у наступних репозиторіях:</p>
+
+    <p>— <a href="https://github.com/o7/plm">o7/plm</a></p>
+
+    </section>
+</main><footer>Namdak Tonpa <span class="heart">&#160;❤&#160;</span> 2009—2019</footer>
+<script type="text/javascript" src="https://n2o.dev/drop.js"></script>
+</body>
+</html>

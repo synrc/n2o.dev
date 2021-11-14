@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<meta name="author" content="Maxim Sokhatsky" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat:900" rel="stylesheet" />
+<title>Vol.2</title>
+<link rel="stylesheet" href="https://n2o.dev/blank.css?v=2"/>
+<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
+<link rel="manifest" href="/img/site.webmanifest" />
+<style>
+@media print {
+    .pagebreak { page-break-after: always; }
+}
+</style>
+</head>
+<body>
+<nav>
+    <a href="../../ua/index.html">DEV</a>
+    <a href="../index.html">BOOKS</a>
+    <a href="index.html">VOL.2</a>
+    <a href="#" style="background:#ededed;">INTERFACE</a>
+</nav>
+<header>
+  <a href="https://github.com/synrc/n2o.tech"><img src="https://openmoji.org/data/color/svg/1F4D7.svg" /></a>
+  <h1>ІНТЕРФЕЙС</h1>
+</header>
+<aside>
+  <article>
+    <section>
+      <h3>КНИГА N2O</h3>
+      <div>Глава ІНТЕРФЕЙС разказує як розробляти додатки для Nitrogen-подібного веб-фреймворку NITRO.
+      </div>
+      <br>
+      <div>2016—2021 © <a href="https://5ht.co/license.htm">ISC LICENSE</a></div>
+      <div>8.11 7.1 6.6 5.10</div>
+    </section>
+    <section>
+      <h3>ЗМІСТ</h3>
+      <div><ul>
+          <li><a href="index.html">ПЕРЕДМОВА</a></li>
+          <li><a href="intro.htm">ВСТУП</a></li>
+          <li><a href="samples.htm">ПРИКЛАДИ</a></li>
+          <li><a href="protocols.htm">ПРОТОКОЛИ</a></li>
+          <li><a href="interface.htm">ІНТЕРФЕЙС</a></li>
+          <li><a href="data.htm">СХОВИЩЕ</a></li>
+          <li><a href="logic.htm">ЛОГІКА</a></li>
+          <li><a href="spec.htm">МОДЕЛЬ</a></li>
+      </ul></div>
+    </section>
+  </article>
+</aside>
+<main>
+<article>
+  <section>
+        <h3>СТОРІНКИ</h3>
+  </section>
+   <section>
+        <a name="endpoint"></a><h3>ЕЛЕМЕНТИ</h3>
+        <p> Nitrogen Elements &#8211; це двигун шаблонів HTML для мови Erlang,
+            у якому всі HTML теги рендеряться з Erlang рекордів.
+        </p>
+        <p>Працюючи з N2O вам взагалі не потрібно користуватись HTML.
+          Натомість ви визначаєте вашу сторінку у вигляді Erlang рекордів,
+          відповідно сторінка генерується, з перевіркою типів, під час компіляції.
+          Це класичний підхід CGI для компільованих сторінок, який надає всі переваги
+          перевірки помилок під час компіляції, та визначає DSL для клієнт- та серверного рендерингу.</p>
+        <p>Nitrogen Elements, за своєю природою, є примітивними UI елементами управління,
+          які можуть бути використані для побудови Nitrogen сторінок з внутрішнім DSL Erlang-а.
+          Вони компілюються в HTML та JavaScript.
+          Поведінка всіх елементів контролюється на стороні сервера,
+          а весь зв'язок між веб-переглядачем та сервером здійснюється
+          за допомогою WebSocket каналів.
+          Отже, вам не потрібно використовувати POST запити чи HTML форми. Тобто:</p>
+        <figure><code>
+ #textbox { id=userName, body= &lt;&lt;"Anonymous">> },
+ #panel { id=chatHistory, class=chat_history }
+        </code></figure>
+        <p>згенерує наступний html</p>
+        <figure><code>
+ &lt;input value="Anonymous" id="userName" type="text"/&gt;
+ &lt;div id="chatHistory" class="chat_history"&gt;&lt;/div&gt;
+        </code></figure>
+
+    </section>
+    <section>
+        <a name="endpoint"></a><h3>ПОДІЇ</h3>
+        <p> Nitrogen Actions &#8211; це двигун шаблонів JavaScript подій для мови Erlang,
+            у якому всі події та обробники кнопок рендеряться з мови Erlang.
+        </p>
+
+        <figure><code>
+    nitro:update(loginButton,
+      #button{id=loginButton,
+              body="Login",postback=login,source=[user,pass]});
+        </code></figure>
+        <p>Це згенерує наступний HTML:
+        </p><figure><code>
+ &lt;input value="Login" id="loginButton" type="button"/&gt;
+        </code></figure>
+       <p>та JavaScript код:</p>
+        <figure><code>
+   qi('loginButton').outerHTML='&lt;button id=\"loginButton\"
+     type=\"button\"&gt;Login&lt;/button&gt;';{var x=qi('loginButton');
+     x &#38;&#38; x.addEventListener('click',function (event){
+      event.preventDefault(); { if (validateSources(['user','pass'])) {
+        ws.send(enc(tuple(atom('pickle'),bin('loginButton'),
+           bin('b840bca20b3295619d1157105e355880f850bf0223f2f081549dc
+           8934ecbcd3653f617bd96cc9b36b2e7a19d2d47fb8f9fbe32d3c768866
+           cb9d6d85700416edf47b9b90742b0632c750a4240a62dfc56789e0f5d8
+           590f9afdfb31f35fbab1563ec54fcb17a8e3bad463218d6402f1304'),
+           [tuple(tuple(string('loginButton'),bin('detail')),[]),
+            tuple(atom('user'),querySource('user')),
+            tuple(atom('pass'),querySource('pass'))]))); }
+       else console.log('Validation Error'); }});};
+        </code></figure>
+    </section>
+    <section>
+        <a name="mqtt"></a><h3>РЕНДЕРИНГ</h3>
+    </section>
+
+</article>
+</main>
+<footer>Namdak Tonpa <span class="heart">❤</span> N2O</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<meta name="author" content="Maxim Sokhatsky" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat:900" rel="stylesheet" />
+<title>Vol.2</title>
+<link rel="stylesheet" href="https://n2o.dev/blank.css?v=2"/>
+<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
+<link rel="manifest" href="/img/site.webmanifest" />
+<style>
+@media print {
+    .pagebreak { page-break-after: always; }
+}
+</style>
+</head>
+<body>
+<nav>
+    <a href="../../ua/index.html">DEV</a>
+    <a href="../index.html">BOOKS</a>
+    <a href="index.html">VOL.2</a>
+    <a href="#" style="background:#ededed;">PROTOCOLS</a>
+</nav>
+<header>
+  <a href="https://github.com/synrc/n2o.tech"><img src="https://openmoji.org/data/color/svg/1F4D7.svg" /></a>
+  <h1>ПРОТОКОЛИ</h1>
+</header>
+<aside>
+  <article>
+    <section>
+      <h3>КНИГА N2O</h3>
+      <div>Глава ПРОТОКОЛИ разказує про точки входу для протоколів N2O, їх відмінності та налаштування.
+      </div>
+      <br>
+      <div>2016—2021 © <a href="https://5ht.co/license.htm">ISC LICENSE</a></div>
+      <div>8.11 7.1 6.6 5.10</div>
+    </section>
+    <section>
+      <h3>ЗМІСТ</h3>
+      <div><ul>
+          <li><a href="index.html">ПЕРЕДМОВА</a></li>
+          <li><a href="intro.htm">ВСТУП</a></li>
+          <li><a href="samples.htm">ПРИКЛАДИ</a></li>
+          <li><a href="protocols.htm">ПРОТОКОЛИ</a></li>
+          <li><a href="interface.htm">ІНТЕРФЕЙС</a></li>
+          <li><a href="data.htm">СХОВИЩЕ</a></li>
+          <li><a href="logic.htm">ЛОГІКА</a></li>
+          <li><a href="spec.htm">МОДЕЛЬ</a></li>
+      </ul></div>
+    </section>
+  </article>
+</aside>
+<main>
+<article>
+  <section>
+
+    <h3>ПРОЦЕСИ</h3>
+
+     <p>N2O — це вбудовувана бібліотека протокольних циклів обробки повідомлень
+                 для WebSocket, MQTT та TCP серверів. До базової функціональності
+                 бібліотеки входять: управління процесами; кільця віртуальних вузлів для
+                 обробки запитів; сервіси сесій, кодування, шини та кешування.</p>
+
+        <p><a href="https://github.com/synrc/n2o/blob/master/src/n2o.erl">N2O</a>
+        надає спосіб створення, налаштування і запуску
+        довільних додатків та протоколів всередині деяких хостів,
+        в які N2O може бути включений, таких, як 
+        <a href="https://github.com/ninenines/cowboy">cowboy</a>
+        та <a href="http://github.com/synrc/emqttd">emqttd</a>.
+        Кожен додаток також може створювати свої сервісні протоколи-процеси,
+        так, як веб-сторінки створюють WebSocket з'єднання,
+        системи управління бізнес-процесами створюють екземпляри процесів,
+        або як чат-додатки створюють процеси управління кімнатами чи персональними чатами.
+        З N2O все управляється протоколами.</p>
+        <center><img src="https://n2o.dev/deps/n2o/man/img/N2O.svg" width="60%" /></center>
+        <p>N2O поставляється для роботи в двох режимах:
+        1) всередині <a href="https://n2o.dev/deps/n2o/man/ua/n2o_mqtt.htm">n2o_mqtt</a> воркерів;
+        2) всередині cowboy процесів, реалізованих в <a href="https://n2o.dev/deps/n2o/man/ua/n2o_stream.htm">n2o_stream</a>.
+        У першому випадку, сервер MQTT використовується між клієнтами та серверними воркерами.
+        У другому випадку, з Erlang процесів задіяні лише клієнти.
+        Ви можете створити власну конфігурацію циклу обробки N2O.</p>
+        <p><img src="https://n2o.dev/deps/n2o/man/img/WebSocket%20+%20MQTT.svg" width="100%" /></p>
+        <p>Сам по собі, N2O — це вбудовуваний протокольний цикл <a href="https://n2o.dev/deps/n2o/man/ua/n2o_proto.htm">n2o_proto</a>, який ви можете включати у свої продукти.
+        Орім цього, він обробляє кеш та сесії
+        з гнучкими <a href="https://n2o.dev/deps/n2o/man/ua/n2o_pi.htm">n2o_pi</a> процесами без обмеження права власності.
+        А також визначає AES/CBC—128 кодування та BERT/JSON декодер.</p>
+
+    <h3>ТОЧКИ ПІДКЛЮЧЕННЯ</h3>
+
+        <p>
+            Перелік типів кінцевих точок підключення протоколів,
+            які підтримуються EMQ, та є доступними для N2O програм:
+            WebSockets, MQTT, MQTT-SN, TCP, UDP, CoAP.
+            Нормальним є використання N2O у якості веб фреймворка
+            або сервера веб додатків з передачею даних по WebSockets,
+            але для IoT та MQTT програм можна використовувати UDP чи SCTP протоколи,
+            для забезпечення консистентності доставки повідомлень на рівні програми.
+            Використовуючи MQTT в якості транспорту ми розширюємо підтримуваний
+            набір протоколів кінцевих точок підключення.
+        </p>
+
+        <h4>RPC MQTT</h4>
+
+        <p>N2O надає RPC через механізм MQ для MQTT пристроїв.
+           N2O запускає набір <a href="https://n2o.dev/deps/n2o/man/ua/n2o_mqtt.htm">n2o_mqtt</a> воркерів —
+           <a href="https://n2o.dev/deps/n2o/man/ua/n2o_pi.htm">n2o_pi</a> процесів, які слухають певні топіки певної кімнати.
+           Відповіді надсилаються до теми подій,
+           яка автоматичного підписана при старті сесії MQTT.</p>
+        <figure><figcaption>Лістинг 5. MQTT RPC Топіків</figcaption><code>
+  actions/:vsn/:module/:client
+  events/:vsn/:node/:module/:client
+        </code></figure>
+
+        <h4>RPC WebSocket</h4>
+        <p>У випадку чистого WebSocket, в N2O реалізовано <a href="https://n2o.dev/deps/n2o/man/ua/n2o_stream.htm">n2o_stream</a>
+           як cowboy модуль, що підтримує бінарні та текстові повідомлення.</p>
+        <figure><figcaption>Лістинг 6. Cowboy stream протокол</figcaption><code>
+  #binary { data :: binary() }.
+  #text   { data :: binary() }.
+        </code></figure>
+
+    <h3>ПРОТОКОЛИ</h3>
+
+        <p>Хоча всі протоколи додатків в системі вимагають середовище з одним ефектом,
+           або з таким же шляхом обробки помилок,
+           <b>n2o</b> визначає єдиний протокольний цикл,
+           як стек протоколів, для всіх додатків.</p>
+        <p>В базовому варіанті <b>n2o</b> містить протоколи NITRO та FTP,
+           що дозволяє створювати працюючі в режимі реального часу веб-додатки,
+           з протоколами на основі бінарних,
+           а також — надійний та продуктивний клієнт для вивантаження файлів,
+           разом з протоколом передачі файлів.
+           Для створення NITRO веб-додатків, вам необхідно підключити <b>nitro</b> в залежності.</p>
+        <h4>info(term(),term(),#cx{}) -> #reply{} | #unknown{}.</h4>
+        <p><b>info/3</b> — функція зворотнього виклику (колбек) N2O протоколу,
+        яка викликається при кожному вхідному запиті.</p>
+
+    <h4>HEART</h4>
+
+    <h4>NITRO</h4>
+
+    <h4>FTP</h4>
+
+    <h4>BPE</h4>
+
+    <h4>KVS</h4>
+
+  </section>
+</article>
+</main>
+<footer>Namdak Tonpa <span class="heart">❤</span> N2O</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body>
+</html>
