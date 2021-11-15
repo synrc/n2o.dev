@@ -1,0 +1,88 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" /><meta name="author" content="Maxim Sokhatsky" />
+<title>MAD.ФАЙЛИ</title>
+<link rel="stylesheet" href="https://n2o.dev/blank.css"/>
+<link rel="shortcut icon" type="image/x-icon" href="https://n2o.dev/img/favicon.ico"/>
+<link rel="apple-touch-icon" sizes="180x180" href="https://n2o.dev/img/apple-touch-icon.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="https://n2o.dev/img/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="https://n2o.dev/img/favicon-16x16.png"/>
+<link rel="manifest" href="https://n2o.dev/img/site.webmanifest"/>
+</head>
+<body>
+<nav>
+    <a href="../../ua/index.html">ЕРЛАНГ</a>
+    <a href="../index.html">КНИГИ</a>
+    <a href="index.html">VOL.4</a>
+    <a href="#" style="background:#ededed;">ФАЙЛИ</a>
+</nav><header>
+        <a href="https://github.com/synrc/fs"><img src="https://openmoji.org/data/color/svg/1F4D9.svg"/></a>
+        <h1>ФАЙЛИ</h1>
+    </header><aside>
+        <article>
+            <section>
+                <h3>КНИГА MAD</h3>
+                <div>Глава ФАЙЛИ розказує про FS &#8211; слухач файлової системи для Windows, Linux та Mac,
+                     який використовується Elixir та Synrc коммюніті.</div><br/>
+            <figure><code> $ mad get fs</code></figure>
+            </section>
+    <section>
+      <h3>ЗМІСТ</h3>
+      <div><ul>
+          <li><a href="index.html">ПЕРЕДМОВА</a></li>
+          <li><a href="setup.htm">ІНСТАЛЯЦІЯ</a></li>
+          <li><a href="fs.htm">ФАЙЛИ</a></li>
+          <li><a href="commands.htm">КОМАНДИ</a></li>
+      </ul></div>
+    </section>
+        </article>
+    </aside>
+<main>
+<article>
+    <section>
+        <a name="intro"></a><h3>ВСТУП</h3>
+     <h4>ПІДПИСКА НА СПОВІЩЕННЯ</h4>
+        <figure><code>
+ > fs:start_link(fs_watcher, "/Users/5HT/synrc/fs").
+ > fs:subscribe(fs_watcher).
+ > flush().
+ Shell got {&#60;0.47.0&#62;,{fs,file_event},
+                     {"/Users/5HT/synrc/fs/src/README.md",
+                      [closed,modified]}}
+        </code></figure>
+     <h4>ПОДІЇ</h4>
+        <figure><code>
+ > fs:known_events(fs_watcher).
+  [mustscansubdirs,userdropped,kerneldropped,eventidswrapped,
+   historydone,rootchanged,mount,unmount,created,removed,
+   inodemetamod,renamed,modified,finderinfomod,changeowner,
+   xattrmod,isfile,isdir,issymlink,ownevent]
+        </code></figure>
+     <h4>Запуск шедулера</h4>
+        <figure><code>
+ > fs:start_looper().
+ =INFO REPORT==== 28-Aug-2013::19:36:26 ===
+ file_event: "/tank/proger/erlfsmon/src/4913" [closed,modified]
+        </code></figure>
+    </section>
+    <section>
+        <a name="intro"></a><h3>СУМІСНІСТЬ</h3>
+        <p> API за замовчуванням сумісний з версіями до 1.10.
+            Після запуску програми, <b>fs</b> запустить fs-спостерігача за визначеним в <b>path</b> середовищем, або,
+            якщо це налаштування не встановлене &#8211; за <b>CWD</b>.
+            Це означає, що ви можете користуватись цією програмою наступним чином:</p>
+        <figure><code>
+ > fs:subscribe().
+        </code></figure>
+        <p>Якщо ви не бажаєте використовувати backwards_compatible режим, ви можете його вимкнути, встановивши налаштування середовища <b>fs</b>:</p>
+        <figure><code>
+ {backwards_compatible, false}
+        </code></figure>
+        <p>Цей параметр відповідає за те, що fs-спостерігач за замовчуванням не буде запущений.</p>
+    </section>
+</article>
+</main><footer>
+    Зроблено з любов'ю <span class="heart">❤</span> до N2O
+</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body></html>
