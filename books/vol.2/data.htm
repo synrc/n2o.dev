@@ -90,6 +90,55 @@
 
      <h3>ROCKSDB</h3>
 
+<figure><code>
+1> {ok,Ref} = rocksdb:open("hey",[{create_if_missing,true}]).
+2> rocksdb:put(Ref, <<"/users/1">>,<<"maxim">>,[{sync,true}]).
+3> rocksdb:put(Ref, <<"/users/2">>,<<"doxtop">>,[{sync,true}]).
+4> rocksdb:put(Ref, <<"/users/3">>,<<"vlad">>,[{sync,true}]).
+5> rocksdb:put(Ref, <<"/staff/1">>,<<"vlad">>,[{sync,true}]).
+6> rocksdb:put(Ref, <<"/staff/2">>,<<"maxim">>,[{sync,true}]).
+7> rocksdb:put(Ref, <<"/staff/3">>,<<"doxtop">>,[{sync,true}]).
+8> {ok,I} = rocksdb:iterator(Ref,[]).
+9> rocksdb:iterator_move(I,{seek,<<"/staff/">>}).
+10> rocksdb:iterator_move(I,next).
+11> rocksdb:iterator_move(I,next).
+12> rocksdb:iterator_move(I,next).
+13> rocksdb:iterator_move(I,{seek,<<"/users/">>}).
+14> rocksdb:iterator_move(I,next).
+15> rocksdb:iterator_move(I,next).
+16> rocksdb:iterator_move(I,next).
+</code></figure>
+
+<figure><code>
+1> kvs:ver().
+{version,"KVS ROCKSDB"}
+2> rr(kvs).
+[emails,id_seq,it,iter,kvs,reader,schema,table,writer]
+3> kvs:join().
+ok
+4> kvs:put(#emails{id=1,email="maxim"}).
+5> kvs:put(#emails{id=2,email="doxtop"}).
+6> kvs:put(#writer{id=2}).
+7> kvs:put(#writer{id=1}).
+8> kvs:all(writer).
+[#writer{id = 1,count = 0,cache = [],args = [],first = []},
+ #writer{id = 2,count = 0,cache = [],args = [],first = []}]
+9> kvs:all(emails).
+[#emails{id = 1,next = [],prev = [],email = "maxim"},
+ #emails{id = 2,next = [],prev = [],email = "doxtop"}]
+
+10> kvs:add(#writer{id=chain,args=#emails{email="maxim@synrc.com"}}).
+11> kvs:add(#writer{id=chain,args=#emails{email="vlad@synrc.com"}}).
+12> kvs:add(#writer{id=chain,args=#emails{email="doxtop@synrc.com"}}).
+13> kvs:all(chain).
+[#emails{id = 1555244691729330000,next = [],prev = [],
+         email = "maxim@synrc.com"},
+ #emails{id = 1555244699905648000,next = [],prev = [],
+         email = "doxtop@synrc.com"},
+ #emails{id = 1555244696660271000,next = [],prev = [],
+         email = "vlad@synrc.com"}]
+</code></figure>
+
      <h3>MNESIA</h3>
   </section>
 </article>
