@@ -62,7 +62,7 @@
 
     <h3>ПРОЦЕСИ</h3>
 
-     <p><a href="https://n2o.dev/deps/n2o/man/ua/index.html">N2O</a> — це вбудовувана бібліотека протокольних циклів обробки повідомлень
+     <p><a href="https://n2o.dev/ua/deps/n2o/man/index.html">N2O</a> — це вбудовувана бібліотека протокольних циклів обробки повідомлень
                  для WebSocket, MQTT та TCP серверів. До базової функціональності
                  бібліотеки входять: управління процесами; кільця віртуальних вузлів для
                  обробки запитів; сервіси сесій, кодування, шини та кешування.</p>
@@ -77,17 +77,17 @@
         системи управління бізнес-процесами створюють екземпляри процесів,
         або як чат-додатки створюють процеси управління кімнатами чи персональними чатами.
         З N2O все управляється протоколами.</p>
-        <center><img src="https://n2o.dev/deps/n2o/man/img/N2O.svg" width="60%" /></center>
+        <center><img src="https://n2o.dev/img/N2O.svg" width="60%" /></center>
         <p>N2O поставляється для роботи в двох режимах:
-        1) всередині <a href="https://n2o.dev/deps/n2o/man/ua/n2o_mqtt.htm">n2o_mqtt</a> воркерів;
-        2) всередині cowboy процесів, реалізованих в <a href="https://n2o.dev/deps/n2o/man/ua/n2o_stream.htm">n2o_stream</a>.
+        1) всередині <a href="https://n2o.dev/ua/deps/n2o/man/n2o_mqtt.htm">n2o_mqtt</a> воркерів;
+        2) всередині cowboy процесів, реалізованих в <a href="https://n2o.dev/ua/deps/n2o/man/n2o_stream.htm">n2o_stream</a>.
         У першому випадку, сервер MQTT використовується між клієнтами та серверними воркерами.
         У другому випадку, з Erlang процесів задіяні лише клієнти.
         Ви можете створити власну конфігурацію циклу обробки N2O.</p>
-        <p><img src="https://n2o.dev/deps/n2o/man/img/WebSocket%20+%20MQTT.svg" width="100%" /></p>
-        <p>Сам по собі, N2O — це вбудовуваний протокольний цикл <a href="https://n2o.dev/deps/n2o/man/ua/n2o_proto.htm">n2o_proto</a>, який ви можете включати у свої продукти.
+        <p><img src="https://n2o.dev/img/WebSocket%20+%20MQTT.svg" width="100%" /></p>
+        <p>Сам по собі, N2O — це вбудовуваний протокольний цикл <a href="https://n2o.dev/ua/deps/n2o/man/n2o_proto.htm">n2o_proto</a>, який ви можете включати у свої продукти.
         Орім цього, він обробляє кеш та сесії
-        з гнучкими <a href="https://n2o.dev/deps/n2o/man/ua/n2o_pi.htm">n2o_pi</a> процесами без обмеження права власності.
+        з гнучкими <a href="https://n2o.dev/ua/deps/n2o/man/n2o_pi.htm">n2o_pi</a> процесами без обмеження права власності.
         А також визначає AES/CBC—128 кодування та BERT/JSON декодер.</p>
 
     <h3>ТОЧКИ ПІДКЛЮЧЕННЯ</h3>
@@ -107,8 +107,8 @@
         <h4>RPC MQTT</h4>
 
         <p>N2O надає RPC через механізм MQ для MQTT пристроїв.
-           N2O запускає набір <a href="https://n2o.dev/deps/n2o/man/ua/n2o_mqtt.htm">n2o_mqtt</a> воркерів —
-           <a href="https://n2o.dev/deps/n2o/man/ua/n2o_pi.htm">n2o_pi</a> процесів, які слухають певні топіки певної кімнати.
+           N2O запускає набір <a href="https://n2o.dev/ua/deps/n2o/man/n2o_mqtt.htm">n2o_mqtt</a> воркерів —
+           <a href="https://n2o.dev/ua/deps/n2o/man/n2o_pi.htm">n2o_pi</a> процесів, які слухають певні топіки певної кімнати.
            Відповіді надсилаються до теми подій,
            яка автоматичного підписана при старті сесії MQTT.</p>
         <figure><figcaption>Лістинг 5. MQTT RPC Топіків</figcaption><code>
@@ -117,7 +117,7 @@
         </code></figure>
 
         <h4>RPC WebSocket</h4>
-        <p>У випадку чистого WebSocket, в N2O реалізовано <a href="https://n2o.dev/deps/n2o/man/ua/n2o_stream.htm">n2o_stream</a>
+        <p>У випадку чистого WebSocket, в N2O реалізовано <a href="https://n2o.dev/ua/deps/n2o/man/n2o_stream.htm">n2o_stream</a>
            як cowboy модуль, що підтримує бінарні та текстові повідомлення.</p>
         <figure><figcaption>Лістинг 6. Cowboy stream протокол</figcaption><code>
   #binary { data :: binary() }.
