@@ -1,0 +1,106 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" /><meta name="author" content="Maxim Sokhatsky" />
+<title>FS</title>
+<link rel="stylesheet" href="https://n2o.dev/blank.css"/>
+<link rel="shortcut icon" type="image/x-icon" href="https://n2o.dev/img/favicon.ico"/>
+<link rel="apple-touch-icon" sizes="180x180" href="https://n2o.dev/img/apple-touch-icon.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="https://n2o.dev/img/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="https://n2o.dev/img/favicon-16x16.png"/>
+<link rel="manifest" href="https://n2o.dev/img/site.webmanifest"/>
+</head><body><nav>
+      <a href="https://n2o.dev">DEV</a>
+      <a href="#" style="background:#ededed;">FS</a>
+  <div class="dropdown">
+    <a onclick="drop()" class="dropbtn">UA</a>
+    <div id="dropdown" class="dropdown-content">
+      <a href="https://n2o.dev/deps/fs/man/ua/index.html">UA</a>
+      <a href="https://fs.n2o.dev/">EN</a>
+    </div>
+  </div>
+    </nav><header>
+        <a href="https://github.com/synrc/fs"><img src="https://openmoji.org/data/color/svg/1F4C1.svg"/></a>
+        <h1>FS</h1>
+    </header><aside>
+        <article>
+            <section>
+                <h3>СИНОПИС</h3>
+                <div>FS &#8211; це нативний слухач файлової системи для Windows, Linux та Mac,
+                     який використовується Elixir та Synrc коммюніті.</div><br/>
+            <figure><code> $ mad get fs</code></figure>
+            </section>
+            <section>
+            <h3>Модулі</h3>
+            <div>
+            <ul>
+            <li><a href="https://github.com/thibaudgg/rb-fsevent">fsevent</a> (Mac)</li>
+            <li><a href="https://github.com/rvoicilas/inotify-tools/wiki">inotify</a> (Linux)</li>
+            <li><a href="https://github.com/thekid/inotify-win">inotify-win</a> (Windows)</li>
+            </ul>
+            </div>
+            <br />
+            <div>
+                NOV 2021 © <a href="https://github.com/proger">proger</a> ISC<br />
+                VER 7.11 4.10 4.1
+            </div>
+            </section>
+        </article>
+    </aside>
+<main>
+<article>
+    <section>
+        <a name="intro"></a><h3>ВСТУП</h3>
+     <h4>Підписка на сповіщення</h4>
+        <figure><code>
+ > fs:start_link(fs_watcher, "/Users/5HT/synrc/fs").
+ > fs:subscribe(fs_watcher).
+ > flush().
+ Shell got {&#60;0.47.0&#62;,{fs,file_event},
+                     {"/Users/5HT/synrc/fs/src/README.md",
+                      [closed,modified]}}
+        </code></figure>
+     <h4>Нативні події</h4>
+        <figure><code>
+ > fs:known_events(fs_watcher).
+  [mustscansubdirs,userdropped,kerneldropped,eventidswrapped,
+   historydone,rootchanged,mount,unmount,created,removed,
+   inodemetamod,renamed,modified,finderinfomod,changeowner,
+   xattrmod,isfile,isdir,issymlink,ownevent]
+        </code></figure>
+     <h4>Запуск шедулера</h4>
+        <figure><code>
+ > fs:start_looper().
+ =INFO REPORT==== 28-Aug-2013::19:36:26 ===
+ file_event: "/tank/proger/erlfsmon/src/4913" [closed,modified]
+        </code></figure>
+    </section>
+    <section>
+        <a name="intro"></a><h3>Сумісність</h3>
+        <p> API за замовчуванням сумісний з версіями до 1.10.
+            Після запуску програми, <b>fs</b> запустить fs-спостерігача за визначеним в <b>path</b> середовищем, або,
+            якщо це налаштування не встановлене &#8211; за <b>CWD</b>.
+            Це означає, що ви можете користуватись цією програмою наступним чином:</p>
+        <figure><code>
+ > fs:subscribe().
+        </code></figure>
+        <p>Якщо ви не бажаєте використовувати backwards_compatible режим, ви можете його вимкнути, встановивши налаштування середовища <b>fs</b>:</p>
+        <figure><code>
+ {backwards_compatible, false}
+        </code></figure>
+        <p>Цей параметр відповідає за те, що fs-спостерігач за замовчуванням не буде запущений.</p>
+    </section>
+    <section>
+        <a name="plugin"></a><h3>Дописувачі</h3>
+        <div>
+        <ul>
+        <li><a href="https://github.com/5HT">5HT</a> — Namdak Tonpa</li>
+        <li><a href="https://github.com/proger">proger</a> — Vlad Ki</li>
+        </ul>
+        </div>
+    </section>
+</article>
+</main><footer>
+    Зроблено з любов'ю <span class="heart">❤</span> до N2O
+</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body></html>

@@ -1,0 +1,35 @@
+.TH bpe 1 "bpe" "Synrc Research Center" "BPE"
+.SH NAME
+bpe
+
+.SH ВСТУП
+.LP
+Модуль
+bpe
+пропонує BPMN інтерфейс (API).
+
+.SH SERVICE
+load(string()) -> #process{}
+start(#process{},list()) -> {ok,pid()} | {error,any()}.
+
+.SH CONTEXT
+process(pid()) -> #process{}.
+complete(pid()) -> {complete,any()}.
+complete(any(),pid()) -> {complete,any()}.
+amend(pid(),any()) -> {complete,any()}.
+event(pid(),any()) -> {complete,any()}.
+hist(pid()) -> list(#hist{}).
+
+.SH ENV
+task(Name::list(),#process{}) -> [tuple()] | tuple().
+doc(Record::tuple(),#process{}) -> [tuple()] | tuple().
+
+.SH tasks(#process{}) -> list().
+docs(#process{}) -> list().
+events(#process{}) -> list().
+.LP
+Retrieves the list of
+
+.SH ALSO
+.LP
+\fB\fITASK(1)\fR\&\fR\&

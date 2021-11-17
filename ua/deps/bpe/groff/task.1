@@ -1,0 +1,20 @@
+.TH task 1 "task" "Synrc Research Center" "TASK"
+.SH NAME
+task
+
+.SH ВСТУП
+.LP
+Модуль
+bpe_task
+забезпечує функціональність обробки задач.
+
+.SH API
+handle_task(Event,CurrentTask,Target,Proc) ->
+{reply,{complete,Target},State} |
+{reply,{error,Message,Task},State} |
+{reply,{{complete,Message},Task},State} |
+{reply,{complete,Task},State}
+
+.SH ALSO
+.LP
+\fB\fIBPE(1)\fR\&\fR\&
