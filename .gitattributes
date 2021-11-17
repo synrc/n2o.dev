@@ -3,3 +3,6 @@
 *.tex linguist-detectable=false
 *.sty linguist-detectable=false
 *.1 linguist-detectable=false
+*.js linguist-detectable=false
+*.sketch linguist-detectable=false
+*.webmanifest linguist-detectable=false
