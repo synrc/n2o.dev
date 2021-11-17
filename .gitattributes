@@ -2,3 +2,4 @@
 *.htm linguist-detectable=false
 *.tex linguist-detectable=false
 *.sty linguist-detectable=false
+*.roff linguist-detectable=false
