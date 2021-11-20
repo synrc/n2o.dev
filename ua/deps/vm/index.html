@@ -34,7 +34,7 @@
   <article>
     <section>
       <h3>Анотація</h3>
-      <div>SYNRC VM &mdash; це похідний твір BEAM-сумісного середовища виконання
+      <div>SYNRC VM &mdash; це очікуваний похідний твір BEAM-сумісного середовища виконання
            LAM (Little Actor Machine) реалізованого Леандро Остера на мові Rust.
       </div><br/>
       <div>
@@ -45,15 +45,16 @@
   </article>
   <article>
     <section>
-            <h3><a href="https://n2o.dev">ВМ</a></h3>
-            <div><ul>
-            <li><a href="man/app.htm">БАЙТКОД</a></li>
-            <li><a href="man/srv.htm">СКРИНЬКИ</a></li>
-            <li><a href="man/srv.htm">ІНТЕРПРЕТАТОР</a></li>
-            <li><a href="man/sup.htm">ПРОЦЕСИ</a></li>
-            <li><a href="man/path.htm">ПЛАНУВАЛЬНИК</a></li>
-            <li><a href="man/sh.htm">КООРДИНАТОР</a></li>
-            </ul></div>
+       <h3>СЕРЕДОВИЩЕ</h3>
+       <div><ul>
+       <li><a href="#intro">ВСТУП</a></li>
+       <li><a href="#coordinator">КООРДИНАТОР</a></li>
+       <li><a href="#scheduler">ПЛАНУВАЛЬНИК</a></li>
+       <li><a href="#process">ПРОЦЕСИ</a></li>
+       <li><a href="#interpreter">ІНТЕРПРЕТАТОР</a></li>
+       <li><a href="#mailbox">СКРИНЬКИ</a></li>
+       <li><a href="#bytecode">БАЙТКОД</a></li>
+       </ul></div>
 
     </section>
     <section>
@@ -70,34 +71,180 @@
 <main>
 <article>
   <section>
-    <a name="endpoint"></a><h3>BYTECODE</h3>
-    <p>
-    </p>
+
+    <a name="intro"></a><h3>ВСТУП</h3>
+
+    <p>Тут хочеться розказати про віртуальні машини які
+       намагаються бути сумісними з семантикою та байткодом віртуальної машини BEAM
+       яка є основою для платформи Erlang/OTP, де Erlang &mdash; це специфікація
+       на мову програмування в цій платформі яка компілює
+       в BEAM байткод з високорівневих репрезентацій Erlang AST (Elixir) або Erlang Core (Joxa, Hamler),
+       а OTP це набір бібліотек разом з кореневими бібліотеками
+      <b>kernel</b> (бібліотека середовища виконання)
+      та <b>stdlib</b> (базова бібліотека з алгоритмами та структурами даних).</p>
+
+    <p>Протягом десятиліть аматори та малі компанії намагаються побудувати
+       сумісну з BEAM віртуальну машину, а деякі навіть зі своїми мовами. Розкажемо
+       про основні спроби імплементації, які в необхідній мірі реалізують можливості Erlang.</p>
+
+    <h4>LING (Erlang On Xen)</h4>
+
+    <p>Перша віртуальна машина LING від компанії Cloudozer авторства Максима Харченко,
+       яка викорстовувалась в SDN свічі LINCX компанії Infoblox. Основним критерієм оптимізації при
+       побудові цієї машини був час її завантаження під гіпервізором Xen (сама
+       машина працювала без операційної системи, але пізніше був зроблений порт
+       у вигляді звичайного POSIX додатку. Ця віртуальна машина завантажується за 50мс.
+       Був також порт на STM мікроконтролери.</p>
+
+    <h4>AtomVM (Microcontrollers)</h4>
+
+    <p>У той час як LING був зосереджений та розроблювався для еластичних
+       cloud-платформ з використанням гіпервізора Xen, головною мотивацією
+       AtomVM є розповсюдження платформи Erlang на ринок мікроконтролерів ESP, STM, FreeRTOS.</p>
+
+    <h4>LAM (Little Abstract Machine)</h4>
+
+    <p>Леандро Остера один з небагатьох авторів мов програмування для платформи Erlang який
+       робить все правильно.</p>
+
   </section>
   <section>
-    <a name="mqtt"></a><h3>MAILBOX</h3>
+    <a name="coordinator"></a><h3>КООРДИНАТОР</h3>
     <p>
     </p>
+
+    <figure><code>
+pub struct Coordinator {
+    program: Program,
+    scheduler_manager: Box&lt;dyn SchedulerManager>,
+    scheduler_count: u32,
+}
+
+pub trait SchedulerManager {
+    fn setup(&mut self, cpus: u32, prog: &Program) -> Result&lt;(), Error>;
+    fn run(&self, coordinator: &Coordinator) -> Result&lt;(), Error>;
+}
+
+pub trait Runtime {
+    fn execute(&mut self, call: &MFA, args: &[Literal]) -> Literal;
+    fn sleep(&self, _duration: u64) {}
+    fn halt(&self) {}
+    fn r#yield(&self);
+}
+
+    </code></figure>
+
   </section>
   <section>
-    <a name="mqtt"></a><h3>INTERPRETER</h3>
+    <a name="scheduler"></a><h3>ПЛАНУВАЛЬНИК</h3>
     <p>
     </p>
+
+    <figure><code>
+pub struct Scheduler {
+    id: u32,
+    reduction_count: u64,
+    process_registry: ProcessRegistry,
+    process_queue: ProcessQueue,
+    program: Program,
+}
+
+pub struct ProcessQueue {
+    ready: VecDeque&lt;Pid>,
+    dead: VecDeque&lt;Pid>,
+}
+
+pub struct ProcessRegistry {
+    process_count: u64,
+    processes: HashMap&lt;Pid, Rc&lt;Process>>,
+}
+</code></figure>
+
   </section>
   <section>
-    <a name="mqtt"></a><h3>PROCESS</h3>
+    <a name="process"></a><h3>ПРОЦЕС</h3>
     <p>
     </p>
+
+    <figure><code>
+pub struct Process {
+    status: RefCell&lt;Status>,
+    pid: Pid,
+    emulator: Emulator,
+    pub mailbox: Mailbox,
+}
+
+pub struct Emulator {
+    registers: RefCell&lt;Registers>,
+    instr_ptr: RefCell&lt;InstructionPointer>,
+}
+    </code></figure>
+
   </section>
   <section>
-    <a name="mqtt"></a><h3>SCHEDULER</h3>
+    <a name="interpreter"></a><h3>ІНТЕРПРЕТАТОР</h3>
     <p>
     </p>
+
+    <figure><code>
+pub struct Program {
+    pub main: MFA,
+    pub modules: HashMap&lt;String, Module>,
+}
+
+pub struct MFA {
+    pub module: String,
+    pub function: String,
+    pub arity: u32,
+}
+
+pub struct Module {
+    pub name: String,
+    pub lambdas: HashMap&lt;(String, Arity), Label>,
+    pub functions: HashMap&lt;(String, Arity), Label>,
+    pub labels: Vec&lt;FunctionLabel>,
+}
+pub struct FunctionLabel {
+    pub id: Label,
+    pub instructions: Vec&lt;Instruction>,
+}
+
+pub struct Registers {
+    global: Vec&lt;Value>,
+    local: VecDeque&lt;Vec&lt;Value>>,
+    current_local: Vec&lt;Value>,
+}
+</code></figure>
+
   </section>
   <section>
-    <a name="mqtt"></a><h3>COORDINATOR</h3>
+    <a name="mailbox"></a><h3>СКРИНЬКА</h3>
     <p>
     </p>
+
+    <figure><code>
+pub struct Mailbox {
+    messages: RefCell&lt;VecDeque&lt;Message>>,
+    current: RefCell&lt;u32>,
+}
+    </code></figure>
+
+  </section>
+  <section>
+    <a name="bytecode"></a><h3>БАЙТКОД</h3>
+    <p>
+    Halt, Move(Value, Register), Swap(Register, Register), Clear(Register),
+    Allocate(Words,Keep), Deallocate(Words), ShiftLocals(Amount), RestoreLocals, Label(Label),
+    Jump(Label), Return, Test(Label, Test), ConditionalJump(reg,er,tab), Badmatch,
+    Call(FnCall, FnKind), TailCall(FnCall, FnKind), MakeLambda(Fst,Mod,Ar,Env), ConsList(H,T,target),
+    SplitList(list,head,tail), SplitListTail(l,t), SplitListHead(l,h), MakeTuple(target,elems),
+    GetTupleElement(tupl,elems,target), GetMapElements(lab,map,elems), Spawn(Spawn), Sleep(Label),
+    Kill, Monitor, Send(msg,proc), PeekMessage(onemp,msg), RemoveMessage, PidSelf(Register),
+    </p>
+
+    <figure><code>
+    </code></figure>
+
   </section>
 </article>
 </main>
