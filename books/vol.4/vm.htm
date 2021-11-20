@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<meta name="author" content="Maxim Sokhatsky" />
+<title>MAD.VM</title>
+<link rel="stylesheet" href="https://n2o.dev/blank.css?x=15" />
+<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href=".img/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png" />
+<link rel="manifest" href="img/site.webmanifest" />
+</head>
+<body>
+<nav>
+    <a href="../index.html">КНИГИ</a>
+    <a href="index.html">VOL.4</a>
+    <a href="#" style="background:#ededed;">СЕРЕДОВИЩЕ</a>
+</nav>
+<header>
+  <a href="../index.html"><img src="https://openmoji.org/data/color/svg/1F4D9.svg"/></a>
+  <h1>СЕРЕДОВИЩЕ</h1>
+</header>
+<aside>
+  <article>
+    <section>
+      <h3>Анотація</h3>
+      <div>SYNRC VM &mdash; це очікуваний похідний твір BEAM-сумісного середовища виконання
+           LAM (Little Actor Machine) реалізованого Леандро Остера на мові Rust.
+      </div><br/>
+      <div>
+        NOV 2021 © <a href="https://github.com/ostera">ostera</a> Apache 2.0<br />
+        VER 0.0.7
+      </div>
+    </section>
+  </article>
+  <article>
+    <section>
+       <h3>СЕРЕДОВИЩЕ</h3>
+       <div><ul>
+       <li><a href="#intro">ВСТУП</a></li>
+       <li><a href="#coordinator">КООРДИНАТОР</a></li>
+       <li><a href="#scheduler">ПЛАНУВАЛЬНИК</a></li>
+       <li><a href="#process">ПРОЦЕСИ</a></li>
+       <li><a href="#interpreter">ІНТЕРПРЕТАТОР</a></li>
+       <li><a href="#mailbox">СКРИНЬКИ</a></li>
+       <li><a href="#bytecode">БАЙТКОД</a></li>
+       </ul></div>
+
+    </section>
+    <section>
+       <h3>ІНСТРУМЕНТИ</h3>
+       <div><ul>
+          <li>КОМПІЛЯТОР</li>
+          <li>ТРАНСЛЯТОР</li>
+          <li>ЛІНКЕР</li>
+          <li>ПРІНТЕР</li>
+       </ul></div>
+    </section>
+  </article>
+</aside>
+<main>
+<article>
+  <section>
+
+    <a name="intro"></a><h3>ВСТУП</h3>
+
+    <p>Тут хочеться розказати про віртуальні машини які
+       намагаються бути сумісними з семантикою та байткодом віртуальної машини BEAM
+       яка є основою для платформи Erlang/OTP, де Erlang &mdash; це специфікація
+       на мову програмування в цій платформі яка компілює
+       в BEAM байткод з високорівневих репрезентацій Erlang AST (Elixir) або Erlang Core (Joxa, Hamler),
+       а OTP це набір бібліотек разом з кореневими бібліотеками
+      <b>kernel</b> (бібліотека середовища виконання)
+      та <b>stdlib</b> (базова бібліотека з алгоритмами та структурами даних).</p>
+
+    <p>Протягом десятиліть аматори та малі компанії намагаються побудувати
+       сумісну з BEAM віртуальну машину, а деякі навіть зі своїми мовами. Розкажемо
+       про основні спроби імплементації, які в необхідній мірі реалізують можливості Erlang.</p>
+
+    <h4>LING (Erlang On Xen)</h4>
+
+    <p>Перша віртуальна машина LING від компанії Cloudozer авторства Максима Харченко,
+       яка викорстовувалась в SDN свічі LINCX компанії Infoblox. Основним критерієм оптимізації при
+       побудові цієї машини був час її завантаження під гіпервізором Xen (сама
+       машина працювала без операційної системи, але пізніше був зроблений порт
+       у вигляді звичайного POSIX додатку. Ця віртуальна машина завантажується за 50мс.
+       Був також порт на STM мікроконтролери.</p>
+
+    <h4>AtomVM (Microcontrollers)</h4>
+
+    <p>У той час як LING був зосереджений та розроблювався для еластичних
+       cloud-платформ з використанням гіпервізора Xen, головною мотивацією
+       AtomVM є розповсюдження платформи Erlang на ринок мікроконтролерів ESP, STM, FreeRTOS.</p>
+
+    <h4>LAM (Little Abstract Machine)</h4>
+
+    <p>Леандро Остера один з небагатьох авторів мов програмування для платформи Erlang який
+       робить все правильно. По-перше на відміну від інших авторів варіантів Standard ML,
+       він вибрав у якості компілятора промисловий OCaml і почав створювати для нього бекенд в Erlang,
+       тас само як Hamler є портом PureScript з Erlang бекендом компіляції в Erlang Core.
+       Так з'явилася мова Caramel і леандро пішов ще далі, він захотів миву з цільовою
+       платформою WebAssembly, що природнім чином привело його в Rust, а з огляду на
+       високу культуру OCaml екосистеми це дало в поєднанні дуже якісний продукт &mdash;
+       віртуальну машину LAM як цільову мову для Caramel. Ми як N2O PRO компанія
+       не фіксуємося на конкретних мовах, для нас основним чином LAM цікава як
+       ідіоматична реалізація семантики Erlang на мові Rust, настільки (ідіоматична), що не виникає бажання
+       писати свою версію. Ця версія дійсно пронизана глибоким розуміння BEAM.
+       Наприклад, Леандро Остера як і Максим Харченко прийшов до висновку що для власної
+       віртуальної машини більше підходить свій, більш оптимізовний байткод. Процес
+       компіляції у цьому випадку замінюється процесом трансляції вже скомпільованого
+       коду <b>erlc</b> компілятором з <a href="https://tonpa.guru/stream/2019/2019-08-05%20PMC.htm">потужним паттерн-мачінгом</a> в свій
+       більш оптимізовний код для розмірів кешів першого рівня на кристалі мікропроцесора.
+       Розмір кодової бази віртуальної машини &mdash; 1700 LOC, а розмір усієї інфраструктури
+       разом з транслятором та лінкером (які можна переписати на Erlang і тримати наприклад
+       як плагіни MAD) складає вього 4K LOC. Однак із-за crate залежностей розмір native
+       WebAssembly файлів для POSIX середовища займають 35МВ. Це проблема яку потрібно
+       вирішити, для нас не так важлива екосистема WebAssembly як розмір інстанса в пам'яті,
+       адже ціни на пам'ять не падають надто швидко, особливо на ту память для якої ми
+       орієнтуємося &mdash; L1 кеш процесора.</p>
+
+  </section>
+  <section>
+    <a name="coordinator"></a><h3>КООРДИНАТОР</h3>
+    <p>
+    </p>
+
+    <figure><code>
+pub struct Coordinator {
+    program: Program,
+    scheduler_manager: Box&lt;dyn SchedulerManager>,
+    scheduler_count: u32,
+}
+
+pub trait SchedulerManager {
+    fn setup(&mut self, cpus: u32, prog: &Program) -> Result&lt;(), Error>;
+    fn run(&self, coordinator: &Coordinator) -> Result&lt;(), Error>;
+}
+
+pub trait Runtime {
+    fn execute(&mut self, call: &MFA, args: &[Literal]) -> Literal;
+    fn sleep(&self, _duration: u64) {}
+    fn halt(&self) {}
+    fn r#yield(&self);
+}
+
+    </code></figure>
+
+  </section>
+  <section>
+    <a name="scheduler"></a><h3>ПЛАНУВАЛЬНИК</h3>
+    <p>
+    </p>
+
+    <figure><code>
+pub struct Scheduler {
+    id: u32,
+    reduction_count: u64,
+    process_registry: ProcessRegistry,
+    process_queue: ProcessQueue,
+    program: Program,
+}
+
+pub struct ProcessQueue {
+    ready: VecDeque&lt;Pid>,
+    dead: VecDeque&lt;Pid>,
+}
+
+pub struct ProcessRegistry {
+    process_count: u64,
+    processes: HashMap&lt;Pid, Rc&lt;Process>>,
+}
+</code></figure>
+
+  </section>
+  <section>
+    <a name="process"></a><h3>ПРОЦЕС</h3>
+    <p>
+    </p>
+
+    <figure><code>
+pub struct Process {
+    status: RefCell&lt;Status>,
+    pid: Pid,
+    emulator: Emulator,
+    pub mailbox: Mailbox,
+}
+
+pub struct Emulator {
+    registers: RefCell&lt;Registers>,
+    instr_ptr: RefCell&lt;InstructionPointer>,
+}
+    </code></figure>
+
+  </section>
+  <section>
+    <a name="interpreter"></a><h3>ІНТЕРПРЕТАТОР</h3>
+    <p>
+    </p>
+
+    <figure><code>
+pub struct Program {
+    pub main: MFA,
+    pub modules: HashMap&lt;String, Module>,
+}
+
+pub struct MFA {
+    pub module: String,
+    pub function: String,
+    pub arity: u32,
+}
+
+pub struct Module {
+    pub name: String,
+    pub lambdas: HashMap&lt;(String, Arity), Label>,
+    pub functions: HashMap&lt;(String, Arity), Label>,
+    pub labels: Vec&lt;FunctionLabel>,
+}
+pub struct FunctionLabel {
+    pub id: Label,
+    pub instructions: Vec&lt;Instruction>,
+}
+
+pub struct Registers {
+    global: Vec&lt;Value>,
+    local: VecDeque&lt;Vec&lt;Value>>,
+    current_local: Vec&lt;Value>,
+}
+</code></figure>
+
+  </section>
+  <section>
+    <a name="mailbox"></a><h3>СКРИНЬКА</h3>
+    <p>
+    </p>
+
+    <figure><code>
+pub struct Mailbox {
+    messages: RefCell&lt;VecDeque&lt;Message>>,
+    current: RefCell&lt;u32>,
+}
+    </code></figure>
+
+  </section>
+  <section>
+    <a name="bytecode"></a><h3>БАЙТКОД</h3>
+    <p>
+    Halt, Move(Value, Register), Swap(Register, Register), Clear(Register),
+    Allocate(Words,Keep), Deallocate(Words), ShiftLocals(Amount), RestoreLocals, Label(Label),
+    Jump(Label), Return, Test(Label, Test), ConditionalJump(reg,er,tab), Badmatch,
+    Call(FnCall, FnKind), TailCall(FnCall, FnKind), MakeLambda(Fst,Mod,Ar,Env), ConsList(H,T,target),
+    SplitList(list,head,tail), SplitListTail(l,t), SplitListHead(l,h), MakeTuple(target,elems),
+    GetTupleElement(tupl,elems,target), GetMapElements(lab,map,elems), Spawn(Spawn), Sleep(Label),
+    Kill, Monitor, Send(msg,proc), PeekMessage(onemp,msg), RemoveMessage, PidSelf(Register),
+    </p>
+
+    <figure><code>
+    </code></figure>
+
+  </section>
+</article>
+</main>
+<footer>Made with <span class="heart">❤</span> to Erlang</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body>
+</html>
