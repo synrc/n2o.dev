@@ -1,0 +1,21 @@
+// SYNRC N2O PRO Color Scheme CSS Overlay
+
+h2, h3 { color: #5BC2E7; }
+nav, body, header { background-color: #ECF8FE; }
+main, footer { background-color: #433363; }
+footer { color: #18F8F8; }
+nav a { background-color: #fff; color: #5BC2E7; }
+nav a:visited { color: #5BC2E7; }
+aside { background-color: #433363; }
+aside h3 { color: #5BC2E7; } { #18F8F8; }
+aside div { color: white; }
+aside a, main a, main a:visited { color: #5BC2E7; } { #18F8F8; }
+figure code, figure pre { color:#330313; background-color: Lavender; }
+main b { color: #121212; }
+
+@media(min-width: 550px)  { figure code { border: 10px solid #D3D3F3; } }
+@media(min-width: 768px)  { figure code { border: 10px solid #D3D3F3; } }
+@media(min-width: 1280px) { figure code { border: 10px solid #D3D3F3; } }
+
+main section {  background-color: #ECF8FE; }
+main section:nth-of-type(even) { background-color: white;margin-left: auto; margin-right: auto; max-width: 1200px; }
