@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<meta name="author" content="Maxim Sokhatsky" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat:900" rel="stylesheet" />
+<title>TECH</title>
+<link rel="stylesheet" href="https://n2o.dev/blank.css?v=2"/>
+<link rel="stylesheet" href="https://n2o.dev/zima.css?x=12"/>
+<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
+<link rel="manifest" href="/img/site.webmanifest" />
+</head>
+<body>
+<nav>
+  <a href="https://n2o.dev/">DEV</a>
+  <a href="https://n2o.dev/pro/">PRO</a>
+</nav>
+<header>
+  <a href="https://github.com/synrc/n2o.tech"><img src="https://synrc.space/images/Synrc Neo.svg?v=1" /></a>
+  <h1>N2O</h1>
+</header>
+<aside>
+  <article>
+    <section>
+      <h3>SYNOPSIS</h3>
+      <div>
+        N2O TECH defines the full-stack specification along
+        with reference implementations in functional programming
+        languages. It provides WebSocket connectivity
+        with minimalistic enterprise protocol stack: web framework,
+        business process management, scalable data storage.
+
+        <br/><br/>
+
+      </div>
+      <div>
+        2013—2021 © <a href="https://5ht.co/license.htm">ISC LICENSE</a>
+      </div>
+    </section>
+  </article>
+</aside>
+<main>
+<article>
+  <section>
+    <h3>WHAT N2O REALLY IS?</h3>
+     <p>N2O is a formal philosophy and software engineering exercise.
+        It stricts you to be minimal and concise while remains functional and complete.
+        It's a kind of purity discipline in software development.
+        The application of the N2O method is modern web development:
+        JavaScript, server-side DOM updates, binary protocols.
+        N2O teaches how to write minimal and robust software.</p>
+  </section>
+  <section>
+     <p>N2O applications:</P>
+     <figure><img src="https://camo.githubusercontent.com/8f1b465dfc7986da9444456e3e9e9eee94731e5692a3d06cb1670a107af1f21c/68747470733a2f2f6e326f2e6465762f4445562e706e673f763d31"></figure>
+
+     <p>Formal spec for core libraries N2O, KVS and BPE in Anders language:</p>
+     <figure><code>
+  module N2O-KVS-BPE where
+  import BASE
+
+  axiom pickle : Binary -> Binary
+  axiom depickle : Binary -> Binary
+  axiom encode : Π (k: U), k -> Binary
+  axiom decode : Π (k: U), Binary -> IO k
+  axiom reg: Π (k: U), k -> IO k
+  axiom unreg : Π (k: U), k -> IO k
+  axiom send : Π (k v z: U), k -> v -> IO z
+  axiom getSession : Π (k v: U), k -> IO v
+  axiom putSession : Π (k v: U), k -> v -> IO v
+  axiom getCache : Π (k v: U), Atom -> k -> IO v
+  axiom putCache : Π (k v: U), Atom -> k -> v -> IO v
+  axiom start : PI -> IO Sup
+
+  axiom get : Π (f k v: U), f -> k -> IO (Maybe v)
+  axiom put : Π (r: U), r -> IO StoreResult
+  axiom delete : Π (f k: U), f -> k -> StoreResult
+  axiom index : Π (f p v r: U), f -> Atom -> v -> List r
+  axiom next : Reader -> IO Reader
+  axiom prev : Reader -> IO Reader
+  axiom take : Reader -> IO Reader
+  axiom drop : Reader -> IO Reader
+  axiom save : Reader -> IO Reader
+  axiom append : Π (f r: U), f -> r -> IO StoreResult
+  axiom remove : Π (f r: U), f -> r -> IO StoreResult
+
+  axiom start : Proc -> IO Sup
+  axiom stop : String -> IO Sup
+  axiom next : ProcId -> IO ProcRes
+  axiom amend : Π (k: U), ProcId -> k -> IO ProcRes
+  axiom discard : Π (k: U), ProcId -> k -> IO ProcRes
+  axiom modify : Π (k: U), ProcId -> k -> Atom -> IO ProcRes
+  axiom event : ProcId -> String -> IO ProcRes
+  axiom head : ProcId -> IO Hist
+  axiom hist : ProcId -> IO (List Hist)
+     </code></figure>
+
+     <p>N2O blueprint implementations:</P>
+     <center>
+      <table align=center style="margin:0" cellpadding=0 cellspacing=0>
+        <tr>
+            <td><a href="https://n2o.dev/"><img width=200 src="https://n2o.dev/img/ERLANG.png"></a></td>
+            <td><a href="https://o1.github.io/sml.uno/"><img src="https://avatars.githubusercontent.com/u/45427884?s=200&v=4"></a></td>
+            <td><a href="https://github.com/o53/"><img src="https://avatars.githubusercontent.com/u/45442911?s=200&v=4"></a></td>
+            <td><a href="https://github.com/o83/"><img src="https://avatars.githubusercontent.com/u/46197464?s=200&v=4"></a></td>
+        </tr>
+        <tr>
+            <td><a href="https://o7.github.io/o7.network/"><img src="https://avatars.githubusercontent.com/u/45430889?s=200&v=4"></a></td>
+            <td><a href="https://o3.click"><img src="https://avatars.githubusercontent.com/u/45380730?s=200&v=4"></a></td>
+            <td><a href="https://github.com/o59/"><img src="https://avatars.githubusercontent.com/u/45442930?s=200&v=4"></a></td>
+            <td><a href="https://github.com/o29/"><img src="https://avatars.githubusercontent.com/u/45442177?s=200&v=4"></a></td>
+        </tr>
+        <tr>
+            <td><a href="https://github.com/o73/"><img src="https://avatars.githubusercontent.com/u/45442306?s=200&v=4"></a></td>
+            <td><a href="https://github.com/o4/"><img src="https://avatars.githubusercontent.com/u/45470008?s=200&v=4"></a></td>
+            <td><a href="https://github.com/o61/"><img src="https://avatars.githubusercontent.com/u/45904424?s=200&v=4"></a></td>
+            <td><a href="https://lean4.dev/"><img src="https://avatars.githubusercontent.com/u/46346236?s=200&v=4"></a></td>
+        </tr>
+       </table>
+     </center>
+  </section>
+  <section>
+    <p>Client Tier 3 —（JavaScript、Lua）：</p>
+  </section>
+  <section>
+    <a name="o99"></a>
+    <h3>N2O.JS CLIENT</h3>
+    <p>ECMAScript client infrastructure for N2O full-stack specification.</p>
+    <ul>
+      <li><a href="https://ws.n2o.dev/man/utf8.js.htm">UTF-8.JS</a> — UTF-8 serialization</li>
+      <li><a href="https://ws.n2o.dev/man/zlib.js.htm">zlib.js</a> — ZLIB inflate algorithm</li>
+      <li><a href="https://ws.n2o.dev/man/ieee754.js.htm">IEEE-754.JS</a> — Real Number Format serialization</li>
+      <li><a href="https://ws.n2o.dev/man/bert.js.htm">BERT.JS</a> — Binary Erlang Term Format serialization</li>
+      <li><a href="https://ws.n2o.dev/man/n2o.js.htm">N2O.JS</a> — N2O/WebSocket JavaScript Client Loop</li>
+      <li><a href="https://ws.n2o.dev/man/mq.js.htm">MQ.JS</a> — N2O/MQTT JavaScript Client Loop</li>
+      <li><a href="https://nitro.n2o.dev/man/nitro.js.htm">NITRO.JS</a> — NITRO/JavaScript bindings of DOM sources</li>
+      <li><a href="https://github.com/synrc/nitro/blob/master/priv/js/validation.js">VALIDATION.JS</a> — NITRO/JavaScript DOM sources validation</li>
+    </ul>
+  </section>
+  <section>
+    <p>Server Tier 2 —（Erlang、Elixir）：</p>
+  </section>
+  <section>
+    <a name="synrc"></a>
+    <h3><a href="https://github.com/synrc">O7 ERLANG ELIXIR HAMLER</a></h3>
+    <p>These repos are stable and mature.</p>
+    <ul>
+      <li><a href="https://ws.n2o.dev">synrc/n2o</a> — N2O 7.12.0 Distributed WebSocket Server</li>
+      <li><a href="https://kvs.n2o.dev">synrc/kvs</a> — KVS 7.11.5 Key Value Store</li>
+      <li><a href="https://mad.n2o.dev">synrc/mad</a> — MAD 7.1.1 Erlang Package Manager</li>
+      <li><a href="https://bpe.n2o.dev">synrc/bpe</a> — BPE 5.12.0 Business Process Engine</li>
+      <li><a href="https://nitro.n2o.dev">synrc/nitro</a> — NITRO 5.12.4 Nitrogen Web Framework</li>
+      <li><a href="https://rest.n2o.dev">synrc/rest</a> — REST 5.10</li>
+      <li><a href="https://active.n2o.dev">synrc/active</a> — ACTIVE 4.11</li>
+      <li><a href="https://fs.n2o.dev">synrc/fs</a> — FS 4.10</li>
+      <li><a href="https://exe.n2o.dev">synrc/exe</a> — EXE 2.11</li>
+      <li><a href="https://rpc.n2o.dev">synrc/bert</a> — RPC 1.11.1 Swift protobuf ASN.1 JavaScript</li>
+      <li><a href="https://review.n2o.dev">synrc/review</a> — REVIEW 1.11 MQTT Chat with File Upload</li>
+      <li><a href="https://sample.n2o.dev">synrc/sample</a> — SAMPLE 1.11 WebSocket Chat with File Upload</li></ul>
+    <br/>
+  </section>
+  <section>
+    <p>Server Tier 1 — （SML、Haskell、F#、Rust）：</p>
+  </section>
+  <section>
+    <a name="o1"></a>
+    <h3><a href="https://github.com/o1">O1 STANDARD ML</a></h3>
+    <p>This is first System-F implementation for SML/NJ and MLton.</p>
+    <ul><li><a href="https://github.com/o1/n2o">o1/n2o</a> — N2O 0.11 WebSocket Server</li>
+        <li><a href="https://github.com/o1/nitro">o1/nitro</a> — NITRO 0.11 Nitrogen Web Framework</li></ul>
+  </section>
+  <section>
+    <a name="o3"></a>
+    <h3><a href="https://github.com/o3">O3 HASKELL</a></h3>
+    <p>This is second System-F implementation.</p>
+    <ul>
+      <li><a href="https://n2o.o3.click/">o3/n2o</a> — N2O 0.11 WebSocket Server</li>
+      <li><a href="https://nitro.o3.click/">o3/nitro</a> — NITRO 0.11 Nitrogen Web Framework</li>
+      <li><a href="https://sample.o3.click/">o3/sample</a> — SAMPLE 0.11 Simple Sample</li>
+    </ul>
+  </section>
+  <section>
+    <a name="o61"></a>
+    <h3><a href="https://github.com/o61">O61 F#</a></h3>
+    <p>This is third System-F implementation.</p>
+    <ul><li><a href="https://github.com/erpuno/ws">o61/ws</a> — WS 1.0 WebSocket Server</li>
+        <li><a href="https://github.com/erpuno/etf">o61/etf</a> — ETF 1.0 Erlang Term Format Serializer</li>
+        <li><a href="https://github.com/erpuno/nitro">o61/nitro</a> — NITRO 1.0 Nitrogen Web Framework</li></ul>
+  </section>
+  <section>
+    <a name="o4"></a>
+    <h3><a href="https://github.com/o83">O83 RUST</a></h3>
+    <p>This is proof-of-concept of formal CPS interpreter with SMP runtime.</p>
+    <ul><li><a href="https://o83.github.io/platform.rs/">o83/kernel</a> — KERNEL SMP OS and K interpreter</li></ul>
+  </section>
+  <section>
+    <p>Server Tier 0 — （Coq、Agda、Lean）：</p>
+  </section>
+  <section>
+    <a name="o89"></a>
+    <h3><a href="https://github.com/o89">O89 LEAN4</a></h3>
+    <p>This is LEAN 4 N2O full-stack.</p>
+    <ul><li><a href="https://github.com/o89/n2o">o89/n2o</a> — N2O WebSocket Server</li>
+       <li><a href="https://github.com/o89/nitro">o89/nitro</a> — NITRO Nitrogen Web Framework</li>
+       <li><a href="https://bum.pm">o89/bum</a> — BUM Lean4 Package Manager</li></ul>
+    <br/><br/>
+  </section>
+  <section>
+    <a name="o29"></a>
+    <h3><a href="https://github.com/o29">O29 COQ</a></h3>
+    <p>Coq.io based system-level Coq programming.</p>
+    <ul><li><a href="https://github.com/o29/n2o">o29/n2o</a> — N2O Coinductive Shell</li></ul>
+  </section>
+  <section>
+    <h3>HEART ADVICE</h3>
+    <p>Each language, N2O TECH is implemented in, should
+      embed its philosophy most naturally and compact. If some layer between
+      the base library of a language is needed, it
+      could be provided, but it should be reduced
+      to zero if possible. In some cases, some parts
+      of a base library could be replaced with better replacement.
+      N2O should provide client companion library usually
+      implemented in a different set
+      of client languages: JavaScript, Swift, Kotlin.
+      If you did everything right, N2O should not
+      be more than 500 LOC in any language.<br /><br />
+    </p>
+      <P>LEGEND:</p>
+
+        <ul>
+           <li>Client Tier 3：（JavaScript、Lua）</li>
+           <li>Client Tier 2：（Swift、Kotlin、TypeScript）</li>
+           <li>Client Tier 1：（UrWeb、OCaml）</li>
+           <li>Client Tier 0：（Formality）</li>
+        </ul>
+        <ul>
+           <li>Server Tier 3：（PHP、Python、Perl、Ruby）</li>
+           <li>Server Tier 2：（Erlang、Elixir）</li>
+           <li>Server Tier 1：（Standard ML、Haskell、F#、Rust）</li>
+           <li>Server Tier 0：（Coq、Agda、Lean）</li>
+        </ul>
+    <br/>
+    <br/>
+  </section>
+</article>
+</main>
+<footer>Namdak Tonpa <span class="heart">❤</span> N2O</footer>
+</body>
+</html>
