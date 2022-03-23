@@ -16,7 +16,6 @@
 <link rel="manifest" href="https://n2o.dev/img/site.webmanifest"/>
 </head>
 <body>
- <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
 <nav>
   <a href="https://synrc.space">SYNRC</a>
   <a href="https://erp.uno">ERP</a>
@@ -366,30 +365,6 @@
         <br>
         <br>
     </section>
-
-<br><br>
-
- <div id="paypal-donate-button-container"></div>
-  <script>
-   PayPal.Donation.Button({
-       env: 'production',
-       hosted_button_id: 'YM4RVGNQGVM7Q',
-       image: {
-           src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif',
-           title: 'PayPal - The safer, easier way to pay online!',
-           alt: 'Donate with PayPal button'
-
-       },
-
-       onComplete: function (params) { console.log(params); },
-
-   }).render('#paypal-donate-button-container');
- </script>
-
-<!--form action="https://www.paypal.com/donate" method="post" target="_top">
-<input type="hidden" name="hosted_button_id" value="YM4RVGNQGVM7Q" />
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-</form-->
 
   </article>
 </aside>
