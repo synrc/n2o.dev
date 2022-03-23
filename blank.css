@@ -36,7 +36,7 @@ header img { margin-right: 15px; margin-bottom:-25px; width: 100px; }
 header h1 { line-height: 1; margin: 40px 0px 40px 0px; padding-left: 20px;
             font-size: 38px; display: inline-block; text-align: left; }
 
-footer { text-align: center; background-color: white; color: black; padding: 0 0 100px; }
+footer { text-align: center; background-color: white; color: black; padding: 20px 0 100px 0; }
 
 aside h3 { font-size: 28px; text-transform: uppercase; color: #5BC2E7; margin: 0px; padding: 20px 0 10px; margin-bottom: 20px;  }
 aside div { color: black; }
