@@ -329,6 +329,131 @@ config :form,
 
     <h4>CRM</h4>
 
+    <p><b>Використані бібліотеки:</b></p>
+
+<figure><code>[
+      {:elixir_make, "~> 0.6.0", runtime: false},
+      {:cowboy, "~> 2.9.0", override: true},
+      {:cowlib, "~> 2.11.0", override: true},
+      {:rocksdb, "~> 1.6.0"},
+      {:sax, "~> 1.0.0"},
+      {:ca, "~> 1.11.0"},
+      {:asic, "~> 0.4.1"},
+      {:barlix2, "~> 0.6.0"},
+      {:qrcode, "~> 0.1"},
+      {:n2o, "~> 8.12.1"},
+      {:soa, "~> 0.1.7"},
+      {:jsone, "~> 1.5.1"},
+      {:bpe, "~> 7.2.8"},
+      {:rpc, "~> 3.11.1"},
+      {:etop, "~> 0.7"},
+      {:kvs, "~> 8.12.0", override: true},
+      {:smtp, "~> 1.1.2"},
+      {:koatuu, "~> 1.3.27"},
+      {:pop3, "~> 2.1.0"},
+      {:nitro, "~> 7.2.1", override: true},
+      {:form, "~> 7.1.0"},
+      {:ecsv, "~> 1.4.2"},
+      {:ex_doc, "~> 0.11", only: [:dev, :test]}
+    ]
+</code></figure>
+
+    <p><b>Налаштування бібліотек N2O, KVS, FORM та SCHEMA:</b></p>
+
+<figure><code>config :bpe,
+  ttl: :infinity,
+  ping_discipline: :undefined,
+  timeout: 30000,
+  procmodules: [
+    :bpe_account,
+    NewInput.Proc,
+    NewOutput.Proc,
+    NewInternal.Proc,
+    NewResolution.Proc,
+    PeriodicResolution.Proc,
+    ReceiveSEV.Proc,
+    SendSEV.Proc
+  ],
+  logger_level: :error,
+  logger: [
+    {:handler, :synrc, :logger_std_h,
+     %{
+       level: :debug,
+       id: :synrc,
+       max_size: 2000,
+       module: :logger_std_h,
+       config: %{type: :file, file: 'crm.log'},
+       formatter:
+         {:logger_formatter,
+          %{
+            template: [:time, ' ', :pid, ' ', :module, ' ', :msg, '\n'],
+            single_line: true
+          }}
+     }}
+  ]
+
+config :n2o,
+  pickler: AES.GCM,
+  mq: :n2o_syn,
+  port: 50111,
+  session: :n2o_session,
+  ttl: 60 * 60 * 8,
+  nitro_prolongate: false,
+  mqtt_host: [],
+  mqtt_tcp_port: 1883,
+  mqtt_services: [],
+  ws_services: [],
+  upload: "./priv/storage",
+  protocols: [:api_bpe, Elixir.CRM.Nitro, :api_ftp, :n2o_heart],
+  routes: CRM.Routes,
+  tables: [:cookies, :file, :web, :caching, :ws, :mqtt, :tcp,
+           :async, :track, :sev, :smtp, :pop3, :barqr, :cron,
+           :ftpSignature, :monitorChat]
+
+config :crm,
+  onlyoffice_host: "mia.erp.uno",
+  active_org: 'MIA:DEMO',
+  active_edrpo: '34239034',
+  convert_server: "mia.erp.uno",
+  convert_dir: "qr-cache",
+  convert_ports: [2001, 2002, 2002, 2004],
+  production_convert: false,
+  sign_queue_length: 10,
+  sign_retry_count: 1,
+  barqr_queue_length: 4,
+  convert_queue_length: 4,
+  import_url: "http://0.0.0.0:0",
+  import_token: "password",
+  default_branch: '22222',
+  trusted_edrpo: ['34239034'],
+  trusted_sev: ['34239034'],
+  files_position: :top,
+  rules_module: CRM.RulesDemo,
+  deeds: "priv/import/demo/deeds_demo.csv",
+  org_name_short: "МІА: Демонстраційний",
+  any_auth_type: true,
+  test_org_allowed: true,
+  barcode_print_sticker: true,
+  barcode_print_doc: true,
+  boot: [:erp_boot, :acc_boot, :doc_boot, :data_boot, :crimes_boot,
+         CRIMES.BOOT.Docs, CRM.BOOT.Docs, CRM.BOOT.Forms, HELP.Index,
+         SEV.BOOT, CRM.BOOT.Templates, CRM.BOOT.HTML]
+
+config :kvs,
+  dba: :kvs_rocks,
+  dba_st: :kvs_st,
+  schema: [:kvs, :kvs_stream, :bpe_metainfo, :erp, :crm]
+
+config :form,
+  module: :form2,
+  registry: :"Elixir.CRM"
+
+config :soa, :globals, version: "1.1"
+
+config :smtp, smtp_opts: [[port: 2525]]
+
+</code></figure>
+
     <figure><img src="https://crm.erp.uno/img/HOME-RMK.svg?v=1"></figure>
 
   </section>
