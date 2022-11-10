@@ -1,0 +1,40 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="" /><meta name="author" content="Maxim Sokhatsky" /><title>NITRO</title><link rel="stylesheet" href="https://n2o.dev/blank.css" /></head><body><nav>
+    <a href="../../../../ua/index.html">DEV</a>
+    <a href="../index.html">LIST</a>
+    <a href="#" style="background:#ededed;">API</a>
+  <div class="dropdown">
+    <a onclick="drop()" class="dropbtn">UA</a>
+    <div id="dropdown" class="dropdown-content">
+      <a href="https://n2o.dev/ua/deps/base/man/list.htm">UA</a>
+      <a href="https://base.n2o.dev/man/list.htm">EN</a>
+    </div>
+  </div>
+</nav><header>
+    <a href="https://github.com/synrc/n2o.dev/tree/master/ua/deps/base/man/list.htm"><img src="https://openmoji.org/data/color/svg/1F506.svg" /></a>
+    <h1>LIST</h1>
+</header>
+<main>
+  <article>
+    <section>
+        <h3>ВСТУП</h3>
+        <p>Модуль роботи зі списками. Перелік підмножини фунцій, що використовуються в ERP.UNO.</p>
+    </section>
+    <section>
+        <h3>ІНТЕРФЕЙС</h3>
+        <p>Інтерфейс модуля є типовим для функціональних мов програмування.</p>
+        <h4 id="map">map(fun((A) -> B), [A]) -> [B]</h4>
+        <p>Бере функцію від As до Bs, а також список As і створює список B,
+           застосовуючи функцію до кожного елемента в списку. Ця функція
+           використовується для отримання повернених значень. Порядок
+           оцінки залежить від реалізації.</p>
+        <figure><code>> :lists.map fn x -> x * x end, [1,2,3]
+[1, 4, 9]</code></figure>
+ <br/>
+ <br/>
+    </section>
+</article>
+</main><footer>
+    2005—2022 © Synrc Research Center
+</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body></html>
