@@ -1,0 +1,259 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="" />
+<meta name="author" content="Maxim Sokhatsky" />
+<title>LIST</title>
+<link rel="stylesheet" href="https://n2o.dev/blank.css" />
+</head>
+<body>
+<nav>
+    <a href="../../../../ua/index.html">DEV</a>
+    <a href="../index.html">LIST</a>
+    <a href="#" style="background:#ededed;">API</a>
+  <div class="dropdown">
+    <a onclick="drop()" class="dropbtn">UA</a>
+    <div id="dropdown" class="dropdown-content">
+      <a href="https://n2o.dev/ua/deps/base/man/list.htm">UA</a>
+      <a href="https://base.n2o.dev/man/list.htm">EN</a>
+    </div>
+  </div>
+</nav>
+<header>
+    <a href="https://github.com/synrc/n2o.dev/tree/master/ua/deps/base/man/list.htm">
+    <img src="https://openmoji.org/data/color/svg/1F506.svg" /></a>
+    <h1>LIST</h1>
+</header>
+<main>
+  <article>
+    <section>
+        <h3>ВСТУП</h3>
+        <p>Модуль роботи зі списками. Перелік підмножини фунцій, що використовуються в ERP.UNO.</p>
+    </section>
+  <section>
+    <h4 id="map/2">map(fun((A) -> B), [A]) -> [B]</h4>
+    <p>Бере функцію від As до Bs, а також список As і створює список B,
+       застосовуючи функцію до кожного елемента в списку. Ця функція
+       використовується для отримання повернених значень. Порядок
+       оцінки залежить від реалізації.</p>
+    <figure><code>> :lists.map(fn x -> x * x end, [1,2,3])
+[1, 4, 9]</code></figure>
+<br/>
+    <h4 id="all/2">all(fun((Elem :: T) -> boolean()), [T]) -> boolean()</h4>
+    <p>Повертає true при умові, що fun(Elem :: T) -> true для всіх 
+       елементів у списку [T], в іншому випадку повертає false. 
+       Результатом fun(Elem :: T) повинно бути повернено логічне значення.</p>
+    <figure><code>> :lists.all(fn x -> rem(x, 2) == 0 end, [2, 4, 6])
+true</code></figure>
+<br/>
+    <h4 id="any/2">any(fun((Elem :: T) -> boolean()), [T]) -> boolean()</h4>
+    <p>Повертає true при умові, що fun(Elem :: T) -> true принаймні для
+       одного елемента у списку [T]. Результатом fun(Elem :: T) повинно 
+       бути повернено логічне значення.</p>
+    <figure><code>> :lists.any(fn x -> rem(x, 2) == 1 end, [2, 3, 4])
+true</code></figure>
+<br/>
+    <h4 id="droplast/1">droplast([T, ...]) -> [T]</h4>
+    <p>Викидає останній елемент у списку [T, ...]. Якщо список порожній, тоді
+       функція аварійно завершує роботу з пропозицією function_clause.</p>
+    <figure><code>> :lists.droplast([1,2,3,4,5])
+[1, 2, 3, 4]</code></figure>
+<br/>
+    <h4 id="duplicate/2">duplicate(integer() >= 0, T) -> [T]</h4>
+    <p>Повертає список, який містить N-копій терму T.</p>
+    <figure><code>> :lists.duplicate(3, [1, 2])
+[[1, 2], [1, 2], [1, 2]]</code></figure>
+<br/>
+    <h4 id="filter/2">filter(fun((Elem :: T) -> boolean()), [T1]) -> [T2]</h4>
+    <p>Повертає у список [T2] лише ті елементи, для яких fun(Elem :: T) -> true.
+       Результатом fun(Elem :: T) повинно бути повернено логічне значення.
+       Зверніть увагу, що filter не може фільтрувати та перетворювати елемент одночасно.
+       Для даних дій використовують метод flat_map/2.</p>
+    <figure><code>> :lists.filter(fn x -> rem(x, 2) == 0 end, [1, 2, 3, 4])
+[2, 4]</code></figure>
+<br/>
+    <h4 id="filtermap/2">filtermap(fun((Elem) -> boolean() | {true, Value}), [Elem]) -> [Elem | Value]</h4>
+    <p>Викликає fun(Elem) для послідовних елементів у списку [Elem]. 
+       Fun/1 має повертати логічне значення або кортеж {true, Value}. 
+       Функція повертає список елементів, для яких Fun повертає нове значення, 
+       де значення true є синонімом {true, Elem}.</p>
+    <figure><code>> :lists.filtermap(fun(X) -> case X rem 2 of 0 -> {true, X div 2}; _ -> false end end, [1,2,3,4,5])
+[1,2]</code></figure>
+<!-- перевірити -->
+
+<br/>
+    <h4 id="flatten/1">flatten([term() | DeepList]) -> [term()]</h4>
+    <p>Повертає зведену версію DeepList. Порожні елементи списку відкидаються</p>
+    <figure><code>> :lists.flatten([1, [[2], 3]])
+[1, 2, 3]</code></figure>
+<br/>
+    <h4 id="flatten/2">flatten([term() | DeepList], [term()]) -> [term()]</h4>
+    <p>Повертає зведену версію DeepList із доданим Tail=[term()]. Порожні елементи списку відкидаються</p>
+    <figure><code>> :lists.flatten([1, [[2], 3]], [4, 5])
+[1, 2, 3, 4, 5]</code></figure>
+<br/>
+    <h4 id="foldl/3">foldl(fun((Elem :: T, AccIn) -> AccOut), Acc0, [T]) -> Acc1</h4>
+    <p>Викликає Fun(Elem, AccIn) для послідовних елементів A з [T], починаючи з AccIn == Acc0. 
+       Fun/2 має повернути новий акумулятор, який передається наступному виклику. 
+       Функцію повертає кінцеве значення акумулятора. Acc0 повертається, якщо 
+       список порожній.</p>
+    <figure><code>> :lists.foldl(fn x, acc -> x + acc end, 10, [5, 5])
+20</code></figure>
+<br/>
+    <h4 id="foldr/3">foldr(fun((Elem :: T, AccIn) -> AccOut), Acc0, [T]) -> Acc1</h4>
+    <p>Подібно до foldl/3, але список перміщується справа наліво.
+       Згортає (зменшує) заданий список справа за допомогою функції. 
+       Потрібен акумулятор, який може бути будь-яким значенням.</p>
+    <figure><code>> :lists.foldr(fn x, acc -> x - acc end, 0, [1, 2, 3, 4])
+-2</code></figure>
+<br/>
+    <h4 id="foreach/2">foreach(fun((Elem :: T) -> term()), [T]) -> ok</h4>
+    <p>Викликає Fun(Elem) для кожного елемента у [T]. Ця функція використовується для її 
+       побічних ефектів, і порядок оцінювання визначається таким самим, як і
+       порядок елементів у списку.</p>
+    <figure><code>> :lists.foreach(fn a -> IO.puts a + a end, [1,2,3])
+2
+4
+6
+:ok</code></figure>
+<br/>
+    <h4 id="join/2">join(T, [T1]) -> [T2]</h4>
+    <p>Об'єднує список шляхів.
+       Вставляє Sep, (Sep=T) між кожним елементом у [T1]. На порожній список 
+       та на список одиночних елементів не впливає.</p>
+    <figure><code>> :lists.join(" = ", [1, 2, 3])
+[1, " = ", 2, " = ", 3]</code></figure>
+<br/>
+    <h4 id="keydelete3">keydelete(term(), integer() >= 1, [Tuple1]) -> [Tuple2]</h4>
+    <p>Метод .keydelete отримує ключ, значення та список кортежів, після шукає 
+       кортеж, який має задане значення за вказаним ключем кортежу. 
+       Коли кортеж знайдено, цей кортеж видаляється зі списку. Буде видалено лише
+       перший відповідний кортеж.</p>
+    <figure><code>> :lists.keydelete(:a, 1, [a: 1, b: 2])
+[b: 2]</code></figure>
+<br/>
+    <h4 id="keyfind/3">keyfind(term(), integer() >= 1, [Tuple]) -> Tuple | false</h4>
+    <p>Отримує список кортежів та повертає перший кортеж, у якому N-й елемент відповідає 
+       заданому key. Якщо такий кортеж знайдено, повертає Tuple, інакше повертає false.</p>
+    <figure><code>> :lists.keyfind(:a, 1, [a: 1, b: 2])
+{:a, 1}</code></figure>
+<br/>
+    <h4 id="keyreplace/4">keyreplace(term(), integer() >= 1, [Tuple1], NewTuple) -> [Tuple2]</h4>
+    <p>Повертає копію [Tuple1], де перше входження кортежу T, N-й елемент якого порівнюється
+       з Key, замінюється на NewTuple, якщо такий кортеж T існує.</p>
+    <figure><code>> :lists.keyreplace(:b, 2, [a: 1, b: 2], {:a, 3})
+[a: 1, b: 2]</code></figure>
+<br/>
+    <h4 id="keystore/4">keystore(term(), integer() >= 1, [Tuple1], tuple()) -> [Tuple, ...]</h4>
+    <p>Повертає копію [Tuple1], де перше входження кортежу T, N-й елемент якого порівнюється
+       з Key, замінюється на NewTuple, якщо такий кортеж T існує. Якщо такого кортежу T немає, 
+       копія [Tuple1], де [tuple()] має бути додано до кінця повертається.</p>
+    <figure><code>> :lists.keystore(:a, 1, [a: 1, b: 2], {:a, 3})
+[a: 3, b: 2]</code></figure>
+<br/>
+    <h4 id="keytake/3">keytake(term(), integer() >= 1, [tuple1()]) -> {value, tuple(), [tuple2()]} | false</h4>
+    <p>Шукає в списку кортежів [tuple1()] кортеж, N-й елемент якого порівнюється з Key. 
+       Повертає {value, Tuple, [tuple2()]}, якщо такий кортеж знайдено, інакше повертає false. 
+       [tuple2()] — це копія [tuple1()], де перше входження Tuple було видалено.</p>
+    <figure><code>> :lists.keytake(:a, 1, [a: 1, b: 2])
+{:value, {:a, 1}, [b: 2]}</code></figure>
+<br/>
+    <h4 id="member/2">member(T, [T]) -> boolean()</h4>
+    <p>Повертає true, якщо елемент T відповідає будь-якому елементу [T], інакше false.</p>
+    <figure><code>> :lists.member(2, [1.0, 2.0, 3.0])
+false</code></figure>
+<br/>
+    <h4 id="partition/2">partition(fun((Elem :: T) -> boolean()), List) -> {Satisfying, NotSatisfying}<br/>
+       List = Satisfying = NotSatisfying = [T]</h4>
+    <p>Розбийте List на два списки, де перший список містить усі елементи, для яких 
+       fun((Elem :: T) повертає true, а другий список містить усі елементи, для яких 
+       fun((Elem :: T) повертає false.
+       Щоб дізнатися про інший спосіб розділення списку, див. splitwith/2.</p>
+    <figure><code>> :lists.partition(fn a -> rem(a, 3) == 1 end, [1,2,3,4,5,6,7])
+{[1, 4, 7], [2, 3, 5, 6]}</code></figure>
+<br/>
+    <h4 id="prefix/2">prefix([term1()], [term2()]) -> boolean()</h4>
+    <p>Повертає true, якщо [term1()] є префіксом [term2()], інакше false.</p>
+    <figure><code>> :lists.prefix([1,2,3], [5,6,7])
+false</code></figure>
+<br/>
+    <h4 id="reverse/1">reverse([term1()]) -> [term2()]</h4>
+    <p>Повертає список з елементами в [term1()] у зворотному порядку.</p>
+    <figure><code>> :lists.reverse([1, 2, 3, 4])
+[4, 3, 2, 1]</code></figure>
+<br/>
+    <h4 id = "reverse/2">reverse([term1()], term()) -> [term2()]</h4>
+    <p>Повертає список із елементами зі списку [term1()] у зворотному порядку, 
+       із доданим term().</p>
+    <figure><code>> :lists.reverse([1, 2, 3, 4], [5, 6, 7]) 
+[4, 3, 2, 1, 5, 6, 7]</code></figure>
+<br/>
+    <h4 id ="search/2">search(fun((T) -> boolean()), [T]) -> {value, Value} | false</h4>
+    <p>Якщо у списку є таке Value, що Pred(Value) повертає true, повертає {value, Value} 
+       для першого такого значення, інакше повертає false. Функція Pred має повертати 
+       логічне значення.</p>
+    <figure><code>> :lists.search(fn(x) -> rem(x, 2) == 0 end, [1, 2, 3, 4])
+{:value, 2}</code></figure>
+
+
+:lists.search(fn(x) -> rem(x, 2) == 0 end, [a: 1, b: 2])
+[a: 1, b: 2]
+    <!-- немає прикладу -->
+<br/>
+    <h4 id="seq/2">seq(From, To) -> [integer()]<br/>
+                   From = To = Incr = integer()</h4>
+    <p>Повертає послідовність цілих чисел, яка починається з From і містить послідовні результати 
+       додавання Incr до попереднього елемента, доки To не буде досягнуто або пройдено 
+       (в останньому випадку To не є елементом послідовності). Incr за замовчуванням дорівнює 1.
+       Невдачі:
+       - If To < From - Incr and Incr > 0.
+       - If To > From - Incr and Incr < 0.
+       - If Incr =:= 0 and From =/= To.</p>
+       Для всіх послідовностей виконуються такі рівності:
+        length(lists:seq(From, To)) =:= To - From + 1
+        length(lists:seq(From, To, Incr)) =:= (To - From + Incr) div Incr   
+    <figure><code>> :lists.seq(1, 10)
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</code></figure>
+<br/>
+    <h4 id="seq/3">seq(integer(), integer(), integer()) -> [integer()]</h4>
+    <figure><code>> :lists.seq(1, 20, 3)
+[1, 4, 7, 10, 13, 16, 19]</code></figure>
+<br/>
+    <h4 id="sort/1">sort[term1()] -> [term2()]</h4>
+    <p>Повертає список, що містить відсортовані елементи [term1()].</p>
+    <figure><code>> :lists.sort([3, 2, 1])
+[1, 2, 3]</code></figure>
+<br/>
+    <h4 id="sort/2">sort(fun((A :: T, B :: T) -> boolean()), [term1()]) -> [term2()]</h4>
+    <p>Повертає список, що містить відсортовані елементи [term1()] відповідно до функції 
+       ordering function Fun. Fun(A, B) має повертати true, якщо A порівнюється менше або 
+       дорівнює B у порядку, інакше false.</p>
+    <figure><code>> :lists.sort(&(&1 >= &2), [1, 2, 3])
+[3, 2, 1] </code></figure>
+<br/>
+    <h4 id="split/2">split(integer() >= 0, [term1()]) -> {[term2()], [term3()]}</h4>
+    <p>Розділяє [term1()] на [term2()] і [term3()]. До частини [term2()] входить N-кількість елементів, 
+       решта від елементів  належить до [term3()].</p>
+    <figure><code>> :lists.split(2, [1, 2, 3])
+{[1, 2], [3]}</code></figure>
+<br/>
+    <h4 id="unzip/1">unzip([{A, B}]) -> {[A], [B]}</h4>
+    <p>«Розпаковує» список двох кортежів на два списки, де перший список містить перший 
+       елемент кожного кортежу, а другий список містить другий елемент кожного кортежу.</p>
+    <figure><code>> :lists.unzip([{:a, 1}, {:b, 2}, {:c, 3}])
+{[:a, :b, :c], [1, 2, 3]}</code></figure>
+    <h4 id="zip/2">zip([term1()], [term2()]) -> [term3()]</h4>
+    <p>"Архівує" два списки однакової довжини в один список двох кортежів, де перший 
+       елемент кожного кортежу береться з першого списку, а другий елемент береться 
+       з відповідного елемента другого списку.</p>
+    <figure><code>> :lists.zip([1, 2], [5, 6])
+[{1, 5}, {2, 6}]</code></figure>
+<br/>
+    </section>
+
+
+
+</article>
+</main><footer>
+    2005—2022 © Synrc Research Center
+</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body></html>
