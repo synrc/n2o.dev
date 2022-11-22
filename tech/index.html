@@ -18,8 +18,16 @@
 </head>
 <body>
 <nav>
-  <a href="https://n2o.dev/">DEV</a>
-  <a href="https://n2o.dev/pro/">PRO</a>
+  <a href="../index.html">DEV</a>
+  <a href="../pro/index.html">PRO</a>
+  <a href="../tech/index.html">TECH</a>
+  <div class="dropdown">
+    <a onclick="drop()" class="dropbtn">EN</a>
+    <div id="dropdown" class="dropdown-content">
+      <a href="../jp/tech/index.html">JP</a>
+      <a href="../ua/tech/index.html">UA</a>
+    </div>
+  </div>
 </nav>
 <header>
   <a href="https://github.com/synrc/n2o.tech"><img src="https://openmoji.org/data/color/svg/1FA90.svg" /></a>
@@ -253,5 +261,6 @@
 </article>
 </main>
 <footer>Namdak Tonpa <span class="heart">❤</span> N2O</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
 </body>
 </html>
