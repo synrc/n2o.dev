@@ -143,30 +143,30 @@
        створена для оркестрації N2O бібліотек у найбільш ефективний спосіб. БНФ Нотація:</p>
 
      <figure><code>
-mod     := 'module' name spec clauses
-spec    := 'kvs' | 'bpe' | 'form'
-name    := word | binary | string
-args    := [] | name args
-clause  := 'import' name
-         | 'record' name args dec
-         | 'notice' name args dec
-         | 'event'  name args dec
-         | 'route'  name args dec
-         | 'form'   name args dec
-
-dec     := 'begin' decls 'end'
-clauses := clause | clause clauses
-decls   := decl | decl '|' decls
-decl    := word '=' args ':' union
-         | word '=' args
-         | args
-         | 'document' word word '[' buttons ']' '[' fields ']'
-         | 'result' '[' conts ']' args
-
-union   := args | args '+' union
-conts   := args | args '|' conts
-fields  := args | args '|' fields
-buttons := args | args '|' buttons
+  mod     := 'module' name spec clauses
+  spec    := 'kvs' | 'bpe' | 'form'
+  name    := word | binary | string
+  args    := [] | name args
+  clause  := 'import' name
+           | 'record' name args dec
+           | 'notice' name args dec
+           | 'event'  name args dec
+           | 'route'  name args dec
+           | 'form'   name args dec
+  
+  dec     := 'begin' decls 'end'
+  clauses := clause | clause clauses
+  decls   := decl | decl '|' decls
+  decl    := word '=' args ':' union
+           | word '=' args
+           | args
+           | 'document' word word '[' buttons ']' '[' fields ']'
+           | 'result' '[' conts ']' args
+  
+  union   := args | args '+' union
+  conts   := args | args '|' conts
+  fields  := args | args '|' fields
+  buttons := args | args '|' buttons
      </code></figure>
 
      <br><br>
