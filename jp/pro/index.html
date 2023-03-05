@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<meta name="author" content="Maxim Sokhatsky" />
+<title>PRO</title>
+<link rel="stylesheet" href="https://n2o.dev/blank.css?x=12"/>
+<link rel="stylesheet" href="https://n2o.dev/zima.css?x=12"/>
+<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
+<link rel="manifest" href="/img/site.webmanifest" />
+<style>
+.compare{overflow:auto;margin:10px auto;border-left:1px solid #ddd;border-collapse: collapse}
+.compare tr:nth-child(2n+1){background-color:#eee}
+.compare th{font-size:12px;word-wrap:anywhere;font-weight:700;background-color:#fff;border-top:1px solid #ddd;border-bottom:1px solid #ccc;border-right:1px solid #ccc;padding:8px 10px}
+.compare td{font-size:12px;word-wrap:anywhere;border-bottom: 1px solid #ccc;border-right: 1px solid #ccc;padding: 8px 10px}
+ul.disc{list-style-type: disc}
+ul.circle{padding-left:1.5em;list-style-type:circle;margin:0}
+main ol{max-width:850px;margin:20px auto}
+.imgw{max-width:100%}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../../index.html">DEV</a>
+  <a href="index.html">PRO</a>
+  <a href="../tech/index.html">TECH</a>
+  <div class="dropdown">
+    <a onclick="drop()" class="dropbtn">JP</a>
+    <div id="dropdown" class="dropdown-content">
+      <a href="../../pro/index.html">EN</a>
+      <a href="../../ua/pro/index.html">UA</a>
+    </div>
+  </div>
+</nav>
+<header>
+  <a href="index.html"><img src="https://n2o.dev/img/Synrc Neo.svg" /></a>
+  <h1>はじめに</h1>
+</header>
+<aside>
+  <article>
+    <section>
+      <h3>リアルタイムWebフレームワーク、N2Oを使ってみる</h3>
+      <div>
+        <p>私は仕事では主にフロントエンドの開発をしているのですが、時には株価やニュースなどリアルタイム性の高い機能の実装が必要になる事もあります。
+           先日、WebSocketを使ったリアルタイム性の高いWebアプリを作りたい、と思い調べていたところ、
+          <a href="https://synrc.com/apps/n2o/">N2O</a> というフレームワークがあることを知りました。
+           もともとは別のErlang製Webフレームワークである <a href="http://chicagoboss.org/">ChicagoBoss</a> を調査していたのですが、プロジェクトのページに
+          <a href="https://github.com/ChicagoBoss/ChicagoBoss/wiki/comparison-of-erlang-web-frameworks">Comparison of Erlang Web Frameworks</a>
+           という比較表があり、機能が高く速そうだったことから興味を持ちました。</p>
+      </div>
+    </section>
+  </article>
+</aside>
+<main>
+<article>
+  <section>
+    <h3>N2Oについて</h3>
+    <p><a href="https://synrc.com/apps/n2o/">N2O</a>(<strong>H</strong>2Oじゃないよ)はウクライナの
+       <a href="https://www.linkedin.com/company/synrc-research-center">Synrc Research Center</a> という会社で開発されたWebアプリケーションフレームワークです。
+       N2Oは"Nitrogen 2x Optimized"の略で、同じErlangのWebアプリケーションフレームワークである
+       <a href="http://nitrogenproject.com/">Nitrogen</a> から、主に
+       <a href="http://erlang.org/pipermail/erlang-questions/2013-August/075094.html">高速化を目的として分岐</a>したプロダクトとの事です。
+       従って、<a href="http://nitrogenproject.com/">Nitrogen</a>を知っていれば、N2Oにもすぐ馴染めるのではないでしょうか。
+       <a href="http://nitrogenproject.com/doc/index.html">Nitrogenプロジェクトでは文書が充実しており</a>、それをほぼそのまま参考に出来るのは有利です。
+       個人的には<a href="http://nitrogenproject.com/">Nitrogen</a>も使った事がなかったのですが、N2O自体の文書も結構充実しており、特に困ることはありませんでした。
+       特に、<a href="https://synrc.com/apps/n2o/doc/book.pdf">N2Oについての68ページの電子書籍</a>がPDFで公開されているのが大きかったです。
+       マイナーなフレームワークでもしっかりした文書があると安心感があり、入って行きやすいですね。
+       また、この<a href="http://slides.com/maximsokhatsky/n2o#/">N2O Erlang Web Stack</a>という紹介スライドも明快で背中を押されました。
+       <a href="https://5ht.co/spawnproc.htm">Synrc社の実例紹介ページ</a>によると、ウクライナの銀行、
+       <a href="https://en.privatbank.ua/">PrivatBank</a>のオンラインバンキングシステムに、N2Oを始めとした同社開発のフレームワークが活用されているとの事です。</p>
+  </section>
+  <section>
+    <h3>特徴</h3>
+    <p>N2Oは他のフレームワークと比べて、以下のような特徴があります。</p>
+    <ul class="disc">
+      <li>高速</li>
+      <li>バイナリ形式(<a href="https://www.infoq.com/jp/news/2009/11/github-bert">BERT</a>)のメッセージ送受信サポート</li>
+      <li>テンプレートのサポート (<a href="https://github.com/erlydtl/erlydtl/wiki">ErlyDTL</a>, <a href="">Nitrogen</a>, 
+        <a href="https://github.com/synrc/nitro">NITRO</a>) ※ErlyDTLサポート ≒ Djangoのテンプレートが使える</li>
+      <li>実装がコンパクト (約1,100行)</li>
+    </ul>
+    <p>私はErlang初心者なので、大きなフレームワークは多分理解不能、また規模が大きいとカスタマイズもしんどそうですが、千行位なら読み込めば何とかなるかも…。</p>
+    <figure>
+      <code>
+  sudo apt-get install -y cloc
+~/devel/erlang/n2o-master$ cloc ./src
+  27 text files.
+  27 unique files.
+  1 file ignored.
+  
+  http://cloc.sourceforge.net v 1.60  T=0.04 s (708.0 files/s, 39046.9 lines/s)
+  -------------------------------------------------------------------------------
+  Language                     files          blank        comment           code
+  -------------------------------------------------------------------------------
+  Erlang                          26            229             63           1142
+      </code>
+    </figure>
+    <p>N2Oでは、HTTPプロトコルのハンドリングには<a href="https://github.com/ninenines/cowboy">Cowboy</a>,
+      Pub/Subには<a href="https://github.com/uwiger/gproc">gproc</a>
+       、テンプレートの処理に<a href="https://github.com/erlydtl/erlydtl">ErlyDTL</a>が使われています。</p>
+    <p>本体の行数が少ないのは、各機能を効果的にライブラリに委譲している事にも由来していそうです。
+    ところで、気になるのはやはり速度です。
+    少し前の情報のようですが、プロジェクトのページに以下のような表が掲載されていました。</p>
+    <figure><figcaption></figcaption><img class="imgw" src="img/jp1.png" style="border:none;"/></figure>
+    <p>もう一つ、N2Oのプロジェクトページの比較表から引用しますが、</p>
+    <table class="compare">
+      <thead>
+        <tr>
+          <th>Framework</th>
+          <th>Enabled Components</th>
+          <th>Speed</th>
+          <th>Timeouts</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>PHP5 FCGI</td>
+          <td>Simple script with two &#60;?php print "OK"; ?&#62;</td>
+          <td>5K</td>
+          <td>timeouts</td>
+        </tr>
+        <tr>
+          <td>ChicagoBoss</td>
+          <td>No sessions, No DSL, Simple DTL</td>
+          <td>500</td>
+          <td>no</td>
+        </tr>
+        <tr>
+          <td>Nitrogen</td>
+          <td>No sessions, No DSL, Simple DTL</td>
+          <td>1K</td>
+          <td>no</td>
+        </tr>
+        <tr>
+          <td>N2O</td>
+          <td>All enabled, sessions, Template, heavy DSL</td>
+          <td>7K</td>
+          <td>no</td>
+        </tr>
+        <tr>
+          <td>N2O</td>
+          <td>Sessions enabled, template with two variables, no DSL</td>
+          <td>10K</td>
+          <td>no</td>
+        </tr>
+        <tr>
+          <td>N2O</td>
+          <td>No sessions, No DSL, only template with two vars</td>
+          <td>15K</td>
+          <td>no</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>もしPHPの2倍のスピードが出るのなら素晴らしいですね。これは是非試さねば。</p>
+  </section>
+  <section>
+    <h3>動作確認環境</h3>
+    <ul class="disc">
+      <li>サーバサイド
+        <ul class="circle">
+          <li>Ubuntu 14.04 64-bit (AWS EC2 / t2.micro)</li>
+          <li><a href="https://www.erlang.org/">Erlang</a> 18.1 
+            (<a href="https://www.erlang-solutions.com/resources/download.html">Erlang Solutionsのビルド</a>)</li>
+          <li><a href="https://synrc.com/apps/n2o/">N2O</a> v2.11</li>
+        </ul>
+      </li>
+      <li>クライアントサイド
+        <ul class="circle">
+          <li>Windows 7 64-bit</li>
+          <li>Chrome 46</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+  <section>
+    <h3>(おことわり)</h3>
+    <p>このエントリは、半年ほど前、N2O v2.4で調査した際のメモを元に作成しましたが、
+       N2Oの最近のバージョン(多分2.8?)では結構大きな変更が加わったようで、サーバ・クライアント間で送受信するデータの構造やAPIが変わりました。
+       N2Oの最新バージョンは、2015/12/14現在、v2.11です。</p>
+    <p>引用したサンプルがv2.11でも動く事は軽く確認しましたが、内容が古い可能性があります(古いAPIを使っている等)。
+    時間が出来たら調べて内容を更新したいと思っています。
+    また、整理してからサンプル一式をGithubにソースをコミットする予定でいます。</p>
+  </section>
+  <section>
+    <h3>お勧めのチュートリアル</h3>
+    <p>まずはサンプルないかな? と、ググってみましたが、余りヒットしません。</p>
+    <p>Synrc社による実装例があるので、こちらを読むのが王道でしょうが、結構本格的なサンプルであるので入門用には重いです。</p>
+    <ul class="disc">
+      <li><a href="https://github.com/synrc/skyline">Skyline: N2O Sample Website</a></li>
+      <li><a href="https://github.com/synrc/games">オンラインポーカー?のサンプル</a></li>
+    </ul>
+    <p>そんな中、以下の<a href="http://crashdump.io">CRASHDUMP.IO</a>によるチュートリアルが参考になりましたのでお勧めです。
+    4回シリーズで、ゼロから始めてHello World・テンプレートまでと、内容も軽めで分かりやすいです。</p>
+    <p>(ただし情報は若干古い)</p>
+    <ul>
+      <li><a href="http://blog.crashdump.io/hello-n2o.html">Hello N2O!</a></li>
+      <li><a href="http://blog.crashdump.io/n2o-templates-static-html.html">N2O templates. Static HTML</a></li>
+      <li><a href="http://blog.crashdump.io/n2o-templates-nitrogen.html">N2O templates. Nitrogen</a></li>
+      <li><a href="http://blog.crashdump.io/n2o-templates-erlydtl.html">N2O templates. Erlydtl</a></li>
+    </ul>
+  </section>
+  <section>
+    <h3>作ってみる</h3>
+    <p>以下を作ることを目標とします。</p>
+    <ul class="disc">
+      <li>株価のリアルタイムレート画面
+        <ul class="circle">
+          <li>サーバ側: Erlang + N2O</li>
+          <li>クライアント側: ブラウザ、JS</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+  <section>
+    <h3>開発ツールのインストール</h3>
+    <p>ビルド時に必要になるツールをインストールします。</p>
+    <figure>
+      <code>
+  shell-session
+$ sudo apt-get install git inotify-tools
+      </code>
+    </figure>
+  </section>
+  <section>
+    <h3>リアルタイムレートの提供元は?</h3>
+    <p>少し探した範囲では、株価のレートを無料でリアルタイム配信してくれるサービスが見当たらなかったので、ビットコインのレートを使うことにします。
+    ビットコインの市場は、土日もなく24時間/365日動き続けているので、むしろこちらの方が都合が良いですね。</p>
+    <p>WebSocketを扱うので、<a href="https://www.npmjs.com/package/wscat">wscat</a> コマンドを環境に含めておくと良い感じです。</p>
+    <p>socat/netcatでも出来ない訳ではないですが、ちょっと面倒。</p>
+  </section>
+  <section>
+    <h3>wscatのインストール</h3>
+    <figure>
+      <code>
+  $ sudo apt-get install nodejs npm
+  $ sudo update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+  $ sudo npm install -g wscat
+  $ wscat --version
+  1.0.1
+      </code>
+    </figure>
+  </section>
+  <section>
+    <h3>WebSocketからリアルタイムレート受信 (コマンド編)</h3>
+    <p>
+      <a href="https://www.bitfinex.com/">Bitfinex</a>のパブリックAPIを使うと、Bitcoinのリアルタイムレートが取得出来ますので、こちらを使用します。</p>
+    <ul class="disc">
+      <li><a href="http://docs.bitfinex.com/#websocket">Bitfinex WebSocket API</a></li>
+    </ul>
+    <figure>
+      <code>
+  $ wscat -c wss://api2.bitfinex.com:3000/ws
+  connected (press CTRL+C to quit)
+  &#60; {"event":"info","version":1}
+  # 以下をペーストし、エンターキーを押す
+  {"event":"subscribe", "pair":"BTCUSD", "channel":"ticker"}
+
+  (応答)
+  &#60; {"event":"subscribed","channel":"ticker","chanId":5,"pair":"BTCUSD"}
+  &#60; [5,459.14,0.41,459.7,3,4.16,0.01,459.61,57932.64969181,469.99,440]
+  &#60; [5,"hb"]
+  &#60; [5,459.23,13.34,459.57,3,4.12,0.01,459.57,57932.85133057,469.99,440]
+  &#60; [5,"hb"]
+  &#60; [5,"hb"]
+  (以下略)
+      </code>
+    </figure>
+    <p>応答のフォーマットです。</p>
+    <figure>
+      <code>
+  // snapshot
+  [
+    "&#60;CHANNEL_ID&#62;",
+    "&#60;BID&#62;",
+    "&#60;BID_SIZE&#62;",
+    "&#60;ASK&#62;",
+    "&#60;ASK_SIZE&#62;",
+    "&#60;DAILY_CHANGE&#62;",
+    "&#60;DAILY_CHANGE_PERC&#62;",
+    "&#60;LAST_PRICE&#62;",
+    "&#60;VOLUME&#62;",
+    "&#60;HIGH&#62;",
+    "&#60;LOW&#62;"
+  ]
+      </code>
+    </figure>
+    <p>リアルタイムレートが取得できたので、次は、このレートを情報源として接続してきたクライアントに配信するサーバサイドのプログラムを、N2Oで作ってみます。</p>
+  </section>
+  <section>
+    <h3>WebSocketからリアルタイムレート受信 (Erlang編)</h3>
+    <p>N2Oに組み込む前に、まずは単独でレートを受信してみます。
+       WebSocketのクライアントライブラリが必要ですが、今回は
+      <a href="https://github.com/jeremyong/websocket_client/">websocket_client</a>を使います。</p>
+    <p>(他には<a href="https://github.com/ninenines/gun">Gun</a>も便利なライブラリだそうです)</p>
+    <figure>
+      <code>
+  %% ws_bitfinex.erl
+
+  -module(ws_bitfinex).
+
+  -behaviour(websocket_client_handler).
+
+  -export([
+      start_link/0,
+      init/2,
+      websocket_handle/3,
+      websocket_info/3,
+      websocket_terminate/3
+  ]).
+
+  start_link() -&#62;
+    crypto:start(),
+    ssl:start(),
+    websocket_client:start_link(
+      "wss://api2.bitfinex.com:3000/ws", ?MODULE, []).
+
+  init([], _ConnState) -&#62;
+    websocket_client:cast(self(), {text,　
+      &#60;&#60;"{\"event\":\"subscribe\",
+      \"pair\":\"BTCUSD\",\"channel\":\"ticker\"}"&#62;&#62;}),
+    {ok, 2}.
+
+  websocket_handle({text, Msg}, _ConnState, State) -&#62;
+    io:format("Received msg ~p~n", [Msg]),
+    {ok, State}.
+
+  websocket_info(start, _ConnState, State) -&#62;
+    {reply, {text, &#60;&#60;"erlang message received"&#62;&#62;}, State}.
+
+  websocket_terminate(Reason, _ConnState, State) -&#62;
+    io:format("Websocket closed in state ~p wih reason ~p~n",
+      [State, Reason]),
+    ok.
+      </code>
+    </figure>
+    <p>単体で動かしてみます。</p>
+    <figure>
+      <code>
+  $ wget https://github.com/jeremyong/websocket_client/archive/v0.7.tar.gz
+  $ tar xvfz v0.7.tar.gz
+  $ cd websocket_client-0.7
+  $ make
+  $ vim ws_bitfinex.erl
+  # ... 上記のws_bitfinex.erlを貼り付けて保存 ...
+  $ erl -pa ebin
+  $ c(ws_bitfinex).
+  {ok,ws_bitfinex}
+  2&#62; ws_bitfinex:start_link().
+  {ok,&#60;0.52.0&#62;}
+  Received msg &#60;&#60;"{\"event\":\"info\",\"version\":1}"&#62;&#62;
+  Received msg &#60;&#60;"{\"event\":\"subscribed\",\"channel\":\"ticker\",
+    \"chanId\":4,\"pair\":\"BTCUSD\"}"&#62;&#62;
+  Received msg &#60;&#60;"[4,456.83,11.78,457,13.52324434,-5.61,-0.01,457,
+    65607.13460856,469.99,440]"&#62;&#62;
+  Received msg &#60;&#60;"[4,\"hb\"]"&#62;&#62;
+  ...以下略...
+  3> q(). または Ctrl + C
+  ok
+      </code>
+    </figure>
+    <p>OK。Erlangでレートが受信出来ました。</p>
+  </section>
+  <section>
+    <h3>N2Oでリアルタイムレート配信</h3>
+    <p>続いて、N2Oを使った配信サービスの方を考えます。</p>
+    <p>先ほどのAPIで購読したリアルタイムレートを、接続してきたクライアントに配信(中継)すれば良いので、仕組みはチャットとかなり似ています。</p>
+    <p>(チャットは誰もが話しますが、レート配信は一人だけが話すイメージ)</p>
+    <p>N2Oのひな型にサンプルにチャットがありますが、このサンプルを改造すれば良さそうです。
+    ところで、N2Oには「レビューボード」のサンプルが付属しており、これはコードレビューを行うサンプルアプリで結構凝っています。
+    それとは別にもっと単純なチャットのサンプルがあるのですが、これはアプリのひな型を作った時に生成されます。</p>
+  </section>
+  <section>
+    <h3>madでビルド・パッケージング・REPL</h3>
+    <p>では、早速やってみましょう。</p>
+    <p>N2Oでは、rebarではなく、<a href="https://synrc.com/apps/mad/">mad</a>というツールでビルド等を行います。</p>
+    <ul class="disc">
+      <li><a href="https://synrc.com/apps/mad/doc/book.pdf">madの文書(PDF)</a></li>
+    </ul>
+    <p>madでは、コマンドに、完全な名前ではなく始めの3文字を省略形として使用可能です。</p>
+    <figure>
+      <code>
+  $ curl https://github.com/synrc/n2o/archive/2.11.tar.gz -o n2o-2.11.tar.gz
+  $ tar xvfz n2o-2.11.tar.gz
+  $ cd n2o-2.11/samples
+  # ./mad deps compile plan repl
+  # 省略形の方がタイピングが楽
+  $ ./mad dep com pla rep
+      </code>
+    </figure>
+  </section>
+  <section>
+    <h3>N2Oアプリのひな型の作成</h3>
+    <p>だいぶ雰囲気がつかめてきたところで、アプリの作成をやってみます。
+    アプリのひな型も、madで作成します。</p>
+    <figure>
+      <code>
+  mad app &#60;アプリケーション名&#62;
+      </code>
+    </figure>
+    <p>このコマンドを発行すると、デフォルトでは、非常にシンプルなチャットアプリが生成されます。
+    生成されるものはもしかしたらカスタマイズできるのかも知れませんが、調べていません。
+    <b>rate-ticker</b> というプロジェクト名にします。</p>
+    <figure>
+      <code>
+  ~/devel/erlang/n2o-2.11/samples$ ./mad app rate-ticker
+  Create File: "rate-ticker/apps/rebar.config"
+  Create File: "rate-ticker/apps/sample/src/sample.app.src"
+  Create File: "rate-ticker/apps/sample/priv/static/synrc.css"
+  Create File: "rate-ticker/apps/sample/src/index.erl"
+  Create File: "rate-ticker/apps/sample/src/routes.erl"
+  Create File: "rate-ticker/apps/sample/src/sample.erl"
+  Create File: "rate-ticker/sys.config"
+  Create File: "rate-ticker/apps/sample/priv/static/spa/index.htm"
+  Create File: "rate-ticker/apps/sample/rebar.config"
+  Create File: "rate-ticker/apps/sample/priv/templates/index.html"
+  Create File: "rate-ticker/rebar.config"
+  Create File: "rate-ticker/vm.args"
+  OK
+
+  $ cd ./rate-ticker
+  # 依存関係解消 コンパイル プラン(パッケージング) REPL
+  $ ../mad deps compile plan repl
+      </code>
+    </figure>
+    <p>最後のコマンドの'repl'は、「REPLを開く」の意なので、シェル上でErlangのREPLが開いているはずです。
+    当たり前ですがここでコマンド等を試しに入力することも可能です。</p>
+  </section>
+  <section>
+    <h3>設定ファイル</h3>
+    <p>プロジェクトディレクトリ直下に設定ファイルがあるので、必要に応じて調整します。</p>
+    <p>— rebar.config<br/>
+       — 利用するライブラリの定義<br/>
+       — sys.config<br/>
+       — パラメータの定義</p>
+    <p>ファイルの内容を見れば一目瞭然なので、説明は省略します。</p>
+  </section>
+  <section>
+    <h3>ブラウザで確認</h3>
+    <p>ここまでで、サーバのポート8001番で最低限のWebアプリケーション(チャット)が動いていますので、
+    ブラウザでアクセスしてみます。
+    複数のブラウザで開いてみて、あるブラウザで入力したメッセージが、全てのブラウザに正しく伝わるかも確認してみましょう。</p>
+    <figure><figcaption></figcaption><img class="imgw" src="img/jp2.png"/></figure>
+    <p>ブラウザ上で何かメッセージを入力してから、CHATボタンを押すと、サーバにはシリアライズされたデータが送信されてきます。</p>
+    <figure><figcaption></figcaption><img class="imgw" src="img/jp3.png"/></figure>
+    <p>単純なメッセージでも、結構複雑な形式のデータとして送られています。</p>
+  </section>
+  <section>
+    <h3>サーバ側で確認</h3>
+    <p>サーバ側のシェルセッション上にはErlangのREPLが開いており、INFOレベルのログが出力されるので、何が起きているか確認できます。
+    また、ここでENTERキーを押すと、対話型のシェルに入りますので、Erlangのコードを入力可能です。
+    試しにコマンドラインからメッセージを送ってみましょう。</p>
+    <figure>
+      <code>
+  wf:send(room,{client,{"system","message!!!"}}).
+      </code>
+    </figure>
+    <p>無事ブラウザに「message!!!」が表示されたでしょうか?</p>
+  </section>
+  <section>
+    <h3>バイナリフレーム送受信の確認</h3>
+    <p>もうちょっと詳しく見てみましょう。
+       クライアント側にどのようなメッセージが来ているか、ブラウザの開発者ツールで確認してみます。
+       Chromeで、F12キーを押して開発者ツールを開き、Network - Framesを選択、WSタブをクリック。
+       オレンジ色で、Binary Frameという列がありますから、確かにバイナリでデータが届けられました。</p>
+    <figure><figcaption></figcaption><img class="imgw" src="img/jp4.png"/></figure>
+    <p>次に、デバッグプリントを有効にして、コンソール上に詳細情報を出すようにします。
+       F12キーを押して開発者ツールを開き、Sourceペーンのn2o/protocols/client.jsをクリックします。
+       これはサーバからのメッセージを読み込む処理の一部です。
+       client.jsのソースを見るとすぐ分かる通り、debug という変数が真ならデータがコンソールにデバッグ出力されるようになっているので、debug変数を定義しましょう。
+       debug変数は、別のファイル、n2o.jsに定義されています。
+       Chrome上でテンポラリでJSを編集しても良いですが、毎回やるのも面倒ですので、サーバ側のJSを編集してしまうのがお勧めです。</p>
+    <figure>
+      <code>
+  // rate-ticker/deps/n2o/priv/n2o.js
+
+  // N2O CORE
+  var active = false,
+  //    debug  = false,
+      debug  = true,
+      </code>
+    </figure>
+    <p>関係ないですが、サーバ上でファイルを編集すると、madが自動的にリロードしてくれるため、アプリの手動再起動が必要ありません。
+       ブラウザの方をリロードするだけで大丈夫です。これは大変便利ですね。
+       (もしそうならない場合は、inotify-toolsをインストールして下さい)</p>
+    <figure>
+      <code>
+  // n2o-master/n2o/priv/protocols/client.js
+
+  // JSON formatter
+
+  var $client = {};
+  $client.on = function onclient(evt, callback) {
+    // 追加
+    console.log(evt.data);
+    try {
+      msg = JSON.parse(evt.data);
+      // 追加
+      console.log(msg);
+      if (debug) console.log(JSON.stringify(msg));
+      if (typeof callback == 'function' &#38;&#38; msg) callback(msg);
+      for (var i=0;i&#60;$bert.protos.length;i++) {
+        p = $bert.protos[i];
+        if (p.on(msg, p.do).status == "ok") return { status: "ok"};
+      }
+    } catch (ex) { return { status: "error" }; }
+    return { status: "ok" };
+  };
+      </code>
+    </figure>
+    <p>ブラウザのコンソールに生っぽいデータが表示されたと思います。
+       N2Oではデータの送受信をBERTというバイナリ形式で行っています。
+       クライアント側だと「protocols/bert.js」を読むと雰囲気がつかめると思います。
+       ブラウザの開発者ツールで、client.jsを開き、適切な場所にブレークポイントを設置すると生のデータが確認できます。
+       例えば、メッセージはこのような形式です。</p>
+    <figure>
+      <code>
+  {"eval":"","data":[131,104,2,107,0,6,115,121,115,116,101,109,107,0,
+                     10,109,101,115,115,97,103,101,33,33,33]}
+      </code>
+    </figure>
+    <p>これはなんでしょうか。</p>
+    <figure>
+      <code>
+  "eval": ""
+      </code>
+    </figure>
+    <p>この例では空なので見てもよく分からないですが、この部分にはJavaScriptの命令文が入って来ます。結構ユニークですね。
+       ザでevalするだけ で、フォームに値がセットされたり、文字や背景色が変わったりという事に使う事が出来ます。
+       データを送ってもパースしてからどこかにセットするわけなので、サーバから送られる時、命令文を組み立てて置けばよい、
+       ということでしょうか。この発想は私には目から鱗でした。NitrogenのPushBack方式、と解説されていましたが、
+      SPAで良くあるやり方なのか、Nitrogenのやり方なのかはよく分かりませんでした。</p>
+    <figure>
+      <code>
+  "data":[131,104,2,107,0,6,115,121,115,116,101,109,107,0,10,109,101,
+          115,115,97,103,101,33,33,33]
+      </code>
+    </figure>
+    <p>dataも、生の値ではなく、BERT形式でエンコードされています。
+       ザコンソール上ではdec()関数でデコードできます。</p>
+    <figure>
+      <code>
+  dec([131,104,2,107,0,6,115,121,115,116,101,109,107,0,10,109,101,115,
+       115,97,103,101,33,33,33])
+      </code>
+    </figure>
+    <p>試しにコンソールからカスタムメッセージを送ってみましょう。
+       ッセージを送るだけでも、結構複雑なデータ構造を与えないといけません。
+       ンの値は、接続時にサーバ側から送られているので、ブラウザの開発者ツールで確認して値を置き換えて下さい。
+       ンの値が間違っていると、サーバ側で無視されますので、何も起きません。</p>
+    <figure><figcaption></figcaption><img class="imgw" src="img/jp5.png"/></figure>
+    <figure>
+      <code>
+  // ※トークンの値は上の画像のハイライトの部分を拾って書き換えて下さい
+  ws.send(enc(
+    tuple(atom('pickle'),
+      bin('send'),
+       // トークン
+      bin('g2gCaAVkAAJldmQABWluZGV4ZAAEY2hhdGsABHNlbmR' + 
+          'kAAVldmVudGgDYgAABapiAAVpO2IACG2w'),
+      [
+          tuple(tuple(utf8_toByteArray('send'),bin('detail')),[]),
+          tuple(atom('message'), utf8_toByteArray('こんにちは世界'))
+      ])));
+      </code>
+    </figure>
+    <p>上手く行くと、以下のように送ったメッセージがそのままサーバから返ってきてブラウザ上に表示されるはずです。</p>
+    <figure><figcaption></figcaption><img class="imgw" src="img/jp6.png"/></figure>
+  </section>
+  <section>
+    <h3>N2Oのアーキテクチャ</h3>
+    <figure><figcaption></figcaption><img style="border:none;" class="imgw" src="img/jp7.png"/></figure>
+  </section>
+  <section>
+    <h3>リアルタイムレート画面の作成</h3>
+    <p>簡単なサンプルチャットアプリを動かして、自動・手動のメッセージ送受信まで出来ました。
+       アルタイムレート配信サービスを作成します。
+       的にはチャットとレート配信は似ているため、チャットのサンプルを改造すれば良さそうです。
+       のパーツとしてJSのライブラリ等を使うため、Webアプリの「ルーティング」を調整する必要があります。
+       画面のテンプレートの作成・処理も必要です。
+       配信部分。単体で動作確認した、リアルタイムレートをAPIから取得するソースを使います。
+       wf_bitfinex.erlをプロジェクトに組み込み。</p>
+    <figure>
+      <code>
+  $ cp ws_bitfinex.erl n2o-2.11/samples/rate-ticker/apps/sample/src/
+      </code>
+    </figure>
+    <p>ws_bitfinex.erlを調整します。レート受信時に、N2Oのwf:send()を呼び出して、クライアントにブロードキャストします。</p>
+    <figure>
+      <code>
+  %% erlang:ws_bitfinex.erl
+  % WSのハートビートなどはそのまま送らず省略しないといけません。本当は。
+  websocket_handle({text, Msg}, _ConnState, State) -&#62;
+  io:format("Received msg ~p~n", [Msg]),
+  % 追加
+  wf:send(room,{client,{"feed",Msg}}),
+  {ok, State}.
+      </code>
+    </figure>
+
+    <figure>
+      <code>
+  %% n2o-2.11/samples/rate-ticker/apps/sample/src/sample.erl
+
+  % ws_bitfinex:start_link() 追加
+  start(_,_) -&#62; supervisor:start_link({local,sample},sample,[]),
+                ws_bitfinex:start_link().
+      </code>
+    </figure>
+    <figure>
+      <code>
+  %% n2o-2.11/samples/rate-ticker/rebar.config
+
+  % 最後の行に追記。前の行末に「,」を付け加えるのをお忘れなく。
+  {websocket_client,".*",{git,"git://github.com/jeremyong/websocket_client",{tag,"v0.7"} }}
+      </code>
+    </figure>
+    <p>再ビルド・起動します。</p>
+    <figure>
+      <code>
+  $ mad dep com pla rep
+      </code>
+    </figure>
+  </section>
+  <section>
+    <h3>リアルタイムレートの確認 (ブラウザ)</h3>
+    <figure><figcaption></figcaption><img class="imgw" src="img/jp8.png"/></figure>
+  </section>
+  <section>
+    <h3>画面周りのテンプレート作成</h3>
+    <p>リアルタイムレートがブラウザに配信され生で表示されるところまで来ました。
+       あとは綺麗に表示すれば完成なのですが・・・
+       元々作っていたサンプルがN2O v2.11で動かなくなってしまったため調整中です。
+       すみません!</p>
+    <p>** TBD **</p>
+  </section>
+  <section>
+    <h3>小ネタ集</h3>
+    <h3>マルチクライアント対応 (Pub/Sub)</h3>
+    <p><b> ※この手順は昔のバージョンでのみ必要です。N2O v2.11では標準でこのように動作するようになっていました </b></p>
+    <p>標準のチャットのサンプルは、1 対 1の通信をするものとなっていますので、
+       もっとチャットらしく、1 対 多のPub/Subの通信をするよう変えてみます。
+       N2Oには、Pub/Sub用APIが用意されていますので、呼び出すだけ使えます。
+       (Pub/Subの実装は<a href="https://github.com/uwiger/gproc">gproc</a>が利用されています)</p>
+    <ul class="disc">
+      <li>wf:reg  — <a href="https://synrc.com/apps/n2o/doc/web/api.htm" class="autolink">api.htm</a> </li>
+    </ul>
+    <figure>
+      <code>
+  %% apps/sample/src/index.erl
+
+  event(init) -&#62; wf:reg(room);
+  event(chat) -&#62; wf:send(room,{client,{peer(),message()}});
+  event({client,{P,M}}) -&#62;
+      wf:insert_bottom(history,#panel{id=history,body=[P,": ",M,#br{}]});
+      </code>
+    </figure>
+  </section>
+  <section>
+    <h3>HTTPS化</h3>
+    <p><strong>※ N2O v2.4の場合。要更新</strong></p>
+    <figure>
+      <code>
+  %%  rate-ticker/apps/sample/src/web_sup.erl
+
+  init([]) -&#62;
+    %% http
+  %  cowboy:start_http(http, 28232, [{port, wf:config(n2o,port)}],
+  %                                 [{env, [{dispatch, rules()}]}]),
+    %% https
+    cowboy:start_https(https, 28232, [
+      {port, wf:config(n2o,port)},
+      {certfile, "/usr/local/cert/ssl/server.crt"},% 要調整
+      {keyfile, "/usr/local/cert/ssl/server.key"}, % 要調整
+      {password,""}],
+    [{env, [{dispatch, rules()}]}]),
+      </code>
+    </figure>
+  </section>
+  <section>
+    <h3>ベンチマーク</h3>
+    <p>** TBD **</p>
+  </section>
+  <section>
+    <h3>(改めて)N2Oが実現している機能</h3>
+    <p>サンプルを動かして気付いたのは以下の機能です。</p>
+    <ul class="disc">
+      <li>WebSocket + XHR fallback ← サーバを落とすと、JS側でXHRによる接続が試行される</li>
+      <li>バイナリでのメッセージ送受信 (BERT)</li>
+      <li>簡易暗号化 (pickle)</li>
+      <li>セッション</li>
+      <li>PING/PONGは自動で4秒毎に発行される</li>
+      <li>サーバからJSの式を送りクライアントで評価する仕組み(多分Nitrogen由来の機能)</li>
+    </ul>
+  </section>
+  <section>
+    <h3>N2Oを使ってみた感想</h3>
+    <p>N2Oはかなり魅力的なライブラリに感じました。</p>
+    <ul>
+      <li>シンプル。覚えるべきAPIが少ない (<a href="https://github.com/synrc/n2o/blob/master/src/wf.erl">wf.erl</a>を読めば大体分かる)</li>
+      <li>バイナリ送受信標準サポート(取り外し可能。JSONに切り替える事も出来るらしい。未検証)</li>
+      <li>ハートビート機能が標準で付いてくる (4秒毎のPING/PONG、こちらも取り外し可能)</li>
+      <li>速さ (<strong>注</strong>: 体感) ※要ベンチマーク</li>
+    </ul>
+    <p>今回紹介した機能を実現するため実装したのは、ソースコードの行数で言うと50行程度。
+       あまりにあっさり出来るので正直拍子抜けする位でした。
+       また表現力も高く、SPAのアプリの中にはErlangの一ファイルですっきり実現出来るものもありそうです。
+       (<a href="https://synrc.com/apps/n2o/">N2Oのトップページ</a>で紹介されているchat.erlのイメージ)
+       個人的には、N2Oは一見シンプルですがフレームワークの機能は豊富だし奥が深そうに感じています。
+       一点、N2OではWebSocketが使えないクライアントのために、XHRによるフォールバックのエンドポイントも用意されているのですが、
+       v2.4の頃は安定性に少し問題があり、開発者も修正に積極的ではない様子でした。</p>
+    <ul class="disc">
+      <li><a href="https://github.com/synrc/n2o/issues/196">Github - N2O - Issue 195 - Broken XHR</a></li>
+    </ul>
+    <p>実際、チャットのサンプルをWebSocketとXHRで動かした時に、XHRの方にだけメッセージが来ない現象がありました。
+       、最近のバージョンでは
+      <a href="https://github.com/synrc/n2o/commits/959c08373e216fff918a8284b130b80d7e67aba3/src/endpoints/cowboy/n2o_stream.erl">
+      n2o_streamというエンドポイントが新規で追加</a>されているので、改善されている可能性がありそうです。</p>
+  </section>
+  <section>
+    <h3>終わりに</h3>
+    <p>N2Oは利用者がまだそれほど多くなく、ライブラリの安定性や高負荷時の挙動については別途評価が必要と思われますが、
+       WebSocketでリアルタイム通信をするようなアプリでは、候補として検討してみてはいかがでしょうか?</p>
+    <p>今回は、長い割にはN2Oを駆け足で紹介しただけで終わってしまいました。</p>
+    <p>WebSocketに加えてHTTP/1.1 Chunkedでの配信する、等も試してみたので何かの機会に紹介できたらなと思います。
+       angとN2Oを使って、<a href="http://shogiwars.heroz.jp/">将棋ウォーズ</a>や<a href="http://ja.lichess.org/">lichess</a>のようなリアルタイム対戦サービスを作るのが私の来年の目標です。
+       はみなさん、メリークリスマス!</p>
+  </section>
+  <section>
+    <h3>参考資料</h3>
+    <ul class="disc">
+      <li><a href="https://5ht.co/index.html">N2O v2.9</a> 作者による解説</li>
+      <li><a href="http://bert-rpc.org/">BERT</a> BERT規格</li>
+      <li><a href="https://qiita.com/mururu/items/2fa4f06b8f3572be4b28">gproc - Extended process registry for Erlang</a> gprocの解説</li>
+    </ul>
+  </section>
+  <section>
+    <a name="credits"></a>
+    <h3>Credits</h3>
+    <p>Original source — <a href="https://qiita.com/dseg/items/4f2c8b04aec35cc504f0">https://qiita.com/dseg/items/4f2c...</a><br/>
+       Author — Daichi Shinozaki — <a href="https://qiita.com/dseg">@dseg</a></p>
+  </section>
+</article>
+</main>
+<footer>2005—2019 © Synrc Research Center</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
+</body>
+</html>

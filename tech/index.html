@@ -18,12 +18,19 @@
 </head>
 <body>
 <nav>
-  <a href="https://n2o.dev/">DEV</a>
-  <a href="https://n2o.dev/tech/" style="background:#ededed;">TECH</a>
-  <a href="https://n2o.dev/pro/">PRO</a>
+  <a href="../index.html">DEV</a>
+  <a href="../pro/index.html">PRO</a>
+  <a href="../tech/index.html">TECH</a>
+  <div class="dropdown">
+    <a onclick="drop()" class="dropbtn">EN</a>
+    <div id="dropdown" class="dropdown-content">
+      <a href="../jp/tech/index.html">JP</a>
+      <a href="../ua/tech/index.html">UA</a>
+    </div>
+  </div>
 </nav>
 <header>
-  <a href="https://github.com/synrc/n2o.tech"><img src="https://openmoji.org/data/color/svg/1FA90.svg" /></a>
+  <a href="https://github.com/synrc/n2o.dev"><img src="https://openmoji.org/data/color/svg/1FA90.svg" /></a>
   <h1>N2O</h1>
 </header>
 <aside>
@@ -123,7 +130,7 @@
         <tr>
             <td><a href="https://github.com/o83/"><img src="https://avatars.githubusercontent.com/u/46197464?s=150&v=4"></a></td>
             <td><a href="https://github.com/o29/"><img src="https://avatars.githubusercontent.com/u/45442177?s=150&v=4"></a></td>
-            <td><a href="https://lean4.dev/"><img src="https://avatars.githubusercontent.com/u/46346236?s=150&v=4"></a></td>
+            <td><a href="https://github.com/o89"><img src="https://avatars.githubusercontent.com/u/46346236?s=150&v=4"></a></td>
         </tr>
        </table>
      </center>
@@ -254,5 +261,6 @@
 </article>
 </main>
 <footer>Namdak Tonpa <span class="heart">❤</span> N2O</footer>
+<script>function drop(){document.getElementById("dropdown").classList.toggle("show");}</script>
 </body>
 </html>
