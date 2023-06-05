@@ -40,11 +40,6 @@ RPC is a set of parse_transform modules that produce various encode/decode gener
 -----
 Open Source Certificate Authority (CA) by SYNRC. It provides Public Key Infrastructure (PKI) with both: Elliptic Curve Cryptography (ECC), best suited for IoT security; and legacy Rivest–Shamir–Adleman (RSA) cryptography. It supports CSR certificate enrollment and provides OCSP responder for fast revokation checking.
 
-Only for Core N2O Developers
-----------------------------
-
-* https://t.me/n2otech (Telegram)
-
 Languages
 ---------
 
@@ -53,11 +48,3 @@ Languages
 * English
 * Russian
 * Bulgarian
-
-Credits
--------
-
-* The Jonathan — [IL] — https://t.me/collision02
-* Taras — [UA] — https://t.me/TTaraskin
-* Namdak Tonpa — [EN,RU] — https://t.me/tonpa
-* Radostin Dimitrov — [BG]
