@@ -46,5 +46,4 @@ Languages
 * Ukrainian
 * Hebrew
 * English
-* Russian
 * Bulgarian
