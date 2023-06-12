@@ -1,5 +1,7 @@
 // SYNRC N2O PRO Color Scheme CSS Overlay
 
+::-webkit-scrollbar { display: none; }
+
 h2, h3 { color: #5BC2E7; }
 nav, body, header { background-color: #ECF8FE; }
 main, footer { background-color: #433363; }
