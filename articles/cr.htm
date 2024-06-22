@@ -20,7 +20,7 @@
   <a href='#' style="background:#ededed;">CR</a>
 </nav>
 <header>
-  <a href="../index.html"><img src="../img/Synrc Neo.svg" /></a>
+  <a href="../index.html"><img src="../img/Synrc Neo.svg?v=1" /></a>
   <h1>CR: BFT</h1>
 </header>
 <main>
@@ -161,7 +161,7 @@ is called configuration. All writes come to the chain's head,
 all reads come to chain's tail.</p>
 
 <figure><figcaption>Picture 1. Chain</figcaption>
-<img src="https://synrc.com/apps/cr/doc/images/replicas.svg" height="200" style="border:none;"/></figure>
+<img src="https://synrc.com/apps/cr/doc/images/replicas.svg?v=1" height="200" style="border:none;"/></figure>
 
 <h4>Replication Log</h4>
 
@@ -174,7 +174,7 @@ As a replication log container it uses <b>#log</b> type and command is stored
 as <b>#operation</b> record. Each replica has its own log.</p>
 
 <figure><figcaption>Picture 2. Log</figcaption>
-<img src="https://synrc.com/apps/cr/doc/images/log.svg" height="400" style="border:none;"/></figure>
+<img src="https://synrc.com/apps/cr/doc/images/log.svg?v=1" height="400" style="border:none;"/></figure>
 
 <h4>Replica Protocol</h4>
 
@@ -258,7 +258,7 @@ Stable = [ R || R &#60;- replicas(O),
 log will be always unordered. As on Picture 3 it should GCP = 2.</p>
 
 <figure><figcaption>Picture 3. Greatest common prefix</figcaption>
-<img src="https://synrc.com/apps/cr/doc/images/merging.svg" height="300" style="border:none;"/></figure>
+<img src="https://synrc.com/apps/cr/doc/images/merging.svg?v=1" height="300" style="border:none;"/></figure>
 
 <h3>Liveness</h3>
 
