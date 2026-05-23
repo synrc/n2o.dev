@@ -1,74 +1,15 @@
-        body,
-        header,
-        nav {
-            background-color: #F0F4F8 !important;
-        }
-
-        main,
-        footer,
-        aside {
-            background-color: #293757 !important;
-        }
-
-        footer {
-            color: #A0AEC0 !important;
-        }
-
-        main section {
-            background-color: #F0F4F8 !important;
-        }
-
-        main section:nth-of-type(even) {
-            background-color: #FFFFFF !important;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5 {
-            color: #293757 !important;
-            border-left-color: #293757 !important;
-        }
-
-        nav a {
-            color: #293757 !important;
-        }
-
-        nav a:hover {
-            border-bottom-color: #293757 !important;
-        }
-
-        nav a:visited {
-            color: #293757 !important;
-        }
-
-        main a,
-        main a:visited {
-            color: #293757 !important;
-            border-bottom-color: #293757 !important;
-        }
-
-        .dropdown {
-            color: #293757 !important;
-        }
-
-        figure code,
-        figure pre {
-            color: #E2E8F0 !important;
-            background-color: #1A2438 !important;
-        }
-
-        aside h3 {
-            color: #E2E8F0 !important;
-        }
-
-        aside div {
-            color: #E2E8F0 !important;
-        }
-
-        aside a,
-        aside a:visited {
-            color: #E2E8F0 !important;
-            border-bottom-color: #E2E8F0 !important;
-        }
+body, header, nav { background-color: #F0F4F8; }
+main, footer, aside { background-color: #293757; }
+footer { color: #A0AEC0; }
+main section { background-color: #F0F4F8; }
+main section:nth-of-type(even) { background-color: #FFFFFF; }
+h1, h2, h3, h4, h5 { color: #293757; border-left-color: #293757; }
+nav a { color: #293757;}
+nav a:hover { border-bottom-color: #293757; }
+nav a:visited { color: #293757; }
+main a, main a:visited { color: #293757; border-bottom-color: #293757;  }
+.dropdown { color: #293757; }
+figure code, figure pre { color: #E2E8F0; background-color: #1A2438; }
+aside h3 { color: #E2E8F0; }
+aside div { color: #E2E8F0; }
+aside a, aside a:visited { color: #E2E8F0; border-bottom-color: #E2E8F0;  text-decoration: underline;  }
